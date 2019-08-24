@@ -269,12 +269,9 @@ inlineEditL10n = {
                                 row = $(inlineEditUserCapabilities.what + id);
                             }
 
-                            // Update the value in the Parent dropdown.
-                            $('#parent').find('option[value=' + option_value + ']').text(row.find('.row-title').text());
-
                             row.hide().fadeIn(400, function () {
                                 // Move focus back to the Quick Edit button.
-                                row.find('.editinline')
+                                row.find('.editinline_capabilities')
                                     .attr('aria-expanded', 'false')
                                     .focus();
                                 wp.a11y.speak(inlineEditL10n.saved);
@@ -319,7 +316,7 @@ inlineEditL10n = {
                 id = id.substr(id.lastIndexOf('-') + 1);
 
                 // Show the role row and move focus back to the Quick Edit button.
-                $(this.what + id).show().find('.editinline')
+                $(this.what + id).show().find('.editinline_capabilities')
                     .attr('aria-expanded', 'false')
                     .focus();
             }

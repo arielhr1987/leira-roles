@@ -352,9 +352,7 @@ class Leira_Roles_Actions{
 		 * Delete roles
 		 */
 		foreach ( $roles as $role ) {
-			remove_role( $role );
-			//check if it was deleted
-			$deleted = $this->manager->is_role( $role );
+			$deleted = $this->manager->delete_role( $role );
 		}
 
 		$single = sprintf( 'The role %s was successfully deleted.', '<strong>' . $roles[0] . '</strong>' );
@@ -484,6 +482,13 @@ class Leira_Roles_Actions{
 		}
 
 		/**
+		 * You are editing your own capabilities. Lets check that you dont break anything
+		 */
+		if ( $user == get_current_user() ) {
+
+		}
+
+		/**
 		 * Sanitize capabilities
 		 */
 		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
@@ -495,12 +500,12 @@ class Leira_Roles_Actions{
 		/**
 		 * Update user capabilities
 		 */
-		$result = $this->manager->update_user_capabilities( $user, $capabilities );
+		$user = $this->manager->update_user_capabilities( $user, $capabilities );
 
 		/**
 		 * Notify user and redirect
 		 */
-		if ( $result === false ) {
+		if ( $user === false ) {
 			$out = __( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.', 'leira-roles' );
 			wp_die( $out );
 		}
@@ -511,8 +516,8 @@ class Leira_Roles_Actions{
 		$GLOBALS['hook_suffix'] = '';//avoid notice error
 		$table                  = _get_list_table( 'WP_Users_List_Table' );
 
-		$table->single_row( $user );
-		wp_die();
+		$tr = $table->single_row( $user );
+		wp_die( $tr );
 	}
 
 	/**
@@ -538,6 +543,15 @@ class Leira_Roles_Actions{
 
 		if ( empty( $capability ) ) {
 			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
+			$this->notify( $out );
+		}
+
+		/**
+		 * Check you are not adding a role as capability
+		 */
+		if ( $this->manager->is_role( $capability ) ) {
+			//this capability already exist
+			$out = __( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.', 'leira-roles' );
 			$this->notify( $out );
 		}
 

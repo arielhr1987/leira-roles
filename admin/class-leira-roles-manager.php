@@ -158,6 +158,19 @@ class Leira_Roles_Manager{
 	}
 
 	/**
+	 * Deletes a role from the system
+	 *
+	 * @param $role
+	 *
+	 * @return bool
+	 */
+	public function delete_role( $role ) {
+		remove_role( $role );
+
+		return ! $this->is_role( $role );
+	}
+
+	/**
 	 * Update a role. If the role is a system role it will update the display name and capabilities only
 	 *
 	 * @param string $old_role     The role to update
@@ -230,7 +243,7 @@ class Leira_Roles_Manager{
 	}
 
 	/**
-	 * Update role capabilities
+	 * Update role capabilities. NOT IN USE
 	 *
 	 * @param string $role           The role to update capabilities
 	 * @param array  $caps           The new capabilities to set
@@ -296,7 +309,7 @@ class Leira_Roles_Manager{
 	 * @return bool
 	 */
 	public function update_user_capabilities( $user, $capabilities = array() ) {
-		if ( ! $user instanceof WP_User ) {
+		if ( is_string( $user ) || is_integer( $user ) ) {
 			$user = get_user_by( 'ID', $user );
 		}
 
@@ -304,18 +317,92 @@ class Leira_Roles_Manager{
 			return false;
 		}
 
-		//we need to check for role capabilities
+		/**
+		 * You are editing your own capabilities. Lets check that you dont break anything
+		 */
+		if ( $user == get_current_user() ) {
+
+		}
+
+		/**
+		 * In multisite check if user belongs to the current site. Except if super admin is editing
+		 */
+
+
+		/**
+		 * Remove roles from capabilities. Make sure we dont insert a role as capability
+		 */
+		$capabilities = array_filter( $capabilities, function( $cap ) {
+			return ! $this->is_role( $cap );
+		}, ARRAY_FILTER_USE_KEY );
+
+		/**
+		 * This array will contain the new array of capabilities
+		 */
+		$update = array();
+
+		/**
+		 * Get user role capabilities. All capabilities that the role allows or deny
+		 */
 		$role_capabilities = array();
 		foreach ( $user->roles as $role ) {
 			$role_obj = $this->get_role( $role );
 			$caps     = isset( $role_obj->capabilities ) && is_array( $role_obj->capabilities ) ? $role_obj->capabilities : [];
 
 			$role_capabilities = array_merge( $role_capabilities, $caps );
+
+			//add roles by default
+			$update[ $role ] = true;
 		}
 
-		$role_capabilities = array_fill_keys( array_keys( $role_capabilities ), false );
+		foreach ( $role_capabilities as $role_capability => $role_value ) {
+			/**
+			 * Check is not a role
+			 */
+			if ( $this->is_role( $role_capability ) ) {
+				continue;
+			}
 
-		return false;
+			if ( isset( $capabilities[ $role_capability ] ) ) {
+				//the user checked a cb
+				//lets check if was check or the user checked
+				if ( $capabilities[ $role_capability ] === $role_value ) {
+					//the user leave the cb checked as it was
+				} else {
+					//the user change the cb to checked
+					$update[ $role_capability ] = ! $role_value;
+				}
+
+			} else {
+				//the user did'nt check the cb
+				//lets check if was uncheck or the user unchecked
+				if ( $role_value === false ) {
+					//the user leave the cb unchecked
+				} else {
+					//the user changed the cb to unchecked
+					$update[ $role_capability ] = ! $role_value;
+
+				}
+			}
+		}
+
+		/**
+		 * Handles the case of other role capabilities or user defined capabilities
+		 */
+		foreach ( $capabilities as $capability => $value ) {
+			if ( ! isset( $role_capabilities[ $capability ] ) ) {
+
+				$update[ $capability ] = true;
+			}
+		}
+
+		//update user meta
+		update_user_meta( $user->ID, $user->cap_key, $update );
+		$user->caps = $update;
+		$user->update_user_level_from_caps();
+		$user->get_role_caps();
+
+		return $user;
 	}
 
 	/**
@@ -338,7 +425,6 @@ class Leira_Roles_Manager{
 		$capabilities = apply_filters( 'leira-roles-get-all-capabilities', $capabilities );
 
 		return $capabilities;
-
 	}
 
 	/**

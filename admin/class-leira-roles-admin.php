@@ -243,7 +243,11 @@ class Leira_Roles_Admin{
 
 			$capabilities = Leira_Roles::instance()->get_loader()->get( 'manager' )->get_all_capabilities();
 			if ( isset( $user->allcaps ) ) {
-				$capabilities = array_merge( $capabilities, $user->allcaps );
+				//remove roles
+				$allcaps      = array_filter( $user->allcaps, function( $cap ) {
+					return ! Leira_Roles::instance()->get_loader()->get( 'manager' )->is_role( $cap );
+				}, ARRAY_FILTER_USE_KEY );
+				$capabilities = array_merge( $capabilities, $allcaps );
 			}
 			ksort( $capabilities );
 			$capabilities = json_encode( $capabilities );
