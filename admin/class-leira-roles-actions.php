@@ -484,8 +484,18 @@ class Leira_Roles_Actions{
 		/**
 		 * You are editing your own capabilities. Lets check that you dont break anything
 		 */
-		if ( $user == get_current_user() ) {
+		if ( $user->ID == get_current_user_id() ) {
+			//What do we do here??? TODO: Lets think about it.
+		}
 
+		/**
+		 * In multisite check if the user to edit is member of the site
+		 */
+		if ( is_multisite() ) {
+			if ( ! is_user_member_of_blog( $user->ID ) ) {
+				$out = __( 'You are not allowed to edit other site users.', 'leira-roles' );
+				wp_die( $out );
+			}
 		}
 
 		/**

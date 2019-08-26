@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Roles & Capabilities
  * Plugin URI:        https://github.com/arielhr1987/leira-roles
- * Description:       Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities. You will be able to assign capabilities to specific users.
+ * Description:       Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities and also assign capabilities to specific users.
  * Version:           1.0.0
  * Author:            Ariel
  * Author URI:        https://github.com/arielhr1987
