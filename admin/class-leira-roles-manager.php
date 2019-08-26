@@ -302,6 +302,14 @@ class Leira_Roles_Manager{
 
 	/**
 	 * Update a user capabilities.
+	 * This is not an easy script so be careful while editing
+	 * The input capabilities are those selected by the user in the frontend. We will check for the default user role
+	 * capabilities. If the provided capabilities contains the same values as the role we will not set it, because by
+	 * default the user has access to it, in case the capability value differs (true|false) we will set according.
+	 * In case other role capabilities we will set it tu true, no need to set to false because the user dow not have
+	 * access to it by default
+	 * In case is not a capability, its a user defined capability we need to set it to true or false otherwise we might
+	 * loose the cap when saving
 	 *
 	 * @param string|WP_User $user         The user to update capabilities
 	 * @param array          $capabilities The new user capabilities
@@ -344,59 +352,88 @@ class Leira_Roles_Manager{
 		/**
 		 * Get user role capabilities. All capabilities that the role allows or deny
 		 */
-		$role_capabilities = array();
+		$user_role_capabilities = array();
 		foreach ( $user->roles as $role ) {
 			$role_obj = $this->get_role( $role );
 			$caps     = isset( $role_obj->capabilities ) && is_array( $role_obj->capabilities ) ? $role_obj->capabilities : [];
 
-			$role_capabilities = array_merge( $role_capabilities, $caps );
+			$user_role_capabilities = array_merge( $user_role_capabilities, $caps );
 
 			//add roles by default
 			$update[ $role ] = true;
 		}
 
-		foreach ( $role_capabilities as $role_capability => $role_value ) {
+		$all_capabilities = $this->get_all_capabilities();
+		foreach ( $all_capabilities as $all_capability => $all_value ) {
 			/**
 			 * Check is not a role
 			 */
-			if ( $this->is_role( $role_capability ) ) {
+			if ( $this->is_role( $all_capability ) ) {
 				continue;
 			}
 
-			if ( isset( $capabilities[ $role_capability ] ) ) {
-				//the user checked a cb
-				//lets check if was check or the user checked
-				if ( $capabilities[ $role_capability ] === $role_value ) {
-					//the user leave the cb checked as it was
-				} else {
-					//the user change the cb to checked
-					$update[ $role_capability ] = ! $role_value;
-				}
+			if ( isset( $user_role_capabilities[ $all_capability ] ) ) {
+				/**
+				 * Is a user role capability
+				 */
+				$role_value = $user_role_capabilities[ $all_capability ];
 
+				if ( isset( $capabilities[ $all_capability ] ) ) {
+					//the user checked a cb
+					//lets check if was check or the user checked
+					if ( $capabilities[ $all_capability ] === $role_value ) {
+						//the user leave the cb checked as it was
+					} else {
+						//the user change the cb to checked
+						$update[ $all_capability ] = ! $role_value;
+					}
+
+				} else {
+					//the user did'nt check the cb
+					//lets check if was uncheck or the user unchecked
+					if ( $role_value === false ) {
+						//the user leave the cb unchecked
+					} else {
+						//the user changed the cb to unchecked
+						$update[ $all_capability ] = ! $role_value;
+
+					}
+				}
 			} else {
-				//the user did'nt check the cb
-				//lets check if was uncheck or the user unchecked
-				if ( $role_value === false ) {
-					//the user leave the cb unchecked
-				} else {
-					//the user changed the cb to unchecked
-					$update[ $role_capability ] = ! $role_value;
+				/**
+				 * Is others role capability
+				 */
+				if ( isset( $capabilities[ $all_capability ] ) ) {
 
+					$update[ $all_capability ] = true;
 				}
 			}
 		}
 
-		/**
-		 * Handles the case of other role capabilities or user defined capabilities
-		 */
-		foreach ( $capabilities as $capability => $value ) {
-			if ( ! isset( $role_capabilities[ $capability ] ) ) {
+		foreach ( $user->allcaps as $capability => $value ) {
 
-				$update[ $capability ] = true;
+			if ( ! $this->is_capability( $capability ) && ! $this->is_role( $capability ) ) {
+				/**
+				 * Its a user specific capability
+				 * Now lets check for the value. false means the user didnt check the cb
+				 */
+				$user_value = isset( $capabilities[ $capability ] ) ? (bool) $capabilities[ $capability ] : false;
+				if ( $user_value == $value ) {
+					//no change in the capability value
+					$update[ $capability ] = $value;
+				} else {
+					//user changed
+					$update[ $capability ] = ! $value;
+				}
+
+				//simplified version, lets keep it the other way to better understanding
+				//$update[ $capability ] = $user_value == $value ? $value : ! $value;
 			}
+
+			//We make sure with this logic that if the user changes the value of a cb the system wont create the capability
 		}
 
-		//update user meta
+		//Update user meta
 		update_user_meta( $user->ID, $user->cap_key, $update );
 		$user->caps = $update;
 		$user->update_user_level_from_caps();
