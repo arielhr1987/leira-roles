@@ -105,7 +105,7 @@ class Leira_Roles_List_Table extends WP_List_Table{
 		//Build row actions
 		$actions = array(
 			//'users'                => sprintf( '<a href="%s" class="">%s</a>', add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ), __( 'Users', 'leira-roles' ) ),
-			'clone'                => sprintf( '<a href="%s" class="delete-role">%s</a>',
+			'clone'                => sprintf( '<a href="%s" class="clone-role">%s</a>',
 				add_query_arg( array(
 					'page'     => 'leira-roles',
 					'action'   => 'leira-roles-clone-role',

@@ -430,7 +430,7 @@ class Leira_Roles_Admin{
 		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
 
 		//enqueue scripts
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . '_table_edit', plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/inline-edit-roles.js', array(
 			'jquery',
 			'wp-a11y'

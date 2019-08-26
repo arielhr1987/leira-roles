@@ -202,9 +202,9 @@ class Leira_Roles_Actions{
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
 			$admin->get_roles_list_table()->single_row( array(
-				'role'  => $role,
-				'name'  => $result->name,
-				'count' => isset( $count_users[ $role ] ) ? $count_users[ $role ] : 0
+				'role'  => $result->name,
+				'name'  => $this->manager->get_role_name( $result->name ),
+				'count' => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0
 			) );
 			$out = ob_get_clean();
 
@@ -269,9 +269,9 @@ class Leira_Roles_Actions{
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
 			$admin->get_roles_list_table()->single_row( array(
-				'role'  => $role,
+				'role'  => $result->name,
 				'name'  => $this->manager->get_role_name( $result->name ),
-				'count' => isset( $count_users[ $role ] ) ? $count_users[ $role ] : 0
+				'count' => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0
 			) );
 			$out = ob_get_clean();
 

@@ -25,8 +25,7 @@ jQuery(document).ready(function ($) {
         data = t.attr('href').replace(/[^?]*\?/, '');
 
         /**
-         * Makes a request to the server to delete the role that corresponds to the
-         * delete role button.
+         * Makes a request to the server to delete the role that corresponds to the delete role button.
          *
          * @param {string} r The response from the server.
          *
@@ -48,6 +47,41 @@ jQuery(document).ready(function ($) {
 
         tr.children().css('backgroundColor', '#f33');
 
+        return false;
+    });
+
+    /**
+     * Adds an event handler to the clone role link on the role overview page.
+     *
+     * Cancels default event handling and event bubbling.
+     *
+     * @since 2.8.0
+     *
+     * @returns boolean Always returns false to cancel the default event handling.
+     */
+    $('#the-list').on('click', '.clone-role', function () {
+        var t = $(this), tr = t.parents('tr'), r = true, data;
+
+        data = t.attr('href').replace(/[^?]*\?/, '');
+
+        /**
+         * Makes a request to the server to clone the role that corresponds to the delete role button.
+         *
+         * @param {string} r The response from the server.
+         *
+         * @returns {void}
+         */
+        $.post(ajaxurl, data, function (r) {
+            if (r) {
+                if (r.success === true) {
+                    $('#ajax-response').empty();
+                    tr.after($(r.data));
+                } else {
+                    $('#ajax-response').empty().append(r.data);
+                    //tr.children().css('backgroundColor', '');
+                }
+            }
+        });
 
         return false;
     });
