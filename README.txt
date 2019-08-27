@@ -53,9 +53,17 @@ No, Wordpress relay on those capabilities to work properly.
 
 == Screenshots ==
 
-1. New menu items to handle roles & capabilities
+1. New menu items to handle roles & capabilities.
+2. New quick action "Capabilities" in users list page.
+3. Quick edit user capabilities.
+4. Manage your site roles.
+5. Edit role capabilities easily, grant or revoke role capabilities.
+6. Bulk edit actions in users page.
+7. Role actions.
+8. Capabilities manager page. System capabilities are not deletable.
+9. Capabilities list page bulk actions.
 
 == Changelog ==
 
 = 1.0.0 =
-* Tee first plugin release\
+* The first plugin release\
