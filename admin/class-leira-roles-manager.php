@@ -15,6 +15,85 @@
 class Leira_Roles_Manager{
 
 	/**
+	 * Built-in system capabilities defined by WordPress and the corresponding description
+	 *
+	 * @var array
+	 */
+	public $system_capabilities = array();
+
+	/**
+	 * Leira_Roles_Manager constructor.
+	 */
+	public function __construct() {
+
+		$this->system_capabilities = array(
+			'activate_plugins'       => __( 'Allow users to activate plugins.', 'leira-roles' ),
+			'create_users'           => __( 'Allow users to create users within the site.', 'leira-roles' ),
+			'delete_others_pages'    => __( 'Enables permission to delete others pages.', 'leira-roles' ),
+			'delete_others_posts'    => __( 'Enables permission to delete others posts.', 'leira-roles' ),
+			'delete_pages'           => __( 'Enables permission to delete pages.', 'leira-roles' ),
+			'delete_plugins'         => __( 'Allow users to delete plugins.', 'leira-roles' ),
+			'delete_posts'           => __( 'Enables permission to delete posts.', 'leira-roles' ),
+			'delete_private_pages'   => __( 'Enables permission to delete pages marked as private.', 'leira-roles' ),
+			'delete_private_posts'   => __( 'Enables permission to delete posts marked as private.', 'leira-roles' ),
+			'delete_published_pages' => __( 'Enables permission to delete published pages.', 'leira-roles' ),
+			'delete_published_posts' => __( 'Enables permission to delete published posts.', 'leira-roles' ),
+			'delete_themes'          => __( 'Allows access to delete themes.', 'leira-roles' ),
+			'delete_users'           => __( 'Allow users to delete users within the site.', 'leira-roles' ),
+			'edit_dashboard'         => __( 'Allows access to edit dashboard widgets and its settings.', 'leira-roles' ),
+			'edit_files'             => __( 'Deprecated', 'leira-roles' ),
+			'edit_others_pages'      => __( 'Enables permission to edit others pages.', 'leira-roles' ),
+			'edit_others_posts'      => __( 'Enables permission to edit others posts.', 'leira-roles' ),
+			'edit_pages'             => __( 'Enables permission to edit pages.', 'leira-roles' ),
+			'edit_plugins'           => __( 'Allow users to edit plugin files.', 'leira-roles' ),
+			'edit_posts'             => __( 'Allows access to “Posts”, “Posts > Add New”, “Comments” and “Comments > Awaiting Moderation”', 'leira-roles' ),
+			'edit_private_pages'     => __( 'Enables permission to edit pages marked as private.', 'leira-roles' ),
+			'edit_private_posts'     => __( 'Enables permission to edit posts marked as private.', 'leira-roles' ),
+			'edit_published_pages'   => __( 'Enables permission to edit published pages.', 'leira-roles' ),
+			'edit_published_posts'   => __( 'Enables permission to edit published posts.', 'leira-roles' ),
+			'edit_theme_options'     => __( 'Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”.', 'leira-roles' ),
+			'edit_themes'            => __( 'Allows access to “Appearance > Theme Editor” to edit theme files.', 'leira-roles' ),
+			'edit_users'             => __( 'Allow users to edit users within the site.', 'leira-roles' ),
+			'export'                 => __( 'Allows access to “Tools > Export”.', 'leira-roles' ),
+			'import'                 => __( 'Allows access to “Tools > Import”.', 'leira-roles' ),
+			'install_plugins'        => __( 'Allow users to install new plugins.', 'leira-roles' ),
+			'install_themes'         => __( 'Allows access to install themes.', 'leira-roles' ),
+			'level_0'                => __( 'Deprecated', 'leira-roles' ),
+			'level_1'                => __( 'Deprecated', 'leira-roles' ),
+			'level_2'                => __( 'Deprecated', 'leira-roles' ),
+			'level_3'                => __( 'Deprecated', 'leira-roles' ),
+			'level_4'                => __( 'Deprecated', 'leira-roles' ),
+			'level_5'                => __( 'Deprecated', 'leira-roles' ),
+			'level_6'                => __( 'Deprecated', 'leira-roles' ),
+			'level_7'                => __( 'Deprecated', 'leira-roles' ),
+			'level_8'                => __( 'Deprecated', 'leira-roles' ),
+			'level_9'                => __( 'Deprecated', 'leira-roles' ),
+			'level_10'               => __( 'Deprecated', 'leira-roles' ),
+			'list_users'             => __( 'Allow users to list users within the site', 'leira-roles' ),
+			'manage_categories'      => __( 'Enables permission to “Posts > Categories” and “Links > Categories”( Links not available since v3.5).', 'leira-roles' ),
+			'manage_links'           => __( 'Used by the Link Manager in WordPress. Since WordPress version 3.0 Link Manager is not available', 'leira-roles' ),
+			'manage_options'         => __( 'Allows access to “Settings” section', 'leira-roles' ),
+			'moderate_comments'      => __( 'Allow users to moderate comments through the “Comments” menu. But it also requires edit_posts capability.', 'leira-roles' ),
+			'promote_users'          => __( 'Allow users to promote users within the site.', 'leira-roles' ),
+			'publish_pages'          => __( 'Enables permission to publish pages.', 'leira-roles' ),
+			'publish_posts'          => __( 'Allows access to publish posts, including XML - RPC publish', 'leira-roles' ),
+			'read'                   => __( 'Allows access to menu items “Dashboard” and “Users > Your Profile”.', 'leira-roles' ),
+			'read_private_pages'     => __( 'Enables permission to read pages marked as private.', 'leira-roles' ),
+			'read_private_posts'     => __( 'Enables permission to read posts marked as private.', 'leira-roles' ),
+			'remove_users'           => __( 'Not used', 'leira-roles' ),
+			'switch_themes'          => __( 'Allows access to “Appearance” and “Appearance > Theme Editor” menus.', 'leira-roles' ),
+			'unfiltered_html'        => __( 'Allows the user to post any HTML data including JavaScript. In WordPress Multisite, only Super Admins have this capability', 'leira-roles' ),
+			'unfiltered_upload'      => __( 'This capability is not available to any role by default ( including Super Admins). The capability needs to be enabled by defining the following constant in wp-config. define( ‘ALLOW_UNFILTERED_UPLOADS’ )', 'leira-roles' ),
+			'update_core'            => __( 'Allows to upgrade WordPress core.', 'leira-roles' ),
+			'update_plugins'         => __( 'Allow users to install new plugins.', 'leira-roles' ),
+			'update_themes'          => __( 'Allows access to update themes.', 'leira-roles' ),
+			'upload_files'           => __( 'Enables permission to “Media” and “Media > Add New”.', 'leira-roles' ),
+			'edit_comment'           => __( 'edit_comment is a meta capability . It gets re-mapped to another meta capability.', 'leira-roles' ),
+			'add_users'              => __( 'Not used', 'leira-roles' )
+		);
+	}
+
+	/**
 	 * Returns an array of all the available roles.
 	 * This method is used to show the roles list table.
 	 *
@@ -496,69 +575,7 @@ class Leira_Roles_Manager{
 	 * @return array
 	 */
 	public function get_system_capabilities( $default = false ) {
-		$capabilities = array(
-			'activate_plugins',
-			'create_users',
-			'delete_others_pages',
-			'delete_others_posts',
-			'delete_pages',
-			'delete_plugins',
-			'delete_posts',
-			'delete_private_pages',
-			'delete_private_posts',
-			'delete_published_pages',
-			'delete_published_posts',
-			'delete_themes',
-			'delete_users',
-			'edit_dashboard',
-			'edit_files',
-			'edit_others_pages',
-			'edit_others_posts',
-			'edit_pages',
-			'edit_plugins',
-			'edit_posts',
-			'edit_private_pages',
-			'edit_private_posts',
-			'edit_published_pages',
-			'edit_published_posts',
-			'edit_theme_options',
-			'edit_themes',
-			'edit_users',
-			'export',
-			'import',
-			'install_plugins',
-			'install_themes',
-			'level_0',
-			'level_1',
-			'level_2',
-			'level_3',
-			'level_4',
-			'level_5',
-			'level_6',
-			'level_7',
-			'level_8',
-			'level_9',
-			'level_10',
-			'list_users',
-			'manage_categories',
-			'manage_links',
-			'manage_options',
-			'moderate_comments',
-			'promote_users',
-			'publish_pages',
-			'publish_posts',
-			'read',
-			'read_private_pages',
-			'read_private_posts',
-			'remove_users',
-			'switch_themes',
-			'unfiltered_html',
-			'unfiltered_upload',
-			'update_core',
-			'update_plugins',
-			'update_themes',
-			'upload_files'
-		);
+		$capabilities = array_keys( $this->system_capabilities );
 
 		$capabilities = array_fill_keys( $capabilities, $default );
 
@@ -670,5 +687,23 @@ class Leira_Roles_Manager{
 		}
 
 		return true;
+	}
+
+	/**
+	 * Gets a description for the capability
+	 *
+	 * @param string $capability The capability
+	 *
+	 * @return string The description for the provided capability
+	 */
+	public function get_capability_description( $capability ) {
+		$description = '';
+		if ( isset( $this->system_capabilities[ $capability ] ) ) {
+			$description = $this->system_capabilities[ $capability ];
+		}
+
+		$description = apply_filters( 'leira-roles-get-capability-description', $description, $capability );
+
+		return $description;
 	}
 }

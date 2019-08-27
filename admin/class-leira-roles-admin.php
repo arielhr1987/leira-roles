@@ -399,7 +399,7 @@ class Leira_Roles_Admin{
 							<?php $table->display(); //Display the table ?>
                         </form>
                         <div class="form-wrap edit-term-notes">
-                            <p>Description here.</p>
+                            <p><?php __( 'Description here.', 'leira-roles' ) ?> </p>
                         </div>
                     </div>
                 </div>
@@ -444,6 +444,22 @@ class Leira_Roles_Admin{
 
 		//Add screen options
 		add_screen_option( 'per_page', array( 'default' => 999 ) );
+
+		//Add Help tabs
+		$this->add_screen_help_tabs();
+
+		get_current_screen()->add_help_tab(
+			array(
+				'id'      => 'screen-content',
+				'title'   => __( 'Screen Content', 'leira-roles' ),
+				'content' =>
+					'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
+					'<ul>' .
+					'<li>' . __( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab.', 'leira-roles' ) . '</li>' .
+					'<li>' . __( 'The <strong>Search Roles</strong> button will search for roles containing the text you type in the box.', 'leira-roles' ) . '</li>' .
+					'</ul>'
+			)
+		);
 	}
 
 	/**
@@ -546,6 +562,20 @@ class Leira_Roles_Admin{
 
 		//Add screen options
 		add_screen_option( 'per_page', array( 'default' => 999 ) );
+
+		$this->add_screen_help_tabs();
+
+		get_current_screen()->add_help_tab(
+			array(
+				'id'      => 'screen-content',
+				'title'   => __( 'Screen Content', 'leira-roles' ),
+				'content' =>
+					'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
+					'<ul>' .
+					'<li>' . __( 'The <strong>Search Capabilities</strong> button will search for capabilities containing the text you type in the box.', 'leira-roles' ) . '</li>' .
+					'</ul>'
+			)
+		);
 	}
 
 	/**
@@ -567,5 +597,91 @@ class Leira_Roles_Admin{
 		$actions = Leira_Roles::instance()->get_loader()->get( 'actions' );
 
 		$actions->handle();
+	}
+
+	/**
+	 * Add help tabs sections to plugin pages
+	 */
+	public function add_screen_help_tabs() {
+		//Add screen Help tabs
+		get_current_screen()->add_help_tab(
+			array(
+				'id'      => 'overview',
+				'title'   => __( 'Overview', 'leira-roles' ),
+				'content' =>
+					'<p>' . __( 'WordPress uses a concept of Roles, designed to give the site owner the ability to control what users can and cannot do within the site.', 'leira-roles' ) . '</p>' .
+					'<p>' . __( 'A site owner can manage the user access to such tasks as writing and editing posts, creating Pages, creating categories, moderating comments, managing plugins, managing themes, and managing other users, by assigning a specific role to each of the users.', 'leira-roles' ) . '</p>' .
+					'<p>' . __( 'WordPress has six pre-defined roles: Super Admin, Administrator, Editor, Author, Contributor and Subscriber. Each role is allowed to perform a set of tasks called Capabilities.', 'leira-roles' ) . '</p>' .
+					'<p>' . __( 'There are many capabilities including “publish_posts“, “moderate_comments“, and “edit_users“. A default set of capabilities is pre-assigned to each role, but other capabilities can be assigned or removed.', 'leira-roles' ) . '</p>' .
+					( is_multisite() ? ( '<p>' . __( 'The Super Admin role allows a user to perform all possible capabilities. Each of the other roles has a decreasing number of allowed capabilities. For instance, the Subscriber role has just the “read” capability. One particular role should not be considered to be senior to another role. Rather, consider that roles define the user’s responsibilities within the site.', 'leira-roles' ) . '</p>' ) : '' ) .
+					'',
+			)
+		);
+		get_current_screen()->add_help_tab(
+			array(
+				'id'      => 'roles',
+				'title'   => __( 'Roles', 'leira-roles' ),
+				'content' =>
+					'<p>' . __( 'Upon installing WordPress, an Administrator account is automatically created.', 'leira-roles' ) . '</p>' .
+					( ! is_multisite() ? ( '<p>' . __( 'The default role for new users can be set in: ', 'leira-roles' ) . sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), __( 'General Settings', 'leira-roles' ) ) . '</p>' ) : '' ) .
+					'<p>' . __( 'WordPress comes with five predefined roles:', 'leira-roles' ) . '</p>' .
+					'<ul>' .
+					( is_multisite() ? ( '<li>' . sprintf( '<strong>%s</strong>', __( 'Super Admin', 'leira-roles' ) ) . __( ' : somebody with access to the site network administration features and all other features.', 'leira-roles' ) . '</li>' ) : '' ) .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘administrator’)', __( 'Administrator', 'leira-roles' ) ) . __( ' : somebody who has access to all the administration features within a single site.', 'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘editor’)', __( 'Editor', 'leira-roles' ) ) . __( ' : somebody who can publish and manage posts including the posts of other users.', 'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘author’)', __( 'Author', 'leira-roles' ) ) . __( ' : somebody who can publish and manage their own posts.', 'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘contributor’)', __( 'Contributor', 'leira-roles' ) ) . __( ' : somebody who can write and manage their own posts but cannot publish them.', 'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘subscriber’)', __( 'Subscriber', 'leira-roles' ) ) . __( ' : somebody who can only manage their profile.', 'leira-roles' ) . '</li>' .
+					'</ul>' .
+					'',
+			)
+		);
+
+		$capabilities        = '';
+		$system_capabilities = Leira_Roles::instance()->get_loader()->get( 'manager' )->system_capabilities;
+		foreach ( $system_capabilities as $capability => $description ) {
+			$capabilities .= sprintf( '<li><strong>%s</strong>: %s</li>', $capability, $description );
+		}
+
+		get_current_screen()->add_help_tab(
+			array(
+				'id'      => 'capabilities',
+				'title'   => __( 'Capabilities', 'leira-roles' ),
+				'content' =>
+					'<p>' . __( 'Below is a list with all WordPress capabilities.', 'leira-roles' ) . '</p>' .
+					'<div style="max-height: 300px; margin-bottom: 5px">' .
+					'<ul>' .
+					$capabilities .
+					'</ul>' .
+					'</div>' .
+					'',
+			)
+		);
+
+		get_current_screen()->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:', 'leira-roles' ) . '</strong></p>' .
+			'<p><a href="https://wordpress.org/support/article/roles-and-capabilities/">' . __( 'Roles and Capabilities', 'leira-roles' ) . '</a></p>' .
+			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Support', 'leira-roles' ) . '</a></p>' . //TODO: Change to github plugin page
+			'<p><a href="https://github.com/arielhr1987/leira-roles/issues">' . __( 'Report an issue', 'leira-roles' ) . '</a></p>' .
+			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Development', 'leira-roles' ) . '</a></p>'
+		);
+	}
+
+	/**
+	 * Add help roles capabilities
+	 */
+	public function load_users_page() {
+
+		//TODO: Improve texts
+		get_current_screen()->add_help_tab( array(
+			'id'       => 'leira-roles-capabilities',
+			'title'    => __( 'Capabilities', 'leira-roles' ),
+			'content'  =>
+				'<p>' . __( 'The <strong>Capabilities</strong> button will help you to allow or revoke specific capabilities for the user.', 'leira-roles' ) . '</p>' .
+				'<p>' . __( 'Be aware that if you revoke your user capabilities, you might experience some issues.', 'leira-roles' ) . '</p>' .
+				'',
+			'priority' => 100
+		) );
+
 	}
 }

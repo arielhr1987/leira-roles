@@ -215,6 +215,8 @@ class Leira_Roles{
 			//for future versions
 			//$this->loader->add_action( 'wp_ajax_leira-roles-add-capability', $actions, 'handle' );
 
+			$this->loader->add_action( 'load-users.php', $plugin_admin, 'load_users_page' );
+
 
 		}
 	}
