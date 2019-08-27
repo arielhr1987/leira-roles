@@ -399,7 +399,7 @@ class Leira_Roles_Admin{
 							<?php $table->display(); //Display the table ?>
                         </form>
                         <div class="form-wrap edit-term-notes">
-                            <p><?php __( 'Description here.', 'leira-roles' ) ?> </p>
+                            <p><?php __( 'Description here.', 'leira-roles' ) ?></p>
                         </div>
                     </div>
                 </div>
