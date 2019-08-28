@@ -4,7 +4,7 @@ Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member
 Requires at least: 4.1
 Tested up to: 5.2.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -65,5 +65,11 @@ No, Wordpress relay on those capabilities to work properly.
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix bug cloning a role
+* Improve list table sort
+* Improve capabilities sort
+* New assets and banner for the plugin page
+
 = 1.0.0 =
-* The first plugin release\
+* The first plugin release
