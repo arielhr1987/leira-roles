@@ -268,10 +268,15 @@ class Leira_Roles_Actions{
 			$count_users = count_users();
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
+			$all_capabilities       = $this->manager->get_all_capabilities();
+			$capabilities           = empty( $detail['capabilities'] ) ? array() : $detail['capabilities'];
+			$capabilities           = array_merge( $all_capabilities, $capabilities );
 			$admin->get_roles_list_table()->single_row( array(
-				'role'  => $result->name,
-				'name'  => $this->manager->get_role_name( $result->name ),
-				'count' => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0
+				'role'         => $result->name,
+				'name'         => $this->manager->get_role_name( $result->name ),
+				'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
+				'capabilities' => $capabilities,
+				'is_system'    => $this->manager->is_system_role( $result->name )
 			) );
 			$out = ob_get_clean();
 

@@ -194,7 +194,7 @@ class Leira_Roles_List_Table extends WP_List_Table{
 				if ( empty( $value ) ) {
 					$value = new stdClass();
 				} else {
-					ksort( $value );
+					ksort( $value, SORT_NATURAL | SORT_FLAG_CASE );
 				}
 				$value = json_encode( $value );
 			}
@@ -362,7 +362,8 @@ class Leira_Roles_List_Table extends WP_List_Table{
 			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( $_REQUEST['order'] ) : 'asc'; //If no order, default to asc
 
 			//$result = strcmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case sensitive
-			$result = strcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case insensitive
+			//$result = strcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case insensitive
+			$result = strnatcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case insensitive, natural order
 
 			return ( $order === 'asc' ) ? $result : - $result; //Send final sort direction to usort
 		}

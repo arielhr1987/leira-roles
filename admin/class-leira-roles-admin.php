@@ -249,7 +249,7 @@ class Leira_Roles_Admin{
 				}, ARRAY_FILTER_USE_KEY );
 				$capabilities = array_merge( $capabilities, $allcaps );
 			}
-			ksort( $capabilities );
+			ksort( $capabilities, SORT_NATURAL | SORT_FLAG_CASE );
 			$capabilities = json_encode( $capabilities );
 
 			$arr   = array(
