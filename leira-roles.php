@@ -16,7 +16,7 @@
  * Plugin Name:       Roles & Capabilities
  * Plugin URI:        https://github.com/arielhr1987/leira-roles
  * Description:       Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities and also assign capabilities to specific users.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Ariel
  * Author URI:        https://github.com/arielhr1987
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'LEIRA_ROLES_VERSION', '1.0.1' );
+define( 'LEIRA_ROLES_VERSION', '1.0.2' );
 
 /**
  * The code that runs during plugin activation.
