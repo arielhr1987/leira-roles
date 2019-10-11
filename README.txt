@@ -30,7 +30,7 @@ With the plugin you will be able to:
 
 == Installation ==
 
-1. Upload `leira-roles.php` to the `/wp-content/plugins/` directory
+1. Upload `leira-roles` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Happy coding :)
 
