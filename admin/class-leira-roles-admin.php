@@ -241,11 +241,11 @@ class Leira_Roles_Admin{
 			$aria_label = esc_attr( sprintf( __( 'Quick edit %s capabilities', 'leira-roles' ), $username ) );
 			$label      = __( 'Capabilities', 'leira-roles' );
 
-			$capabilities = Leira_Roles::instance()->get_loader()->get( 'manager' )->get_all_capabilities();
+			$capabilities = leira_roles()->manager->get_all_capabilities();
 			if ( isset( $user->allcaps ) ) {
 				//remove roles
 				$allcaps      = array_filter( $user->allcaps, function( $cap ) {
-					return ! Leira_Roles::instance()->get_loader()->get( 'manager' )->is_role( $cap );
+					return ! leira_roles()->manager->is_role( $cap );
 				}, ARRAY_FILTER_USE_KEY );
 				$capabilities = array_merge( $capabilities, $allcaps );
 			}
@@ -594,7 +594,7 @@ class Leira_Roles_Admin{
 	 */
 	public function handle_actions() {
 
-		$actions = Leira_Roles::instance()->get_loader()->get( 'actions' );
+		$actions = leira_roles()->actions;
 
 		$actions->handle();
 	}
@@ -638,7 +638,7 @@ class Leira_Roles_Admin{
 		);
 
 		$capabilities        = '';
-		$system_capabilities = Leira_Roles::instance()->get_loader()->get( 'manager' )->system_capabilities;
+		$system_capabilities = leira_roles()->manager->system_capabilities;
 		foreach ( $system_capabilities as $capability => $description ) {
 			$capabilities .= sprintf( '<li><strong>%s</strong>: %s</li>', $capability, $description );
 		}

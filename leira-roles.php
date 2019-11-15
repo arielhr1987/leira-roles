@@ -13,16 +13,16 @@
  * @package           Leira_Roles
  *
  * @wordpress-plugin
- * Plugin Name:       Roles & Capabilities
- * Plugin URI:        https://github.com/arielhr1987/leira-roles
- * Description:       Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities and also assign capabilities to specific users.
- * Version:           1.0.2
- * Author:            Ariel
- * Author URI:        https://github.com/arielhr1987
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       leira-roles
- * Domain Path:       /languages
+ * Plugin Name:     Roles & Capabilities
+ * Plugin URI:      https://github.com/arielhr1987/leira-roles
+ * Description:     Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities and also assign capabilities to specific users.
+ * Version:         1.1.0
+ * Author:          Ariel
+ * Author URI:      https://leira.dev
+ * License:         GPL-2.0+
+ * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:     leira-roles
+ * Domain Path:     /languages
  */
 
 // If this file is called directly, abort.
@@ -65,12 +65,24 @@ register_deactivation_hook( __FILE__, 'deactivate_leira_roles' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-leira-roles.php';
 
 /**
+ * Helper method to get the main instance of the plugin
+ *
+ * @return Leira_Roles
+ * @since    1.1.0
+ * @access   global
+ */
+function leira_roles() {
+	return Leira_Roles::instance();
+}
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    1.1.0
  */
-Leira_Roles::instance()->run();
+leira_roles()->run();
+

@@ -41,7 +41,7 @@ class Leira_Roles_Actions{
 	 * Leira_Roles_Actions constructor.
 	 */
 	public function __construct() {
-		$this->manager = Leira_Roles::instance()->get_loader()->get( 'manager' );
+		$this->manager = leira_roles()->manager;
 	}
 
 	/**
@@ -197,14 +197,18 @@ class Leira_Roles_Actions{
 			/**
 			 * The role row
 			 */
-			$admin       = Leira_Roles::instance()->get_loader()->get( 'admin' );
 			$count_users = count_users();
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
-			$admin->get_roles_list_table()->single_row( array(
-				'role'  => $result->name,
-				'name'  => $this->manager->get_role_name( $result->name ),
-				'count' => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0
+			$all_capabilities       = $this->manager->get_all_capabilities();
+			$capabilities           = isset( $result->capabilities ) ? $result->capabilities : array();
+			$capabilities           = array_merge( $all_capabilities, $capabilities );
+			leira_roles()->admin->get_roles_list_table()->single_row( array(
+				'role'         => $result->name,
+				'name'         => $this->manager->get_role_name( $result->name ),
+				'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
+				'capabilities' => $capabilities,
+				'is_system'    => $this->manager->is_system_role( $result->name )
 			) );
 			$out = ob_get_clean();
 
@@ -264,12 +268,12 @@ class Leira_Roles_Actions{
 			/**
 			 * The role row
 			 */
-			$admin       = Leira_Roles::instance()->get_loader()->get( 'admin' );
+			$admin       = leira_roles()->admin;
 			$count_users = count_users();
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
 			$all_capabilities       = $this->manager->get_all_capabilities();
-			$capabilities           = empty( $detail['capabilities'] ) ? array() : $detail['capabilities'];
+			$capabilities           = isset( $result->capabilities ) ? $result->capabilities : array();
 			$capabilities           = array_merge( $all_capabilities, $capabilities );
 			$admin->get_roles_list_table()->single_row( array(
 				'role'         => $result->name,
@@ -439,7 +443,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Output the row table with the new updated data
 		 */
-		$admin                  = Leira_Roles::instance()->get_loader()->get( 'admin' );
+		$admin                  = leira_roles()->admin;
 		$GLOBALS['hook_suffix'] = '';//avoid notice error
 		$table                  = $admin->get_roles_list_table();
 		$count                  = count_users();
@@ -593,7 +597,7 @@ class Leira_Roles_Actions{
 			/**
 			 * The capability row
 			 */
-			$admin = Leira_Roles::instance()->get_loader()->get( 'admin' );
+			$admin = leira_roles()->admin;
 			ob_start();
 			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
 			$admin->get_capabilies_list_table()->single_row( array(

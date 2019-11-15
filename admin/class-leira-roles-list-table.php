@@ -31,7 +31,7 @@ class Leira_Roles_List_Table extends WP_List_Table{
 			'ajax'     => true        //does this table support ajax?
 		) );
 
-		$this->manager = Leira_Roles::instance()->get_loader()->get( 'manager' );
+		$this->manager = leira_roles()->manager;
 
 	}
 

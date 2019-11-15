@@ -3,8 +3,8 @@ Contributors: arielhr1987, jlcd0894
 Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member
 Requires at least: 4.1
-Tested up to: 5.2.2
-Stable tag: 1.0.2
+Tested up to: 5.3
+Stable tag: 1.1.0
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,11 @@ No, Wordpress relay on those capabilities to work properly.
 9. Capabilities list page bulk actions.
 
 == Changelog ==
+
+= 1.1.0 =
+* Plugin refactored
+* Fix bug creating new role, capabilities are show now upon role creation in the role list
+* Fix bug cloning role, capabilities are show now upon role cloning in the role list
 
 = 1.0.2 =
 * Adding banners to assets
