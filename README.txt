@@ -65,6 +65,9 @@ No, Wordpress relay on those capabilities to work properly.
 
 == Changelog ==
 
+= 1.1.1 =
+* Adding spanish language
+
 = 1.1.0 =
 * Plugin refactored
 * Fix bug creating new role, capabilities are show now upon role creation in the role list

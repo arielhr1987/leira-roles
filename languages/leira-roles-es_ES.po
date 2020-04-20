@@ -2,53 +2,58 @@
 # This file is distributed under the same license as the Roles & Capabilities plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Roles & Capabilities 1.1.0\n"
+"Project-Id-Version: leira-roles\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/leira-roles\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2020-04-18T04:08:56+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"PO-Revision-Date: 2020-04-18 00:02-0700\n"
+"X-Generator: Poedit 2.3\n"
 "X-Domain: leira-roles\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: leira-roles\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: leira-roles.pot\n"
+"Language: es_ES\n"
+"Last-Translator: \n"
 
 #. Plugin Name of the plugin
 msgid "Roles & Capabilities"
-msgstr ""
+msgstr "Roles y capacidades"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/arielhr1987/leira-roles"
-msgstr ""
+msgstr "https://github.com/arielhr1987/leira-roles"
 
 #. Description of the plugin
 msgid "Roles & Capabilities is a plugin that will allows you to manage user roles and capabilities and also assign capabilities to specific users."
-msgstr ""
+msgstr "Roles & Capacidades es un plugin que le permitirá administrar roles y capacidades de usuario y también asignar capacidades a usuarios específicos."
 
 #. Author of the plugin
 msgid "Ariel"
-msgstr ""
+msgstr "Ariel"
 
 #. Author URI of the plugin
 msgid "https://leira.dev"
-msgstr ""
+msgstr "https://leira.dev"
 
 #: admin/class-leira-roles-actions.php:104
 msgid "Dismiss this notice."
-msgstr ""
+msgstr "Descartar esta notificación."
 
 #: admin/class-leira-roles-actions.php:131
 #: admin/class-leira-roles-actions.php:386
 #: admin/class-leira-roles-actions.php:470
 msgid "You do not have sufficient permissions to perform this action."
-msgstr ""
+msgstr "No tiene permisos suficientes para realizar esta acción."
 
 #: admin/class-leira-roles-actions.php:146
 #: admin/class-leira-roles-actions.php:395
 #: admin/class-leira-roles-actions.php:479
 msgid "Your link has expired, refresh the page and try again."
-msgstr ""
+msgstr "Tu enlace ha expirado, actualiza la página e inténtalo de nuevo."
 
 #: admin/class-leira-roles-actions.php:173
 #: admin/class-leira-roles-actions.php:245
@@ -56,406 +61,393 @@ msgstr ""
 #: admin/class-leira-roles-actions.php:408
 #: admin/class-leira-roles-actions.php:564
 msgid "Missing parameters, refresh the page and try again."
-msgstr ""
+msgstr "Faltan parámetros, actualiza la página y vuelve a intentarlo."
 
 #: admin/class-leira-roles-actions.php:192
 #: admin/class-leira-roles-actions.php:263
 msgid "Something went wrong, the system wasn't able to create the role, refresh the page and try again."
-msgstr ""
+msgstr "Algo salió mal, el sistema no pudo crear el rol, actualice la página e inténtelo de nuevo."
 
 #: admin/class-leira-roles-actions.php:300
 msgid "Undo"
-msgstr ""
+msgstr "Deshacer"
 
 #: admin/class-leira-roles-actions.php:356
 msgid "Deleting a system role is not allowed."
-msgstr ""
+msgstr "No se permite eliminar un rol de sistema."
 
 #: admin/class-leira-roles-actions.php:428
 msgid "The provided new role, already exist. Use an other role identifier."
-msgstr ""
+msgstr "El nuevo rol proporcionado ya existe. Utilice otro identificador para el rol."
 
 #: admin/class-leira-roles-actions.php:439
 msgid "Something went wrong, the system wasn't able to update the role, refresh the page and try again."
-msgstr ""
+msgstr "Algo salió mal, el sistema no pudo actualizar el rol, actualice la página e inténtelo de nuevo."
 
 #: admin/class-leira-roles-actions.php:489
 msgid "User not found, refresh the page and try again."
-msgstr ""
+msgstr "Usuario no encontrado, actualiza la página e inténtalo de nuevo."
 
 #: admin/class-leira-roles-actions.php:505
 msgid "You are not allowed to edit other site users."
-msgstr ""
+msgstr "No tienes permisos para editar otros usuarios del sitio."
 
 #: admin/class-leira-roles-actions.php:528
 msgid "Something went wrong, the system wasn't able to save the user capabilities, refresh the page and try again."
-msgstr ""
+msgstr "Algo salió mal, el sistema no pudo guardar las capacidades del usuario, actualice la página e inténtelo de nuevo."
 
 #: admin/class-leira-roles-actions.php:573
 msgid "You can't add a capability with the same identifier as a role, use other capability identifier."
-msgstr ""
+msgstr "No se puede agregar una capacidad con el mismo identificador que un rol, use otro identificador para la capacidad."
 
 #: admin/class-leira-roles-actions.php:592
 msgid "Something went wrong, the system wasn't able to create the capability, refresh the page and try again."
-msgstr ""
+msgstr "Algo salió mal, el sistema no pudo crear la capacidad, actualice la página e inténtelo de nuevo."
 
 #: admin/class-leira-roles-actions.php:644
 msgid "Select valid capabilities and try again."
-msgstr ""
+msgstr "Seleccione capacidades válidas y vuelva a intentarlo."
 
 #: admin/class-leira-roles-actions.php:654
 msgid "Something went wrong, the system wasn't able to delete the selected capabilities, refresh the page and try again."
-msgstr ""
+msgstr "Algo salió mal, el sistema no pudo eliminar las capacidades seleccionadas, actualice la página e inténtelo de nuevo."
 
-#: admin/class-leira-roles-admin.php:173
-#: admin/class-leira-roles-admin.php:174
-#: admin/class-leira-roles-admin.php:346
-#: admin/class-leira-roles-admin.php:623
+#: admin/class-leira-roles-admin.php:173 admin/class-leira-roles-admin.php:174
+#: admin/class-leira-roles-admin.php:346 admin/class-leira-roles-admin.php:623
 msgid "Roles"
-msgstr ""
+msgstr "Roles"
 
-#: admin/class-leira-roles-admin.php:187
-#: admin/class-leira-roles-admin.php:188
-#: admin/class-leira-roles-admin.php:242
-#: admin/class-leira-roles-admin.php:291
-#: admin/class-leira-roles-admin.php:474
-#: admin/class-leira-roles-admin.php:649
+#: admin/class-leira-roles-admin.php:187 admin/class-leira-roles-admin.php:188
+#: admin/class-leira-roles-admin.php:242 admin/class-leira-roles-admin.php:291
+#: admin/class-leira-roles-admin.php:474 admin/class-leira-roles-admin.php:649
 #: admin/class-leira-roles-admin.php:678
 #: admin/class-leira-roles-capabilities-list-table.php:443
 #: admin/class-leira-roles-list-table.php:444
 msgid "Capabilities"
-msgstr ""
+msgstr "Capacidades"
 
 #: admin/class-leira-roles-admin.php:241
 msgid "Quick edit %s capabilities"
-msgstr ""
+msgstr "Edición rápida %s capacidades"
 
 #: admin/class-leira-roles-admin.php:287
 msgid "Edit Capabilities"
-msgstr ""
+msgstr "Editar capacidades"
 
-#: admin/class-leira-roles-admin.php:296
-#: admin/class-leira-roles-admin.php:490
+#: admin/class-leira-roles-admin.php:296 admin/class-leira-roles-admin.php:490
 #: admin/class-leira-roles-capabilities-list-table.php:448
 #: admin/class-leira-roles-list-table.php:449
 msgid "Search Capabilities"
-msgstr ""
+msgstr "Buscar Capacidades"
 
 #: admin/class-leira-roles-admin.php:300
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: admin/class-leira-roles-admin.php:305
 #: admin/class-leira-roles-capabilities-list-table.php:453
 #: admin/class-leira-roles-list-table.php:458
 msgid "No capabilities found."
-msgstr ""
+msgstr "No se encontraron capacidades."
 
 #: admin/class-leira-roles-admin.php:315
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: admin/class-leira-roles-admin.php:319
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
-#: admin/class-leira-roles-admin.php:342
-#: admin/class-leira-roles-admin.php:421
-#: admin/class-leira-roles-admin.php:470
-#: admin/class-leira-roles-admin.php:543
+#: admin/class-leira-roles-admin.php:342 admin/class-leira-roles-admin.php:421
+#: admin/class-leira-roles-admin.php:470 admin/class-leira-roles-admin.php:543
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "No tiene permisos suficientes para acceder a esta página."
 
 #. translators: %s: search keywords
-#: admin/class-leira-roles-admin.php:351
-#: admin/class-leira-roles-admin.php:479
+#: admin/class-leira-roles-admin.php:351 admin/class-leira-roles-admin.php:479
 msgid "Search results for &#8220;%s&#8221;"
-msgstr ""
+msgstr "Resultados de búsqueda para &#8220;%s&#8221;"
 
 #: admin/class-leira-roles-admin.php:362
 msgid "Search Roles"
-msgstr ""
+msgstr "Buscar roles"
 
-#: admin/class-leira-roles-admin.php:368
-#: admin/class-leira-roles-admin.php:390
+#: admin/class-leira-roles-admin.php:368 admin/class-leira-roles-admin.php:390
 msgid "Add New Role"
-msgstr ""
+msgstr "Añadir nuevo rol"
 
 #: admin/class-leira-roles-admin.php:377
 #: admin/class-leira-roles-list-table.php:70
 #: admin/class-leira-roles-list-table.php:425
 msgid "Role"
-msgstr ""
+msgstr "Rol"
 
 #: admin/class-leira-roles-admin.php:380
 msgid "A unique identifier for the new role."
-msgstr ""
+msgstr "Un identificador único para el nuevo rol."
 
 #: admin/class-leira-roles-admin.php:383
 #: admin/class-leira-roles-capabilities-list-table.php:434
 #: admin/class-leira-roles-list-table.php:71
 #: admin/class-leira-roles-list-table.php:435
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: admin/class-leira-roles-admin.php:385
 msgid "The name is how it appears on your site."
-msgstr ""
+msgstr "El nombre es como aparece en su sitio."
 
 #: admin/class-leira-roles-admin.php:402
 msgid "Description here."
-msgstr ""
+msgstr "Descripción aquí."
 
-#: admin/class-leira-roles-admin.php:454
-#: admin/class-leira-roles-admin.php:571
+#: admin/class-leira-roles-admin.php:454 admin/class-leira-roles-admin.php:571
 msgid "Screen Content"
-msgstr ""
+msgstr "Contenido de la pantalla"
 
-#: admin/class-leira-roles-admin.php:456
-#: admin/class-leira-roles-admin.php:573
+#: admin/class-leira-roles-admin.php:456 admin/class-leira-roles-admin.php:573
 msgid "You can customize the display of this screen&#8217;s contents in a number of ways:"
-msgstr ""
+msgstr "Puede personalizar el contenido de esta pantalla&#8217;s de varias maneras:"
 
 #: admin/class-leira-roles-admin.php:458
 msgid "You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab."
-msgstr ""
+msgstr "Puedes ocultar/mostrar columnas basado en tus necesidades y decidir cuántos roles listar por pantalla usando la pestaña <strong>Opciones de pantalla</strong>."
 
 #: admin/class-leira-roles-admin.php:459
 msgid "The <strong>Search Roles</strong> button will search for roles containing the text you type in the box."
-msgstr ""
+msgstr "El botón <strong>Buscar rol</strong> buscará los roles cuyo nombre contengan el texto que escriba en el cuadro."
 
-#: admin/class-leira-roles-admin.php:496
-#: admin/class-leira-roles-admin.php:512
+#: admin/class-leira-roles-admin.php:496 admin/class-leira-roles-admin.php:512
 msgid "Add New Capability"
-msgstr ""
+msgstr "Añadir nueva capacidad"
 
 #: admin/class-leira-roles-admin.php:505
 #: admin/class-leira-roles-capabilities-list-table.php:424
 msgid "Capability"
-msgstr ""
+msgstr "Capacidad"
 
 #: admin/class-leira-roles-admin.php:508
 msgid "A unique identifier for the new capability."
-msgstr ""
+msgstr "Un identificador único para la nueva capacidad."
 
 #: admin/class-leira-roles-admin.php:524
 msgid "Built-in system capabilities are not deletable."
-msgstr ""
+msgstr "Las capacidades del sistema no son eliminables."
 
 #: admin/class-leira-roles-admin.php:575
 msgid "The <strong>Search Capabilities</strong> button will search for capabilities containing the text you type in the box."
-msgstr ""
+msgstr "El botón <strong>Buscar capacidad</strong> buscará aquellas capacidades cuyo nombre contenga el texto que escriba en el cuadro."
 
 #: admin/class-leira-roles-admin.php:610
 msgid "Overview"
-msgstr ""
+msgstr "Resúmen"
 
 #: admin/class-leira-roles-admin.php:612
 msgid "WordPress uses a concept of Roles, designed to give the site owner the ability to control what users can and cannot do within the site."
-msgstr ""
+msgstr "WordPress utiliza un concepto de Roles, diseñado para dar al propietario del sitio la capacidad de controlar lo que los usuarios pueden y no pueden hacer dentro del sitio."
 
 #: admin/class-leira-roles-admin.php:613
 msgid "A site owner can manage the user access to such tasks as writing and editing posts, creating Pages, creating categories, moderating comments, managing plugins, managing themes, and managing other users, by assigning a specific role to each of the users."
-msgstr ""
+msgstr "Un propietario del sitio puede administrar el acceso del usuario a tareas tales como escribir y editar artículos, crear páginas, crear categorías, moderar comentarios, administrar plugins, administrar temas y administrar otros usuarios, asignando un rol específico a cada uno de los usuarios."
 
 #: admin/class-leira-roles-admin.php:614
 msgid "WordPress has six pre-defined roles: Super Admin, Administrator, Editor, Author, Contributor and Subscriber. Each role is allowed to perform a set of tasks called Capabilities."
-msgstr ""
+msgstr "WordPress tiene seis roles predefinidos: Super administrador, administrador, editor, autor, colaborador y suscriptor. Cada rol tiene permitido realizar un conjunto de tareas llamadas Capacidades."
 
 #: admin/class-leira-roles-admin.php:615
 msgid "There are many capabilities including “publish_posts“, “moderate_comments“, and “edit_users“. A default set of capabilities is pre-assigned to each role, but other capabilities can be assigned or removed."
-msgstr ""
+msgstr "Hay muchas capacidades incluyendo “publish_posts“, “moderate_comments“, y “edit_users“. Un conjunto predeterminado de capacidades está pre-asignado a cada rol, pero otras capacidades pueden ser asignadas o eliminadas."
 
 #: admin/class-leira-roles-admin.php:616
 msgid "The Super Admin role allows a user to perform all possible capabilities. Each of the other roles has a decreasing number of allowed capabilities. For instance, the Subscriber role has just the “read” capability. One particular role should not be considered to be senior to another role. Rather, consider that roles define the user’s responsibilities within the site."
-msgstr ""
+msgstr "El rol Super administrador permite a un usuario tener todas las capacidades posibles. Cada uno de los otros roles tiene un número decreciente de capacidades permitidas. Por ejemplo, el Subscriptor tiene sólo la capacidad de “leer”. Un rol particular no debe ser considerado como superior a otro rol. Más bien, considere que los roles definen las responsabilidades del usuario dentro del sitio."
 
 #: admin/class-leira-roles-admin.php:625
 msgid "Upon installing WordPress, an Administrator account is automatically created."
-msgstr ""
+msgstr "Al instalar WordPress, se crea automáticamente una cuenta de administrador."
 
 #: admin/class-leira-roles-admin.php:626
 msgid "The default role for new users can be set in: "
-msgstr ""
+msgstr "El rol por defecto para los nuevos usuarios puede establecerse en: "
 
 #: admin/class-leira-roles-admin.php:626
 msgid "General Settings"
-msgstr ""
+msgstr "Configuración General"
 
 #: admin/class-leira-roles-admin.php:627
 msgid "WordPress comes with five predefined roles:"
-msgstr ""
+msgstr "WordPress viene con cinco roles predefinidos:"
 
 #: admin/class-leira-roles-admin.php:629
 msgid "Super Admin"
-msgstr ""
+msgstr "Super Administrador"
 
 #: admin/class-leira-roles-admin.php:629
 msgid " : somebody with access to the site network administration features and all other features."
-msgstr ""
+msgstr " : alguien con acceso a las funciones de administración de red del sitio y todas las demás características."
 
 #: admin/class-leira-roles-admin.php:630
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #: admin/class-leira-roles-admin.php:630
 msgid " : somebody who has access to all the administration features within a single site."
-msgstr ""
+msgstr " : alguien que tiene acceso a todas las funciones de administración dentro de un único sitio."
 
 #: admin/class-leira-roles-admin.php:631
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #: admin/class-leira-roles-admin.php:631
 msgid " : somebody who can publish and manage posts including the posts of other users."
-msgstr ""
+msgstr " : alguien que puede publicar y administrar artículos incluyendo los de otros usuarios."
 
 #: admin/class-leira-roles-admin.php:632
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: admin/class-leira-roles-admin.php:632
 msgid " : somebody who can publish and manage their own posts."
-msgstr ""
+msgstr " : alguien que puede publicar y administrar sus propios artículos."
 
 #: admin/class-leira-roles-admin.php:633
 msgid "Contributor"
-msgstr ""
+msgstr "Colaborador"
 
 #: admin/class-leira-roles-admin.php:633
 msgid " : somebody who can write and manage their own posts but cannot publish them."
-msgstr ""
+msgstr " : alguien que puede escribir y administrar sus propios artículos pero no puede publicarlos."
 
 #: admin/class-leira-roles-admin.php:634
 msgid "Subscriber"
-msgstr ""
+msgstr "Suscriptor"
 
 #: admin/class-leira-roles-admin.php:634
 msgid " : somebody who can only manage their profile."
-msgstr ""
+msgstr " : alguien que sólo puede administrar su perfil."
 
 #: admin/class-leira-roles-admin.php:651
 msgid "Below is a list with all WordPress capabilities."
-msgstr ""
+msgstr "A continuación hay una lista con todas las capacidades de WordPress."
 
 #: admin/class-leira-roles-admin.php:662
 msgid "For more information:"
-msgstr ""
+msgstr "Para más información:"
 
 #: admin/class-leira-roles-admin.php:663
 msgid "Roles and Capabilities"
-msgstr ""
+msgstr "Roles y capacidades"
 
 #: admin/class-leira-roles-admin.php:664
 msgid "Support"
-msgstr ""
+msgstr "Soporte"
 
 #: admin/class-leira-roles-admin.php:665
 msgid "Report an issue"
-msgstr ""
+msgstr "Reportar un problema"
 
 #: admin/class-leira-roles-admin.php:666
 msgid "Development"
-msgstr ""
+msgstr "Desarrollo"
 
 #: admin/class-leira-roles-admin.php:680
 msgid "The <strong>Capabilities</strong> button will help you to allow or revoke specific capabilities for the user."
-msgstr ""
+msgstr "El botón <strong>Capacidades</strong> le ayudará a permitir o revocar capacidades específicas para el usuario."
 
 #: admin/class-leira-roles-admin.php:681
 msgid "Be aware that if you revoke your user capabilities, you might experience some issues."
-msgstr ""
+msgstr "Tenga en cuenta que si revoca sus capacidades de usuario, puede que experimente algunos problemas."
 
 #: admin/class-leira-roles-capabilities-list-table.php:147
 #: admin/class-leira-roles-list-table.php:119
 msgid "Quick edit &#8220;%s&#8221; inline"
-msgstr ""
+msgstr "Edición&nbsp;Rápida &#8220;%s&#8221; en linea"
 
 #: admin/class-leira-roles-capabilities-list-table.php:148
 #: admin/class-leira-roles-list-table.php:120
 msgid "Quick&nbsp;Edit"
-msgstr ""
+msgstr "Edición&nbsp;Rápida"
 
 #: admin/class-leira-roles-capabilities-list-table.php:157
 msgid "Are you sure you want to delete this capability?"
-msgstr ""
+msgstr "¿Está seguro que desea eliminar esta capacidad?"
 
 #: admin/class-leira-roles-capabilities-list-table.php:158
 #: admin/class-leira-roles-list-table.php:140
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: admin/class-leira-roles-list-table.php:72
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #: admin/class-leira-roles-list-table.php:115
 msgid "Clone"
-msgstr ""
+msgstr "Clonar"
 
 #: admin/class-leira-roles-list-table.php:139
 msgid "Are you sure you want to delete this role?"
-msgstr ""
+msgstr "¿Está seguro que desea eliminar este rol?"
 
 #: admin/class-leira-roles-list-table.php:453
 msgid "All"
-msgstr ""
+msgstr "Todos"
 
 #: admin/class-leira-roles-manager.php:30
 msgid "Allow users to activate plugins."
-msgstr ""
+msgstr "Permitir que los usuarios activen plugins."
 
 #: admin/class-leira-roles-manager.php:31
 msgid "Allow users to create users within the site."
-msgstr ""
+msgstr "Permitir a los usuarios crear usuarios dentro del sitio."
 
 #: admin/class-leira-roles-manager.php:32
 msgid "Enables permission to delete others pages."
-msgstr ""
+msgstr "Activa el permiso para eliminar otras páginas."
 
 #: admin/class-leira-roles-manager.php:33
 msgid "Enables permission to delete others posts."
-msgstr ""
+msgstr "Habilita el permiso para borrar otros artículos."
 
 #: admin/class-leira-roles-manager.php:34
 msgid "Enables permission to delete pages."
-msgstr ""
+msgstr "Habilita el permiso para eliminar páginas."
 
 #: admin/class-leira-roles-manager.php:35
 msgid "Allow users to delete plugins."
-msgstr ""
+msgstr "Permitir a los usuarios eliminar plugins."
 
 #: admin/class-leira-roles-manager.php:36
 msgid "Enables permission to delete posts."
-msgstr ""
+msgstr "Habilita el permiso para eliminar artículos."
 
 #: admin/class-leira-roles-manager.php:37
 msgid "Enables permission to delete pages marked as private."
-msgstr ""
+msgstr "Permite eliminar las páginas marcadas como privadas."
 
 #: admin/class-leira-roles-manager.php:38
 msgid "Enables permission to delete posts marked as private."
-msgstr ""
+msgstr "Habilita el permiso para eliminar artículos marcados como privados."
 
 #: admin/class-leira-roles-manager.php:39
 msgid "Enables permission to delete published pages."
-msgstr ""
+msgstr "Activa el permiso para eliminar páginas publicadas."
 
 #: admin/class-leira-roles-manager.php:40
 msgid "Enables permission to delete published posts."
-msgstr ""
+msgstr "Habilita el permiso para eliminar artículos publicados."
 
 #: admin/class-leira-roles-manager.php:41
 msgid "Allows access to delete themes."
-msgstr ""
+msgstr "Permite eliminar temas."
 
 #: admin/class-leira-roles-manager.php:42
 msgid "Allow users to delete users within the site."
-msgstr ""
+msgstr "Permitir a los usuarios eliminar otros usuarios dentro del sitio."
 
 #: admin/class-leira-roles-manager.php:43
 msgid "Allows access to edit dashboard widgets and its settings."
-msgstr ""
+msgstr "Permite acceder a los widgets del panel de control y a sus ajustes."
 
 #: admin/class-leira-roles-manager.php:44
 #: admin/class-leira-roles-manager.php:61
@@ -470,146 +462,146 @@ msgstr ""
 #: admin/class-leira-roles-manager.php:70
 #: admin/class-leira-roles-manager.php:71
 msgid "Deprecated"
-msgstr ""
+msgstr "Obsoleto"
 
 #: admin/class-leira-roles-manager.php:45
 msgid "Enables permission to edit others pages."
-msgstr ""
+msgstr "Habilita el permiso para editar páginas de otros usuarios."
 
 #: admin/class-leira-roles-manager.php:46
 msgid "Enables permission to edit others posts."
-msgstr ""
+msgstr "Habilita el permiso para editar artículos de otros usuarios."
 
 #: admin/class-leira-roles-manager.php:47
 msgid "Enables permission to edit pages."
-msgstr ""
+msgstr "Permite editar las páginas."
 
 #: admin/class-leira-roles-manager.php:48
 msgid "Allow users to edit plugin files."
-msgstr ""
+msgstr "Permitir a los usuarios editar archivos de plugin."
 
 #: admin/class-leira-roles-manager.php:49
 msgid "Allows access to “Posts”, “Posts > Add New”, “Comments” and “Comments > Awaiting Moderation”"
-msgstr ""
+msgstr "Permite el acceso a \"Artículos\", \"Artículos > Añadir Nuevo\", \"Comentarios\" y \"Comentarios > Esperando moderación\""
 
 #: admin/class-leira-roles-manager.php:50
 msgid "Enables permission to edit pages marked as private."
-msgstr ""
+msgstr "Permite editar páginas marcadas como privadas."
 
 #: admin/class-leira-roles-manager.php:51
 msgid "Enables permission to edit posts marked as private."
-msgstr ""
+msgstr "Permite editar artículos marcados como privados."
 
 #: admin/class-leira-roles-manager.php:52
 msgid "Enables permission to edit published pages."
-msgstr ""
+msgstr "Permite editar páginas publicadas."
 
 #: admin/class-leira-roles-manager.php:53
 msgid "Enables permission to edit published posts."
-msgstr ""
+msgstr "Permite editar artículos publicados."
 
 #: admin/class-leira-roles-manager.php:54
 msgid "Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”."
-msgstr ""
+msgstr "Permitir el acceso a “Widgets”, “Menus”, “Personalizar”, “Fondo” y “Encabezado” en “Apariencia”."
 
 #: admin/class-leira-roles-manager.php:55
 msgid "Allows access to “Appearance > Theme Editor” to edit theme files."
-msgstr ""
+msgstr "Permite el acceso a \"Apariencia > Editor de temas\" para editar archivos de temas."
 
 #: admin/class-leira-roles-manager.php:56
 msgid "Allow users to edit users within the site."
-msgstr ""
+msgstr "Permitir a los usuarios editar los usuarios dentro del sitio."
 
 #: admin/class-leira-roles-manager.php:57
 msgid "Allows access to “Tools > Export”."
-msgstr ""
+msgstr "Permite el acceso a “Herramientas > Exportar”."
 
 #: admin/class-leira-roles-manager.php:58
 msgid "Allows access to “Tools > Import”."
-msgstr ""
+msgstr "Permite el acceso a “Herramientas > Importar”."
 
 #: admin/class-leira-roles-manager.php:59
 #: admin/class-leira-roles-manager.php:88
 msgid "Allow users to install new plugins."
-msgstr ""
+msgstr "Permitir a los usuarios instalar nuevos plugins."
 
 #: admin/class-leira-roles-manager.php:60
 msgid "Allows access to install themes."
-msgstr ""
+msgstr "Permite instalar temas."
 
 #: admin/class-leira-roles-manager.php:72
 msgid "Allow users to list users within the site"
-msgstr ""
+msgstr "Permitir a los usuarios listar usuarios dentro del sitio"
 
 #: admin/class-leira-roles-manager.php:73
 msgid "Enables permission to “Posts > Categories” and “Links > Categories”( Links not available since v3.5)."
-msgstr ""
+msgstr "Permite el acceso a “Artículos > Categorías” y “Enlaces > Categorías”( Enlaces no disponibles desde la v3.5)."
 
 #: admin/class-leira-roles-manager.php:74
 msgid "Used by the Link Manager in WordPress. Since WordPress version 3.0 Link Manager is not available"
-msgstr ""
+msgstr "Utilizado por el Administrador de Enlaces en WordPress. Desde la versión 3.0 de WordPress el Administrador de Enlaces no está disponible"
 
 #: admin/class-leira-roles-manager.php:75
 msgid "Allows access to “Settings” section"
-msgstr ""
+msgstr "Permite el acceso a la sección \"Configuración\""
 
 #: admin/class-leira-roles-manager.php:76
 msgid "Allow users to moderate comments through the “Comments” menu. But it also requires edit_posts capability."
-msgstr ""
+msgstr "Permitir a los usuarios moderar comentarios a través del menú \"Comentarios\". Pero también requiere la capacidad de edit_posts."
 
 #: admin/class-leira-roles-manager.php:77
 msgid "Allow users to promote users within the site."
-msgstr ""
+msgstr "Permitir a los usuarios promocionar usuarios dentro del sitio."
 
 #: admin/class-leira-roles-manager.php:78
 msgid "Enables permission to publish pages."
-msgstr ""
+msgstr "Permite publicar páginas."
 
 #: admin/class-leira-roles-manager.php:79
 msgid "Allows access to publish posts, including XML - RPC publish"
-msgstr ""
+msgstr "Permite publicar artículos, incluyendo XML - RPC publicar"
 
 #: admin/class-leira-roles-manager.php:80
 msgid "Allows access to menu items “Dashboard” and “Users > Your Profile”."
-msgstr ""
+msgstr "Permite el acceso a los elementos del menú “Panel de control” y “Usuarios > Mi perfil”."
 
 #: admin/class-leira-roles-manager.php:81
 msgid "Enables permission to read pages marked as private."
-msgstr ""
+msgstr "Permite el permiso para leer páginas marcadas como privadas."
 
 #: admin/class-leira-roles-manager.php:82
 msgid "Enables permission to read posts marked as private."
-msgstr ""
+msgstr "Activa el permiso para leer artículos marcados como privados."
 
 #: admin/class-leira-roles-manager.php:83
 #: admin/class-leira-roles-manager.php:92
 msgid "Not used"
-msgstr ""
+msgstr "No utilizado"
 
 #: admin/class-leira-roles-manager.php:84
 msgid "Allows access to “Appearance” and “Appearance > Theme Editor” menus."
-msgstr ""
+msgstr "Permite el acceso a los menús \"Apariencia\" y \"Apariencia > Editor de Temas\"."
 
 #: admin/class-leira-roles-manager.php:85
 msgid "Allows the user to post any HTML data including JavaScript. In WordPress Multisite, only Super Admins have this capability"
-msgstr ""
+msgstr "Permite al usuario publicar cualquier dato HTML incluyendo JavaScript. En WordPress Multisite, sólo los super administradores tienen esta capacidad"
 
 #: admin/class-leira-roles-manager.php:86
 msgid "This capability is not available to any role by default ( including Super Admins). The capability needs to be enabled by defining the following constant in wp-config. define( ‘ALLOW_UNFILTERED_UPLOADS’ )"
-msgstr ""
+msgstr "Esta capacidad no está disponible para ningún rol por defecto ( incluyendo Super Administradores). La capacidad necesita ser habilitada definiendo la siguiente constante en wp-config. define( 'ALLOW_UNFILTERED_UPLOADS' )"
 
 #: admin/class-leira-roles-manager.php:87
 msgid "Allows to upgrade WordPress core."
-msgstr ""
+msgstr "Permite actualizar el núcleo de WordPress."
 
 #: admin/class-leira-roles-manager.php:89
 msgid "Allows access to update themes."
-msgstr ""
+msgstr "Permite el acceso a actualizar temas."
 
 #: admin/class-leira-roles-manager.php:90
 msgid "Enables permission to “Media” and “Media > Add New”."
-msgstr ""
+msgstr "Permite acceder a \"Medios\" y \"Medios > Añadir nuevo\"."
 
 #: admin/class-leira-roles-manager.php:91
 msgid "edit_comment is a meta capability . It gets re-mapped to another meta capability."
-msgstr ""
+msgstr "edit_comment es una meta capacidad. Se vuelve a asignar a otra meta capacidad."
