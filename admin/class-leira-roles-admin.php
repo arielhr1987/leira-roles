@@ -119,6 +119,8 @@ class Leira_Roles_Admin{
 				'jquery',
 				'wp-a11y'
 			), $this->version, false );
+
+			//wp_localize_script( $this->plugin_name, 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
 		}
 
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
@@ -435,6 +437,10 @@ class Leira_Roles_Admin{
 			'jquery',
 			'wp-a11y'
 		), $this->version, false );
+
+		//Localize
+		//wp_localize_script( $this->plugin_name . '_table_edit', 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
+		//wp_localize_script( $this->plugin_name, 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
 
 		//initialize table here to be able to register default WP_List_Table screen options
 		$this->get_roles_list_table();

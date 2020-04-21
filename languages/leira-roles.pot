@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Roles & Capabilities plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Roles & Capabilities 1.1.0\n"
+"Project-Id-Version: Roles & Capabilities 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/leira-roles\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-04-18T04:08:56+00:00\n"
+"POT-Creation-Date: 2020-04-21T22:24:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: leira-roles\n"
@@ -107,262 +107,262 @@ msgstr ""
 msgid "Something went wrong, the system wasn't able to delete the selected capabilities, refresh the page and try again."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:173
-#: admin/class-leira-roles-admin.php:174
-#: admin/class-leira-roles-admin.php:346
-#: admin/class-leira-roles-admin.php:623
+#: admin/class-leira-roles-admin.php:175
+#: admin/class-leira-roles-admin.php:176
+#: admin/class-leira-roles-admin.php:348
+#: admin/class-leira-roles-admin.php:629
 msgid "Roles"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:187
-#: admin/class-leira-roles-admin.php:188
-#: admin/class-leira-roles-admin.php:242
-#: admin/class-leira-roles-admin.php:291
-#: admin/class-leira-roles-admin.php:474
-#: admin/class-leira-roles-admin.php:649
-#: admin/class-leira-roles-admin.php:678
+#: admin/class-leira-roles-admin.php:189
+#: admin/class-leira-roles-admin.php:190
+#: admin/class-leira-roles-admin.php:244
+#: admin/class-leira-roles-admin.php:293
+#: admin/class-leira-roles-admin.php:480
+#: admin/class-leira-roles-admin.php:655
+#: admin/class-leira-roles-admin.php:684
 #: admin/class-leira-roles-capabilities-list-table.php:443
 #: admin/class-leira-roles-list-table.php:444
 msgid "Capabilities"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:241
+#: admin/class-leira-roles-admin.php:243
 msgid "Quick edit %s capabilities"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:287
+#: admin/class-leira-roles-admin.php:289
 msgid "Edit Capabilities"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:296
-#: admin/class-leira-roles-admin.php:490
+#: admin/class-leira-roles-admin.php:298
+#: admin/class-leira-roles-admin.php:496
 #: admin/class-leira-roles-capabilities-list-table.php:448
 #: admin/class-leira-roles-list-table.php:449
 msgid "Search Capabilities"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:300
+#: admin/class-leira-roles-admin.php:302
 msgid "Select All"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:305
+#: admin/class-leira-roles-admin.php:307
 #: admin/class-leira-roles-capabilities-list-table.php:453
 #: admin/class-leira-roles-list-table.php:458
 msgid "No capabilities found."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:315
+#: admin/class-leira-roles-admin.php:317
 msgid "Cancel"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:319
+#: admin/class-leira-roles-admin.php:321
 msgid "Save"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:342
-#: admin/class-leira-roles-admin.php:421
-#: admin/class-leira-roles-admin.php:470
-#: admin/class-leira-roles-admin.php:543
+#: admin/class-leira-roles-admin.php:344
+#: admin/class-leira-roles-admin.php:423
+#: admin/class-leira-roles-admin.php:476
+#: admin/class-leira-roles-admin.php:549
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #. translators: %s: search keywords
-#: admin/class-leira-roles-admin.php:351
-#: admin/class-leira-roles-admin.php:479
+#: admin/class-leira-roles-admin.php:353
+#: admin/class-leira-roles-admin.php:485
 msgid "Search results for &#8220;%s&#8221;"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:362
+#: admin/class-leira-roles-admin.php:364
 msgid "Search Roles"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:368
-#: admin/class-leira-roles-admin.php:390
+#: admin/class-leira-roles-admin.php:370
+#: admin/class-leira-roles-admin.php:392
 msgid "Add New Role"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:377
+#: admin/class-leira-roles-admin.php:379
 #: admin/class-leira-roles-list-table.php:70
 #: admin/class-leira-roles-list-table.php:425
 msgid "Role"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:380
+#: admin/class-leira-roles-admin.php:382
 msgid "A unique identifier for the new role."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:383
+#: admin/class-leira-roles-admin.php:385
 #: admin/class-leira-roles-capabilities-list-table.php:434
 #: admin/class-leira-roles-list-table.php:71
 #: admin/class-leira-roles-list-table.php:435
 msgid "Name"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:385
+#: admin/class-leira-roles-admin.php:387
 msgid "The name is how it appears on your site."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:402
+#: admin/class-leira-roles-admin.php:404
 msgid "Description here."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:454
-#: admin/class-leira-roles-admin.php:571
+#: admin/class-leira-roles-admin.php:460
+#: admin/class-leira-roles-admin.php:577
 msgid "Screen Content"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:456
-#: admin/class-leira-roles-admin.php:573
+#: admin/class-leira-roles-admin.php:462
+#: admin/class-leira-roles-admin.php:579
 msgid "You can customize the display of this screen&#8217;s contents in a number of ways:"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:458
+#: admin/class-leira-roles-admin.php:464
 msgid "You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:459
+#: admin/class-leira-roles-admin.php:465
 msgid "The <strong>Search Roles</strong> button will search for roles containing the text you type in the box."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:496
-#: admin/class-leira-roles-admin.php:512
+#: admin/class-leira-roles-admin.php:502
+#: admin/class-leira-roles-admin.php:518
 msgid "Add New Capability"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:505
+#: admin/class-leira-roles-admin.php:511
 #: admin/class-leira-roles-capabilities-list-table.php:424
 msgid "Capability"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:508
+#: admin/class-leira-roles-admin.php:514
 msgid "A unique identifier for the new capability."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:524
+#: admin/class-leira-roles-admin.php:530
 msgid "Built-in system capabilities are not deletable."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:575
+#: admin/class-leira-roles-admin.php:581
 msgid "The <strong>Search Capabilities</strong> button will search for capabilities containing the text you type in the box."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:610
+#: admin/class-leira-roles-admin.php:616
 msgid "Overview"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:612
+#: admin/class-leira-roles-admin.php:618
 msgid "WordPress uses a concept of Roles, designed to give the site owner the ability to control what users can and cannot do within the site."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:613
+#: admin/class-leira-roles-admin.php:619
 msgid "A site owner can manage the user access to such tasks as writing and editing posts, creating Pages, creating categories, moderating comments, managing plugins, managing themes, and managing other users, by assigning a specific role to each of the users."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:614
+#: admin/class-leira-roles-admin.php:620
 msgid "WordPress has six pre-defined roles: Super Admin, Administrator, Editor, Author, Contributor and Subscriber. Each role is allowed to perform a set of tasks called Capabilities."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:615
+#: admin/class-leira-roles-admin.php:621
 msgid "There are many capabilities including “publish_posts“, “moderate_comments“, and “edit_users“. A default set of capabilities is pre-assigned to each role, but other capabilities can be assigned or removed."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:616
+#: admin/class-leira-roles-admin.php:622
 msgid "The Super Admin role allows a user to perform all possible capabilities. Each of the other roles has a decreasing number of allowed capabilities. For instance, the Subscriber role has just the “read” capability. One particular role should not be considered to be senior to another role. Rather, consider that roles define the user’s responsibilities within the site."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:625
+#: admin/class-leira-roles-admin.php:631
 msgid "Upon installing WordPress, an Administrator account is automatically created."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:626
+#: admin/class-leira-roles-admin.php:632
 msgid "The default role for new users can be set in: "
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:626
+#: admin/class-leira-roles-admin.php:632
 msgid "General Settings"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:627
+#: admin/class-leira-roles-admin.php:633
 msgid "WordPress comes with five predefined roles:"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:629
+#: admin/class-leira-roles-admin.php:635
 msgid "Super Admin"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:629
+#: admin/class-leira-roles-admin.php:635
 msgid " : somebody with access to the site network administration features and all other features."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:630
+#: admin/class-leira-roles-admin.php:636
 msgid "Administrator"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:630
+#: admin/class-leira-roles-admin.php:636
 msgid " : somebody who has access to all the administration features within a single site."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:631
+#: admin/class-leira-roles-admin.php:637
 msgid "Editor"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:631
+#: admin/class-leira-roles-admin.php:637
 msgid " : somebody who can publish and manage posts including the posts of other users."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:632
+#: admin/class-leira-roles-admin.php:638
 msgid "Author"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:632
+#: admin/class-leira-roles-admin.php:638
 msgid " : somebody who can publish and manage their own posts."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:633
+#: admin/class-leira-roles-admin.php:639
 msgid "Contributor"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:633
+#: admin/class-leira-roles-admin.php:639
 msgid " : somebody who can write and manage their own posts but cannot publish them."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:634
+#: admin/class-leira-roles-admin.php:640
 msgid "Subscriber"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:634
+#: admin/class-leira-roles-admin.php:640
 msgid " : somebody who can only manage their profile."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:651
+#: admin/class-leira-roles-admin.php:657
 msgid "Below is a list with all WordPress capabilities."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:662
+#: admin/class-leira-roles-admin.php:668
 msgid "For more information:"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:663
+#: admin/class-leira-roles-admin.php:669
 msgid "Roles and Capabilities"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:664
+#: admin/class-leira-roles-admin.php:670
 msgid "Support"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:665
+#: admin/class-leira-roles-admin.php:671
 msgid "Report an issue"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:666
+#: admin/class-leira-roles-admin.php:672
 msgid "Development"
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:680
+#: admin/class-leira-roles-admin.php:686
 msgid "The <strong>Capabilities</strong> button will help you to allow or revoke specific capabilities for the user."
 msgstr ""
 
-#: admin/class-leira-roles-admin.php:681
+#: admin/class-leira-roles-admin.php:687
 msgid "Be aware that if you revoke your user capabilities, you might experience some issues."
 msgstr ""
 
@@ -381,7 +381,9 @@ msgid "Are you sure you want to delete this capability?"
 msgstr ""
 
 #: admin/class-leira-roles-capabilities-list-table.php:158
+#: admin/class-leira-roles-capabilities-list-table.php:237
 #: admin/class-leira-roles-list-table.php:140
+#: admin/class-leira-roles-list-table.php:238
 msgid "Delete"
 msgstr ""
 

@@ -234,7 +234,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	 */
 	protected function get_bulk_actions() {
 		$actions = array(
-			'leira-roles-delete-capability' => 'Delete'
+			'leira-roles-delete-capability' => __('Delete', 'leira-roles')
 		);
 
 		return $actions;
