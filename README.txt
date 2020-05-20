@@ -3,7 +3,7 @@ Contributors: arielhr1987, jlcd0894
 Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member
 Requires at least: 4.1
-Tested up to: 5.3
+Tested up to: 5.4.1
 Stable tag: 1.1.1
 Requires PHP: 5.4
 License: GPLv2 or later
