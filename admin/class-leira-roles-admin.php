@@ -667,7 +667,7 @@ class Leira_Roles_Admin{
 		get_current_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'leira-roles' ) . '</strong></p>' .
 			'<p><a href="https://wordpress.org/support/article/roles-and-capabilities/">' . __( 'Roles and Capabilities', 'leira-roles' ) . '</a></p>' .
-			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Support', 'leira-roles' ) . '</a></p>' . //TODO: Change to github plugin page
+			'<p><a href="https://wordpress.org/support/plugin/leira-roles/">' . __( 'Support', 'leira-roles' ) . '</a></p>' . //TODO: Change to github plugin page
 			'<p><a href="https://github.com/arielhr1987/leira-roles/issues">' . __( 'Report an issue', 'leira-roles' ) . '</a></p>' .
 			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Development', 'leira-roles' ) . '</a></p>'
 		);

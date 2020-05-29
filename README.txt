@@ -4,7 +4,7 @@ Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member
 Requires at least: 4.1
 Tested up to: 5.4.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -48,7 +48,7 @@ Yes.
 = Can I create new capabilities to assign to a role? =
 Yes, new capabilities can be created.
 
-= Can I remove system capabilities =
+= Can I remove system capabilities? =
 No, Wordpress relay on those capabilities to work properly.
 
 == Screenshots ==
@@ -64,6 +64,11 @@ No, Wordpress relay on those capabilities to work properly.
 9. Capabilities list page bulk actions.
 
 == Changelog ==
+
+= 1.1.2 =
+* Roles list column number correctly formatted
+* Support link url updated
+* Inline edit checkbox CSS fix
 
 = 1.1.1 =
 * Translated to spanish language

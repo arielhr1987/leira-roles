@@ -2,6 +2,8 @@ table th.column-count, table td.column-count {
   width: 74px;
   text-align: center; }
 
+body.users_page_leira-roles .inline-editor fieldset label input[type=checkbox] {
+  margin-left: 1px; }
 body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
   width: 100%; }
   @media screen and (min-width: 576px) {
@@ -16,6 +18,8 @@ body.users_page_leira-roles .inline-editor .capabilities-container > label.capab
   @media screen and (min-width: 2000px) {
     body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
       width: 20em; } }
+body.users-php .inline-editor fieldset label input[type=checkbox] {
+  margin-left: 1px; }
 body.users-php .inline-editor .capabilities-container > label.capability-item {
   width: 100%; }
   @media screen and (min-width: 576px) {
@@ -55,8 +59,9 @@ body.users_page_leira-roles-capabilities .capabilities-container {
     @media screen and (min-width: 2000px) {
       body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
         width: 20em; } }
+    body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item input[type="checkbox"] {
+      margin-left: 1px; }
     body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item span.checkbox-title {
-      font-style: italic;
       margin: 0;
       padding: 0;
       word-wrap: break-word;

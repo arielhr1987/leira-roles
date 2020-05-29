@@ -182,7 +182,7 @@ class Leira_Roles_List_Table extends WP_List_Table{
 	 */
 	protected function column_title( $item ) {
 
-		$out = sprintf( '<a href="#"><strong>%1$s</strong></a>', $item['role'] );
+		$out = sprintf( '<a id="%1$s"><strong>%1$s</strong></a>', $item['role'] );
 
 		$out .= '<div class="hidden" id="inline_' . md5( $item['role'] ) . '">';
 
@@ -225,7 +225,7 @@ class Leira_Roles_List_Table extends WP_List_Table{
 	 * @return string
 	 */
 	protected function column_count( $item ) {
-		return sprintf( '<a href="%s" class="">%s</a>', add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ), $item['count'] );
+		return sprintf( '<a href="%s" class="">%s</a>', add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ), number_format_i18n($item['count']) );
 	}
 
 	/**

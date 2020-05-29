@@ -13,6 +13,14 @@ body {
 
     .inline-editor {
 
+      fieldset label input[type=checkbox] {
+        margin-left: 1px;
+      }
+
+      .cb-capabilities-select-all {
+
+      }
+
       .capabilities-container {
 
         > label.capability-item {
@@ -41,6 +49,14 @@ body {
   &.users-php {
 
     .inline-editor {
+
+      fieldset label input[type=checkbox] {
+        margin-left: 1px;
+      }
+
+      .cb-capabilities-select-all {
+
+      }
 
       .capabilities-container {
 
@@ -104,8 +120,11 @@ body {
           width: 20em;
         }
 
+        input[type="checkbox"]{
+          margin-left: 1px;
+        }
+
         span.checkbox-title {
-          font-style: italic;
           margin: 0;
           padding: 0;
           word-wrap: break-word;
