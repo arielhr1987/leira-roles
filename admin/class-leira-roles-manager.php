@@ -393,7 +393,7 @@ class Leira_Roles_Manager{
 	 * @param string|WP_User $user         The user to update capabilities
 	 * @param array          $capabilities The new user capabilities
 	 *
-	 * @return bool
+	 * @return bool|WP_User
 	 */
 	public function update_user_capabilities( $user, $capabilities = array() ) {
 		if ( is_string( $user ) || is_integer( $user ) ) {

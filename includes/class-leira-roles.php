@@ -203,6 +203,8 @@ class Leira_Roles{
 			$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'filter_set_screen_option', 10, 3 );
 			$this->loader->add_filter( 'user_row_actions', $plugin_admin, 'filter_user_row_actions', 10, 2 );
 
+			$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', 1000 );
+
 			/**
 			 * Actions to handle
 			 */
@@ -213,13 +215,13 @@ class Leira_Roles{
 			$this->loader->add_action( 'wp_ajax_leira-roles-clone-role', $actions, 'handle' );
 			$this->loader->add_action( 'wp_ajax_leira-roles-quick-edit-role', $actions, 'handle' );
 			$this->loader->add_action( 'wp_ajax_leira-roles-quick-edit-user-capabilities', $actions, 'handle' );
+			$this->loader->add_action( 'wp_ajax_leira-roles-footer-rated', $actions, 'footer_rated' );
 
-			//
-
-			//for future versions
+			//for future versions add ajax to capability creation
 			//$this->loader->add_action( 'wp_ajax_leira-roles-add-capability', $actions, 'handle' );
 
 			$this->loader->add_action( 'load-users.php', $plugin_admin, 'load_users_page' );
+
 
 
 		}

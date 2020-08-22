@@ -299,7 +299,7 @@ class Leira_Roles_Admin{
                                             </p>
                                             <label class="alignleft">
                                                 <input type="checkbox" class="cb-capabilities-select-all">
-                                                <span class="checkbox-title"><?php _e( 'Select All', 'leira-roles' ) ?> </span>
+                                                <span class="checkbox-title"><?php _e( 'All', 'leira-roles' ) ?> </span>
                                             </label>
                                         </div>
                                         <div class="capabilities-container wp-clearfix">
@@ -432,6 +432,7 @@ class Leira_Roles_Admin{
 		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
 
 		//enqueue scripts
+		wp_enqueue_script( $this->plugin_name . '_common', plugin_dir_url( __FILE__ ) . 'js/leira-roles-common.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . '_table_edit', plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/inline-edit-roles.js', array(
 			'jquery',
@@ -558,6 +559,7 @@ class Leira_Roles_Admin{
 		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
 
 		//enqueue scripts
+		wp_enqueue_script( $this->plugin_name . '_common', plugin_dir_url( __FILE__ ) . 'js/leira-roles-common.js', array( 'jquery' ), $this->version, false );
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leira-roles-capabilities-admin.js', array( 'jquery' ), $this->version, false );
 
 		//initialize table here to be able to register default WP_List_Table screen options
@@ -689,5 +691,47 @@ class Leira_Roles_Admin{
 			'priority' => 100
 		) );
 
+	}
+
+	/**
+	 * Change the admin footer text on Settings page
+	 * Give us a rate
+	 *
+	 * @param $footer_text
+	 *
+	 * @return string
+	 * @since 1.1.3
+	 */
+	public function admin_footer_text( $footer_text ) {
+		$current_screen = get_current_screen();
+
+		//Pages where we are going to show footer review
+		$pages = array(
+			'users_page_leira-roles',
+            'users_page_leira-roles-capabilities'
+		);
+
+		if ( isset( $current_screen->id ) && in_array( $current_screen->id, $pages ) ) {
+			// Change the footer text
+			if ( ! get_option( 'leira-roles-footer-rated' ) ) {
+
+				ob_start(); ?>
+                <a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
+                   class="leira-roles-admin-rating-link"
+                   data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ) ?>"
+                   data-nonce="<?php echo wp_create_nonce( 'footer-rated' ) ?>">
+                    &#9733;&#9733;&#9733;&#9733;&#9733;
+                </a>
+				<?php $link = ob_get_clean();
+
+				ob_start();
+
+				printf( __( 'If you like Roles & Capabilities please consider leaving a %s review. It will help us to grow the plugin and make it more popular. Thank you.', 'leira-roles' ), $link ) ?>
+
+				<?php $footer_text = ob_get_clean();
+			}
+		}
+
+		return $footer_text;
 	}
 }

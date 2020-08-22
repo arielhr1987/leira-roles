@@ -667,4 +667,24 @@ class Leira_Roles_Actions{
 			$this->notify( $out, 'success' );
 		}
 	}
+
+	/**
+	 * When user clicks the review link in backend
+	 *
+	 * @since 1.1.3
+	 */
+	function footer_rated() {
+		/**
+		 * Check capabilities
+		 */
+		$this->check_permissions();
+
+		/**
+		 * Check nonce
+		 */
+		$this->check_nonce( 'footer-rated' );
+
+		update_option( 'leira-roles-footer-rated', 1 );
+		wp_send_json_success();
+	}
 }
