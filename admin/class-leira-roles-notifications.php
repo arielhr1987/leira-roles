@@ -38,6 +38,7 @@ class Leira_Roles_Notifications{
 
 	/**
 	 * Leira_Roles_Notifications constructor.
+	 *
 	 * @since      1.1.3
 	 */
 	public function __construct() {
@@ -71,7 +72,7 @@ class Leira_Roles_Notifications{
 			$messages = $this->get( $type );
 			foreach ( $messages as $message ) {
 				if ( is_string( $message ) ) {
-					$html .= sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, sanitize_text_field( urldecode( $message ) ) );
+					$html .= sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, urldecode( $message ) );
 				}
 			}
 		}
