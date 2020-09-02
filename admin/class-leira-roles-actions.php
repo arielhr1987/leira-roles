@@ -660,7 +660,7 @@ class Leira_Roles_Actions{
 		 * Notify the user
 		 */
 		$single = sprintf( 'The capability %s was successfully deleted.', '<strong>' . $capabilities[0] . '</strong>' );
-		$plural = sprintf( 'The selected %s roles were successfully deleted.', '<strong>' . count( $capabilities ) . '</strong>' );
+		$plural = sprintf( 'The selected %s capabilities were successfully deleted.', '<strong>' . count( $capabilities ) . '</strong>' );
 		$out    = _n( $single, $plural, count( $capabilities ), 'leira-roles' );
 		if ( $this->is_ajax() ) {
 			wp_send_json_success( $out );
