@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://github.com/arielhr1987
+ * @link       https://github.com/arielhr1987/leira-roles
  * @since      1.0.0
  *
  * @package    Leira_Roles
@@ -143,6 +143,10 @@ class Leira_Roles{
 			 * The class responsible for handling form submissions
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-actions.php';
+			/**
+			 * The class responsible for handling notifications
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-notifications.php';
 		}
 
 		/**
@@ -222,6 +226,11 @@ class Leira_Roles{
 
 			$this->loader->add_action( 'load-users.php', $plugin_admin, 'load_users_page' );
 
+			/**
+			 * Notifications
+			 */
+			$notifications = new Leira_Roles_Notifications();
+			$this->loader->set( 'notify', $notifications );
 
 
 		}
