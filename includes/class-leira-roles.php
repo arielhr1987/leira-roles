@@ -27,9 +27,10 @@
  * @subpackage Leira_Roles/includes
  * @author     Ariel <arielhr1987@gmail.com>
  *
- * @property Leira_Roles_Admin   admin
- * @property Leira_Roles_Manager manager
- * @property Leira_Roles_Actions actions
+ * @property Leira_Roles_Admin         admin
+ * @property Leira_Roles_Manager       manager
+ * @property Leira_Roles_Actions       actions
+ * @property Leira_Roles_Notifications notify
  */
 class Leira_Roles{
 

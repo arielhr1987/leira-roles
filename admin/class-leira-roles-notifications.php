@@ -2,6 +2,7 @@
 
 /**
  * This class handle all notifications inside to end user within the plugin.
+ * The logic is based on BuddyPress core functionality
  *
  * @link       https://github.com/arielhr1987/leira-roles
  * @since      1.1.3
@@ -14,6 +15,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Cookie name to use
 	 *
+	 * @since      1.1.3
 	 * @var string
 	 */
 	protected $cookie = 'leira_roles_notification';
@@ -21,6 +23,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * All types of notifications allowed
 	 *
+	 * @since      1.1.3
 	 * @var string[]
 	 */
 	protected $types = array( 'error', 'success', 'warning', 'info' );
@@ -28,12 +31,14 @@ class Leira_Roles_Notifications{
 	/**
 	 * All current messages
 	 *
+	 * @since      1.1.3
 	 * @var array
 	 */
 	protected $messages = array();
 
 	/**
 	 * Leira_Roles_Notifications constructor.
+	 * @since      1.1.3
 	 */
 	public function __construct() {
 		/**
@@ -41,40 +46,37 @@ class Leira_Roles_Notifications{
 		 */
 		if ( isset( $_COOKIE[ $this->cookie ] ) ) {
 			$messages = $_COOKIE[ $this->cookie ];
-			$messages = @json_decode( $messages );
+			$messages = @json_decode( $messages, true );
 			if ( is_array( $messages ) ) {
 				$this->messages = $messages;
+			}
+
+			/**
+			 * Delete the cookie by setting an expiration time before current time
+			 */
+			if ( ! headers_sent() ) {
+				@setcookie( $this->cookie, '', strtotime( "-1 month" ) );
 			}
 		}
 	}
 
 	/**
 	 * Display all messages
+	 *
+	 * @since      1.1.3
 	 */
-	public function display_all() {
+	public function display() {
 		$html = '';
 		foreach ( $this->types as $type ) {
 			$messages = $this->get( $type );
 			foreach ( $messages as $message ) {
 				if ( is_string( $message ) ) {
-					$html .= esc_html( sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, sanitize_text_field( $message ) ) );
+					$html .= sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, sanitize_text_field( urldecode( $message ) ) );
 				}
 			}
 		}
 
-		/**
-		 * Delete the cookie by setting an expiration time before current time
-		 */
-		setcookie( $this->cookie, '', time() + 3600 * 24 * 7 );
-
 		return $html;
-	}
-
-	/**
-	 * @param string $type
-	 */
-	public function display( $type ) {
-
 	}
 
 	/**
@@ -83,11 +85,12 @@ class Leira_Roles_Notifications{
 	 * @param string $type
 	 *
 	 * @return array The messages
+	 * @since      1.1.3
 	 */
 	protected function get( $type ) {
 		$messages = array();
 		if ( isset( $this->messages[ $type ] ) && is_array( $this->messages[ $type ] ) ) {
-			$messages = array();
+			$messages = $this->messages[ $type ];
 		}
 
 		return $messages;
@@ -99,14 +102,13 @@ class Leira_Roles_Notifications{
 	 * @param string $msg  The message to show to the user
 	 *
 	 * @return bool If notification was added successfully
+	 * @since      1.1.3
 	 */
 	public function add( $type, $msg ) {
-		if ( ! in_array( $type, $this->types ) ) {
+		if ( ! in_array( $type, $this->types ) || ! is_string( $msg ) ) {
 			return false;
 		}
-		if ( ! is_string( $msg ) ) {
-			return false;
-		}
+
 		$messages   = $this->get( $type );
 		$messages[] = $msg;
 
@@ -118,7 +120,7 @@ class Leira_Roles_Notifications{
 			 * Set the cookie to read in the next call
 			 * Expiration time is set to a long number to avoid timezone differences (7 days)
 			 */
-			setcookie( $this->cookie, json_encode( $this->messages ), time() + 3600 * 24 * 7 );
+			@setcookie( $this->cookie, json_encode( $this->messages ), time() + 3600 * 24 * 7 );
 		}
 
 		return true;
@@ -128,6 +130,8 @@ class Leira_Roles_Notifications{
 	 * Show an error message
 	 *
 	 * @param string $msg
+	 *
+	 * @since      1.1.3
 	 */
 	public function error( $msg ) {
 		$this->add( 'error', $msg );
@@ -137,6 +141,8 @@ class Leira_Roles_Notifications{
 	 * Show a success message
 	 *
 	 * @param string $msg
+	 *
+	 * @since      1.1.3
 	 */
 	public function success( $msg ) {
 		$this->add( 'success', $msg );
@@ -146,6 +152,8 @@ class Leira_Roles_Notifications{
 	 * Show a warning message
 	 *
 	 * @param string $msg
+	 *
+	 * @since      1.1.3
 	 */
 	public function warning( $msg ) {
 		$this->add( 'warning', $msg );
@@ -155,6 +163,8 @@ class Leira_Roles_Notifications{
 	 * Show an info message
 	 *
 	 * @param string $msg
+	 *
+	 * @since      1.1.3
 	 */
 	public function info( $msg ) {
 		$this->add( 'info', $msg );

@@ -106,9 +106,10 @@ class Leira_Roles_Actions{
 			wp_send_json_error( sprintf( $format, $type, $message ) );
 		} else {
 			//enqueue message
-			$_SESSION['leira-roles-flash-message'] = array( $type => $message );
-			$redirect_url                          = wp_get_referer();
-			$redirect_url                          = wp_get_raw_referer();
+			leira_roles()->notify->add( $type, $message );
+
+			$redirect_url = wp_get_referer();
+			$redirect_url = wp_get_raw_referer();
 			if ( empty( $redirect_url ) ) {
 				$params       = array(
 					'page' => 'leira-roles', //TODO: redirect to capabilities page too

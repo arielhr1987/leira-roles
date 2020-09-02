@@ -423,11 +423,6 @@ class Leira_Roles_Admin{
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 
-		//ensure session is started. Its used for user notifications
-		if ( session_status() !== PHP_SESSION_ACTIVE ) {
-			session_start();
-		}
-
 		//enqueue styles
 		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
 
@@ -550,11 +545,6 @@ class Leira_Roles_Admin{
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 
-		//ensure session is started. Its used for user notifications
-		if ( session_status() !== PHP_SESSION_ACTIVE ) {
-			session_start();
-		}
-
 		//enqueue styles
 		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
 
@@ -590,11 +580,7 @@ class Leira_Roles_Admin{
 	 * Display admin flash notices
 	 */
 	public function admin_notices() {
-		$messages = isset( $_SESSION['leira-roles-flash-message'] ) ? $_SESSION['leira-roles-flash-message'] : array();
-		foreach ( $messages as $type => $text ) {
-			echo sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, $text );
-		}
-		$_SESSION['leira-roles-flash-message'] = array();
+		echo leira_roles()->notify->display();
 	}
 
 	/**
@@ -708,7 +694,7 @@ class Leira_Roles_Admin{
 		//Pages where we are going to show footer review
 		$pages = array(
 			'users_page_leira-roles',
-            'users_page_leira-roles-capabilities'
+			'users_page_leira-roles-capabilities'
 		);
 
 		if ( isset( $current_screen->id ) && in_array( $current_screen->id, $pages ) ) {
