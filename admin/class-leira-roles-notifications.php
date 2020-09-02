@@ -119,9 +119,9 @@ class Leira_Roles_Notifications{
 		if ( ! headers_sent() ) {
 			/**
 			 * Set the cookie to read in the next call
-			 * Expiration time is set to a long number to avoid timezone differences (7 days)
+			 * Expiration time is set to a long number to avoid timezone differences
 			 */
-			@setcookie( $this->cookie, json_encode( $this->messages ), time() + 3600 * 24 * 7 );
+			@setcookie( $this->cookie, json_encode( $this->messages ), strtotime( '+1 month' ) );
 		}
 
 		return true;
