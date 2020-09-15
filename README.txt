@@ -37,7 +37,7 @@ With the plugin you will be able to:
 == Frequently Asked Questions ==
 
 = Can I create new user roles? =
-Yes, you can add new roles, and assign the capabilities that fit the most for that role
+Yes, you can add new roles, and assign the capabilities that fit the most for that role.
 
 = Can I remove Wordpress default roles? =
 No, system default roles are not allowed to deleted. Wordpress system relay on those roles to work properly.
