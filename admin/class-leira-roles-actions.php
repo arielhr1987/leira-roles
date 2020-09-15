@@ -620,6 +620,8 @@ class Leira_Roles_Actions{
 
 	/**
 	 * Handles delete role action
+	 *
+	 * @access public
 	 */
 	public function delete_capability() {
 		/**
@@ -672,9 +674,10 @@ class Leira_Roles_Actions{
 	/**
 	 * When user clicks the review link in backend
 	 *
-	 * @since 1.1.3
+	 * @since  1.1.3
+	 * @access public
 	 */
-	function footer_rated() {
+	public function footer_rated() {
 		/**
 		 * Check capabilities
 		 */
