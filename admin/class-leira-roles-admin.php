@@ -239,7 +239,7 @@ class Leira_Roles_Admin{
 				$username = $user->data->user_nicename;
 				$username = sprintf( '&#8220;%s&#8221;', $username );
 			}
-			$format     = '<button type="button" class="button-link editinline_capabilities" aria-label="%s" aria-expanded="false">%s</button><div class="hidden" id="inline_capabilities_%s">%s</di>';
+			$format     = '<button type="button" class="button-link editinline_capabilities" aria-label="%s" aria-expanded="false">%s</button><div class="hidden" id="inline_capabilities_%s">%s</div>';
 			$aria_label = esc_attr( sprintf( __( 'Quick edit %s capabilities', 'leira-roles' ), $username ) );
 			$label      = __( 'Capabilities', 'leira-roles' );
 
