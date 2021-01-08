@@ -3,8 +3,8 @@ Contributors: arielhr1987, jlcd0894
 Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member
 Requires at least: 4.1
-Tested up to: 5.5.1
-Stable tag: 1.1.5
+Tested up to: 5.6
+Stable tag: 1.1.6
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,9 @@ No, Wordpress relay on those capabilities to work properly.
 9. Capabilities list page bulk actions.
 
 == Changelog ==
+
+= 1.1.6 =
+* Wordpress 5.6 compatibility check
 
 = 1.1.5 =
 * Fix typo, missing the 'v' in a closing div tag
