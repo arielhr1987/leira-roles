@@ -705,9 +705,7 @@ class Leira_Roles_Admin{
                 <a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
                    class="leira-roles-admin-rating-link"
                    data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ) ?>"
-                   data-nonce="<?php echo wp_create_nonce( 'footer-rated' ) ?>">
-                    &#9733;&#9733;&#9733;&#9733;&#9733;
-                </a>
+                   data-nonce="<?php echo wp_create_nonce( 'footer-rated' ) ?>">&#9733;&#9733;&#9733;&#9733;&#9733;</a>
 				<?php $link = ob_get_clean();
 
 				ob_start();
