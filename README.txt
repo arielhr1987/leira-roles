@@ -28,6 +28,8 @@ With the plugin you will be able to:
 * Delete user defined capabilities.
 * Grant or revoke capabilities to user
 
+This plugin is open source. You can view the source code here: https://github.com/arielhr1987/leira-roles.
+
 == Installation ==
 
 1. Upload `leira-roles` to the `/wp-content/plugins/` directory
