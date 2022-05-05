@@ -4,7 +4,7 @@ Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member, edit
 Requires at least: 4.1
 Tested up to: 5.9
-Stable tag: 1.1.8
+Stable tag: 1.1.8.0
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ Manage your site user roles & capabilities the easy way.
 
 == Description ==
 
-Manage your roles and capabilities with simple, yet powerful tools in the admin area..
+Manage your roles and capabilities with simple, yet powerful tools in the admin area.
 
 "Roles & Capabilities" provides a set of tools to help administrators to manage their site roles and capabilities as well as the site users capabilities.
 Only administrator will be able to access this plugin features, there is no extra capability that will grant access to this tool.
