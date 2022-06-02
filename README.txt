@@ -16,7 +16,7 @@ Manage your site user roles & capabilities the easy way.
 Manage your roles and capabilities with simple, yet powerful tools in the admin area.
 
 "Roles & Capabilities" provides a set of tools to help administrators to manage their site roles and capabilities as well as the site users capabilities.
-Only administrator will be able to access this plugin features, there is no extra capability that will grant access to this tool.
+Only administrator will be able to access the plugin features, there is no extra capability that will grant access to this tool.
 
 With the plugin you will be able to:
 
