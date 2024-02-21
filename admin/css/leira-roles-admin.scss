@@ -12,6 +12,9 @@ body {
   &.users_page_leira-roles {
 
     .inline-editor {
+      > td {
+        padding: 0 12px;
+      }
 
       fieldset label input[type=checkbox] {
         margin-left: 1px;
@@ -49,6 +52,9 @@ body {
   &.users-php {
 
     .inline-editor {
+      > td {
+        padding: 0 12px;
+      }
 
       fieldset label input[type=checkbox] {
         margin-left: 1px;

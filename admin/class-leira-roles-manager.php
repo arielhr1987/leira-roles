@@ -193,7 +193,7 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Clone a role into an other one. The new role identifier will contain a "-" followed by a number
+	 * Clone a role into another one. The new role identifier will contain a "-" followed by a number
 	 *
 	 * @param $role
 	 *

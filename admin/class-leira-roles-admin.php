@@ -287,7 +287,7 @@ class Leira_Roles_Admin {
 	 */
 	public function quick_edit_user_capabilities_form() {
 		$screen = get_current_screen();
-		if ( 'users' === $screen && $screen->id ) {
+		if ( $screen && $screen->id === 'users' ) {
 			// Output the inline form
 			global $wp_list_table;
 			$columns_count = $wp_list_table->get_column_count();
