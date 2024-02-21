@@ -3,9 +3,9 @@ Contributors: arielhr1987, jlcd0894, grandeljay
 Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member, edit
 Requires at least: 4.1
-Tested up to: 6.0
-Stable tag: 1.1.8.0
-Requires PHP: 5.4
+Tested up to: 6.4
+Stable tag: 1.1.9
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,9 @@ With the plugin you will be able to:
 * Delete user defined capabilities.
 * Grant or revoke capabilities to user
 
-This plugin is open source. You can view the source code here: https://github.com/arielhr1987/leira-roles.
+= Development =
+
+This plugin is open source. You can view the source code here: [Github](https://github.com/arielhr1987/leira-roles).
 
 == Installation ==
 
@@ -66,6 +68,14 @@ No, Wordpress relay on those capabilities to work properly.
 9. Capabilities list page bulk actions.
 
 == Changelog ==
+
+= 1.1.8 =
+* Wordpress 6.4 compatibility check
+* Remove trailing space in 5 star link
+* Add GitHub link
+* Apply WordPress coding style
+* Ignore VS Code workspaces
+* Use lf line endings for all text files
 
 = 1.1.8 =
 * Wordpress 5.9 compatibility check
