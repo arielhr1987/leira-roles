@@ -1,5 +1,5 @@
 === Roles & Capabilities ===
-Contributors: arielhr1987, jlcd0894
+Contributors: arielhr1987, jlcd0894, grandeljay
 Donate link: https://github.com/arielhr1987
 Tags: user, role, capabilities, debug, admin, dev, permissions, member, edit
 Requires at least: 4.1
