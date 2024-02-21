@@ -24,7 +24,7 @@
  * @subpackage Leira_Roles/includes
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_i18n{
+class Leira_Roles_i18n {
 
 
 	/**
@@ -39,6 +39,5 @@ class Leira_Roles_i18n{
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
 }

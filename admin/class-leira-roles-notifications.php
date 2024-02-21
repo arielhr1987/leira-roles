@@ -10,7 +10,7 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Notifications{
+class Leira_Roles_Notifications {
 
 	/**
 	 * Cookie name to use
@@ -56,7 +56,7 @@ class Leira_Roles_Notifications{
 			 * Delete the cookie by setting an expiration time before current time
 			 */
 			if ( ! headers_sent() ) {
-				@setcookie( $this->cookie, '', strtotime( "-1 month" ) );
+				@setcookie( $this->cookie, '', strtotime( '-1 month' ) );
 			}
 		}
 	}
@@ -113,7 +113,7 @@ class Leira_Roles_Notifications{
 		$messages   = $this->get( $type );
 		$messages[] = $msg;
 
-		//Update the messages
+		// Update the messages
 		$this->messages[ $type ] = $messages;
 
 		if ( ! headers_sent() ) {

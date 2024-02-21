@@ -21,7 +21,7 @@
  * @subpackage Leira_Roles/includes
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Loader{
+class Leira_Roles_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
@@ -58,7 +58,6 @@ class Leira_Roles_Loader{
 		$this->actions   = array();
 		$this->filters   = array();
 		$this->instances = array();
-
 	}
 
 	/**
@@ -82,7 +81,6 @@ class Leira_Roles_Loader{
 		if ( is_string( $key ) ) {
 			$this->instances[ $key ] = $value;
 		}
-
 	}
 
 	/**
@@ -139,11 +137,10 @@ class Leira_Roles_Loader{
 			'component'     => $component,
 			'callback'      => $callback,
 			'priority'      => $priority,
-			'accepted_args' => $accepted_args
+			'accepted_args' => $accepted_args,
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -154,19 +151,27 @@ class Leira_Roles_Loader{
 	public function run() {
 
 		foreach ( $this->filters as $hook ) {
-			add_filter( $hook['hook'], array(
-				$hook['component'],
-				$hook['callback']
-			), $hook['priority'], $hook['accepted_args'] );
+			add_filter(
+				$hook['hook'],
+				array(
+					$hook['component'],
+					$hook['callback'],
+				),
+				$hook['priority'],
+				$hook['accepted_args']
+			);
 		}
 
 		foreach ( $this->actions as $hook ) {
-			add_action( $hook['hook'], array(
-				$hook['component'],
-				$hook['callback']
-			), $hook['priority'], $hook['accepted_args'] );
+			add_action(
+				$hook['hook'],
+				array(
+					$hook['component'],
+					$hook['callback'],
+				),
+				$hook['priority'],
+				$hook['accepted_args']
+			);
 		}
-
 	}
-
 }
