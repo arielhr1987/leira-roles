@@ -85,4 +85,3 @@ function leira_roles() {
  * @since    1.1.0
  */
 leira_roles()->run();
-

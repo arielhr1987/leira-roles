@@ -12,7 +12,7 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Actions{
+class Leira_Roles_Actions {
 
 	/**
 	 * @var string
@@ -88,11 +88,11 @@ class Leira_Roles_Actions{
 	}
 
 	/**
-	 * Notify the user with a message. Handles ajax and post requests
+	 * Notify the user with a message. Handles ajax and post requests.
 	 *
-	 * @param string $message  The message to show to the user
-	 * @param string $type     The type of message to show [error|success|warning\info]
-	 * @param bool   $redirect If we should redirect to referrer
+	 * @param string $message  The message to show to the user.
+	 * @param string $type     The type of message to show [error|success|warning\info].
+	 * @param bool   $redirect If we should redirect to referrer.
 	 */
 	protected function notify( $message, $type = 'error', $redirect = true ) {
 
@@ -105,14 +105,14 @@ class Leira_Roles_Actions{
 			$format = '<div class="notice notice-%s is-dismissible"><p>%s</p></div>';
 			wp_send_json_error( sprintf( $format, $type, $message ) );
 		} else {
-			//enqueue message
+			// enqueue message
 			leira_roles()->notify->add( $type, $message );
 
 			$redirect_url = wp_get_referer();
 			$redirect_url = wp_get_raw_referer();
 			if ( empty( $redirect_url ) ) {
 				$params       = array(
-					'page' => 'leira-roles', //TODO: redirect to capabilities page too
+					'page' => 'leira-roles', // TODO: redirect to capabilities page too
 				);
 				$redirect_url = add_query_arg( $params, admin_url( 'users.php' ) );
 			}
@@ -179,8 +179,8 @@ class Leira_Roles_Actions{
 		 * Check role doesn't exist
 		 */
 		if ( $this->manager->is_role( $role ) ) {
-			//this role already exist
-			$out = __( sprintf( 'The role %s already exist, use other role identifier.', "<strong>" . esc_attr( $role ) . "</strong>" ), 'leira-roles' );
+			// this role already exist
+			$out = __( sprintf( 'The role %s already exist, use other role identifier.', '<strong>' . esc_attr( $role ) . '</strong>' ), 'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -200,17 +200,19 @@ class Leira_Roles_Actions{
 			 */
 			$count_users = count_users();
 			ob_start();
-			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
+			$GLOBALS['hook_suffix'] = '';// avoid warning outputs
 			$all_capabilities       = $this->manager->get_all_capabilities();
 			$capabilities           = isset( $result->capabilities ) ? $result->capabilities : array();
 			$capabilities           = array_merge( $all_capabilities, $capabilities );
-			leira_roles()->admin->get_roles_list_table()->single_row( array(
-				'role'         => $result->name,
-				'name'         => $this->manager->get_role_name( $result->name ),
-				'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
-				'capabilities' => $capabilities,
-				'is_system'    => $this->manager->is_system_role( $result->name )
-			) );
+			leira_roles()->admin->get_roles_list_table()->single_row(
+				array(
+					'role'         => $result->name,
+					'name'         => $this->manager->get_role_name( $result->name ),
+					'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
+					'capabilities' => $capabilities,
+					'is_system'    => $this->manager->is_system_role( $result->name ),
+				)
+			);
 			$out = ob_get_clean();
 
 			wp_send_json_success( $out );
@@ -251,8 +253,8 @@ class Leira_Roles_Actions{
 		 * Check role doesn't exist
 		 */
 		if ( ! $this->manager->is_role( $role ) ) {
-			//this role does not exist
-			$out = __( sprintf( 'The role %s doesn\'t exist.', "<strong>" . esc_attr( $role ) . "</strong>" ), 'leira-roles' );
+			// this role does not exist
+			$out = __( sprintf( 'The role %s doesn\'t exist.', '<strong>' . esc_attr( $role ) . '</strong>' ), 'leira-roles' );
 			$this->notify( $out );
 		}
 		/**
@@ -272,17 +274,19 @@ class Leira_Roles_Actions{
 			$admin       = leira_roles()->admin;
 			$count_users = count_users();
 			ob_start();
-			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
+			$GLOBALS['hook_suffix'] = '';// avoid warning outputs
 			$all_capabilities       = $this->manager->get_all_capabilities();
 			$capabilities           = isset( $result->capabilities ) ? $result->capabilities : array();
 			$capabilities           = array_merge( $all_capabilities, $capabilities );
-			$admin->get_roles_list_table()->single_row( array(
-				'role'         => $result->name,
-				'name'         => $this->manager->get_role_name( $result->name ),
-				'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
-				'capabilities' => $capabilities,
-				'is_system'    => $this->manager->is_system_role( $result->name )
-			) );
+			$admin->get_roles_list_table()->single_row(
+				array(
+					'role'         => $result->name,
+					'name'         => $this->manager->get_role_name( $result->name ),
+					'count'        => isset( $count_users['avail_roles'][ $result->name ] ) ? $count_users['avail_roles'][ $result->name ] : 0,
+					'capabilities' => $capabilities,
+					'is_system'    => $this->manager->is_system_role( $result->name ),
+				)
+			);
 			$out = ob_get_clean();
 
 			wp_send_json_success( $out );
@@ -292,12 +296,15 @@ class Leira_Roles_Actions{
 			 */
 			$from     = '<strong>' . $role . '</strong>';
 			$to       = '<strong>' . $result->name . '</strong>';
-			$undo_url = add_query_arg( array(
-				'page'     => 'leira-roles',
-				'action'   => 'leira-roles-delete-role',
-				'role'     => esc_attr( $result->name ),
-				'_wpnonce' => wp_create_nonce( 'bulk-roles' )
-			), admin_url( 'users.php' ) );
+			$undo_url = add_query_arg(
+				array(
+					'page'     => 'leira-roles',
+					'action'   => 'leira-roles-delete-role',
+					'role'     => esc_attr( $result->name ),
+					'_wpnonce' => wp_create_nonce( 'bulk-roles' ),
+				),
+				admin_url( 'users.php' )
+			);
 			$undo     = sprintf( '<a href="%s">%s</a>', $undo_url, __( 'Undo', 'leira-roles' ) );
 			$out      = __( sprintf( 'The role %s was cloned successfully into %s. %s', $from, $to, $undo ), 'leira-roles' );
 			$this->notify( $out, 'success' );
@@ -326,7 +333,7 @@ class Leira_Roles_Actions{
 			if ( is_string( $_REQUEST['role'] ) ) {
 				$input   = sanitize_text_field( $_REQUEST['role'] );
 				$roles[] = $input;
-			} else if ( is_array( $_REQUEST['role'] ) ) {
+			} elseif ( is_array( $_REQUEST['role'] ) ) {
 				foreach ( $_REQUEST['role'] as $key => $id ) {
 					$roles[] = sanitize_text_field( $id );
 				}
@@ -424,7 +431,7 @@ class Leira_Roles_Actions{
 		 */
 		if ( $this->manager->is_system_role( $old_role ) ) {
 
-		} else if ( $old_role !== $new_role ) {
+		} elseif ( $old_role !== $new_role ) {
 			if ( $this->manager->is_role( $new_role ) ) {
 				$out = __( 'The provided new role, already exist. Use an other role identifier.', 'leira-roles' );
 				wp_die( $out );
@@ -436,7 +443,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Something went wrong
 		 */
-		if ( $result === false ) {
+		if ( false === $result ) {
 			$out = __( 'Something went wrong, the system wasn\'t able to update the role, refresh the page and try again.', 'leira-roles' );
 			wp_die( $out );
 		}
@@ -445,19 +452,20 @@ class Leira_Roles_Actions{
 		 * Output the row table with the new updated data
 		 */
 		$admin                  = leira_roles()->admin;
-		$GLOBALS['hook_suffix'] = '';//avoid notice error
+		$GLOBALS['hook_suffix'] = '';// avoid notice error
 		$table                  = $admin->get_roles_list_table();
 		$count                  = count_users();
 
-		$table->single_row( array(
-			'role'         => $result->name,
-			'name'         => $name,
-			'capabilities' => array_merge( $this->manager->get_all_capabilities(), $capabilities ),
-			'count'        => isset( $count['avail_roles'][ $new_role ] ) ? $count['avail_roles'][ $new_role ] : 0,
-			'is_system'    => $this->manager->is_system_role( $new_role )
-		) );
+		$table->single_row(
+			array(
+				'role'         => $result->name,
+				'name'         => $name,
+				'capabilities' => array_merge( $this->manager->get_all_capabilities(), $capabilities ),
+				'count'        => isset( $count['avail_roles'][ $new_role ] ) ? $count['avail_roles'][ $new_role ] : 0,
+				'is_system'    => $this->manager->is_system_role( $new_role ),
+			)
+		);
 		wp_die();
-
 	}
 
 	/**
@@ -494,8 +502,8 @@ class Leira_Roles_Actions{
 		/**
 		 * You are editing your own capabilities. Lets check that you dont break anything
 		 */
-		if ( $user->ID == get_current_user_id() ) {
-			//What do we do here??? TODO: Lets think about it.
+		if ( get_current_user_id() == $user->ID ) {
+			// What do we do here??? TODO: Lets think about it.
 		}
 
 		/**
@@ -525,7 +533,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Notify user and redirect
 		 */
-		if ( $user === false ) {
+		if ( false === $user ) {
 			$out = __( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.', 'leira-roles' );
 			wp_die( $out );
 		}
@@ -533,7 +541,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Output the row table with the new updated data
 		 */
-		$GLOBALS['hook_suffix'] = '';//avoid notice error
+		$GLOBALS['hook_suffix'] = '';// avoid notice error
 		$table                  = _get_list_table( 'WP_Users_List_Table' );
 
 		$tr = $table->single_row( $user );
@@ -570,7 +578,7 @@ class Leira_Roles_Actions{
 		 * Check you are not adding a role as capability
 		 */
 		if ( $this->manager->is_role( $capability ) ) {
-			//this capability already exist
+			// this capability already exist
 			$out = __( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.', 'leira-roles' );
 			$this->notify( $out );
 		}
@@ -579,8 +587,8 @@ class Leira_Roles_Actions{
 		 * Check capability doesn't exist
 		 */
 		if ( $this->manager->is_capability( $capability ) ) {
-			//this capability already exist
-			$out = __( sprintf( 'The capability %s already exist, use other capability identifier.', "<strong>" . esc_attr( $capability ) . "</strong>" ), 'leira-roles' );
+			// this capability already exist
+			$out = __( sprintf( 'The capability %s already exist, use other capability identifier.', '<strong>' . esc_attr( $capability ) . '</strong>' ), 'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -600,12 +608,14 @@ class Leira_Roles_Actions{
 			 */
 			$admin = leira_roles()->admin;
 			ob_start();
-			$GLOBALS['hook_suffix'] = '';//avoid warning outputs
-			$admin->get_capabilies_list_table()->single_row( array(
-				'capability' => $capability,
-				'name'       => $name,
-				'is_system'  => $this->manager->is_system_capability( $capability )
-			) );
+			$GLOBALS['hook_suffix'] = '';// avoid warning outputs
+			$admin->get_capabilies_list_table()->single_row(
+				array(
+					'capability' => $capability,
+					'name'       => $name,
+					'is_system'  => $this->manager->is_system_capability( $capability ),
+				)
+			);
 			$out = ob_get_clean();
 
 			wp_send_json_success( $out );

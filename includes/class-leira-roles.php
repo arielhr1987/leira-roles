@@ -32,7 +32,7 @@
  * @property Leira_Roles_Actions       actions
  * @property Leira_Roles_Notifications notify
  */
-class Leira_Roles{
+class Leira_Roles {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -75,7 +75,7 @@ class Leira_Roles{
 	 * @return self
 	 */
 	public static function instance() {
-		if ( self::$instance === null ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -98,7 +98,6 @@ class Leira_Roles{
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'leira-roles';
-
 	}
 
 	/**
@@ -123,41 +122,40 @@ class Leira_Roles{
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-leira-roles-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-leira-roles-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-leira-roles-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-leira-roles-i18n.php';
 
 		if ( is_admin() ) {
 			/**
 			 * The class responsible for manage roles and capabilities.
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-manager.php';
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-leira-roles-manager.php';
 			/**
 			 * The class responsible for defining all actions that occur in the admin area.
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-admin.php';
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-leira-roles-admin.php';
 			/**
 			 * The class responsible for handling form submissions
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-actions.php';
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-leira-roles-actions.php';
 			/**
 			 * The class responsible for handling notifications
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-leira-roles-notifications.php';
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-leira-roles-notifications.php';
 		}
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-leira-roles-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-leira-roles-public.php';
 
 		$this->loader = new Leira_Roles_Loader();
-
 	}
 
 	/**
@@ -175,7 +173,6 @@ class Leira_Roles{
 		$this->get_loader()->set( 'i18n', $plugin_i18n );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -222,8 +219,8 @@ class Leira_Roles{
 			$this->loader->add_action( 'wp_ajax_leira-roles-quick-edit-user-capabilities', $actions, 'handle' );
 			$this->loader->add_action( 'wp_ajax_leira-roles-footer-rated', $actions, 'footer_rated' );
 
-			//for future versions add ajax to capability creation
-			//$this->loader->add_action( 'wp_ajax_leira-roles-add-capability', $actions, 'handle' );
+			// for future versions add ajax to capability creation
+			// $this->loader->add_action( 'wp_ajax_leira-roles-add-capability', $actions, 'handle' );
 
 			$this->loader->add_action( 'load-users.php', $plugin_admin, 'load_users_page' );
 
@@ -232,7 +229,6 @@ class Leira_Roles{
 			 */
 			$notifications = new Leira_Roles_Notifications();
 			$this->loader->set( 'notify', $notifications );
-
 
 		}
 	}
@@ -245,7 +241,6 @@ class Leira_Roles{
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
 	}
 
 	/**
@@ -302,7 +297,6 @@ class Leira_Roles{
 	 *
 	 * @since     1.1.0
 	 * @access    public
-	 *
 	 */
 	public function __get( $key ) {
 		return $this->get_loader()->get( $key );
@@ -316,10 +310,8 @@ class Leira_Roles{
 	 *
 	 * @since     1.1.0
 	 * @access    public
-	 *
 	 */
 	public function __set( $key, $value ) {
 		$this->get_loader()->set( $key, $value );
 	}
-
 }
