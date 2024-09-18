@@ -187,7 +187,7 @@ inlineEditL10n = {
 
                     $.each(json, function (capability, value) {
                         //var title = leira_roles_i18n[capability] ? leira_roles_i18n[capability] : '';
-                        var html = '<label class="alignleft capability-item" title="">' +
+                        var html = '<label class="alignleft capability-item" title="' + capability + '">' +
                             '<input type="checkbox" name="capability[]" value="' + capability + '"' + (value ? ' checked="checked"' : '') + '>' +
                             '<span class="checkbox-title">' + capability + '</span>' +
                             '</label>';

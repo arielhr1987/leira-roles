@@ -7,7 +7,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 /**
  * Class Leira_Roles_List_Table
  */
-class Leira_Roles_List_Table extends WP_List_Table {
+class Leira_Roles_List_Table extends WP_List_Table{
 
 	/**
 	 * The roles manager
@@ -55,7 +55,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 		$class = array( 'roles-tr' );
 		$id    = 'role-' . md5( $item['role'] );
 
-		printf( '<tr id="%s" class="%s">', $id, implode( ' ', $class ) );
+		printf( '<tr id="%s" class="%s">', esc_html( $id ), esc_html( implode( ' ', $class ) ) );
 		$this->single_row_columns( $item );
 		echo '</tr>';
 	}
@@ -107,7 +107,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 			// 'users'                => sprintf( '<a href="%s" class="">%s</a>', add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ), __( 'Users', 'leira-roles' ) ),
 			'clone'                => sprintf(
 				'<a href="%s" class="clone-role">%s</a>',
-				add_query_arg(
+				esc_url( add_query_arg(
 					array(
 						'page'     => 'leira-roles',
 						'action'   => 'leira-roles-clone-role',
@@ -115,19 +115,22 @@ class Leira_Roles_List_Table extends WP_List_Table {
 						'_wpnonce' => wp_create_nonce( 'bulk-roles' ),
 					),
 					admin_url( 'users.php' )
-				),
+				) ),
 				__( 'Clone', 'leira-roles' )
 			),
 			'inline hide-if-no-js' => sprintf(
 				'<button type="button" class="button-link editinline" aria-label="%s" aria-expanded="false">%s</button>',
+				/*
+				 * translators: The role name to quick edit
+				 */
 				esc_attr( sprintf( __( 'Quick edit &#8220;%s&#8221; inline', 'leira-roles' ), $item['role'] ) ),
 				__( 'Quick&nbsp;Edit', 'leira-roles' )
 			),
-		// 'edit'  => sprintf(
-		// '<button type="button" class="button-link editinline" aria-label="%s" aria-expanded="false">%s</button>',
-		// esc_attr( sprintf( __( 'Edit', 'leira-roles' ), $item['role'] ) ),
-		// __( 'Edit', 'leira-roles' )
-		// ),
+			// 'edit'  => sprintf(
+			// '<button type="button" class="button-link editinline" aria-label="%s" aria-expanded="false">%s</button>',
+			// esc_attr( sprintf( __( 'Edit', 'leira-roles' ), $item['role'] ) ),
+			// __( 'Edit', 'leira-roles' )
+			// ),
 		);
 
 		if ( ! $this->manager->is_system_role( $item['role'] ) ) {
@@ -137,7 +140,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 				array(
 					'delete' => sprintf(
 						'<a href="%s" class="delete-role" onclick="return confirm(\'%s\')">%s</a>',
-						add_query_arg(
+						esc_url( add_query_arg(
 							array(
 								'page'     => 'leira-roles',
 								'action'   => 'leira-roles-delete-role',
@@ -145,7 +148,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 								'_wpnonce' => wp_create_nonce( 'bulk-roles' ),
 							),
 							admin_url( 'users.php' )
-						),
+						) ),
 						__( 'Are you sure you want to delete this role?', 'leira-roles' ),
 						__( 'Delete', 'leira-roles' )
 					),
@@ -207,7 +210,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 				} else {
 					ksort( $value, SORT_NATURAL | SORT_FLAG_CASE );
 				}
-				$value = json_encode( $value );
+				$value = wp_json_encode( $value );
 			}
 			$out .= sprintf( '<div class="%s">%s</div>', $key, $value );
 		}
@@ -236,7 +239,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 	 * @return string
 	 */
 	protected function column_count( $item ) {
-		return sprintf( '<a href="%s" class="">%s</a>', add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ), number_format_i18n( $item['count'] ) );
+		return sprintf( '<a href="%s" class="">%s</a>', esc_url( add_query_arg( 'role', esc_attr( $item['role'] ), admin_url( 'users.php' ) ) ), number_format_i18n( $item['count'] ) );
 	}
 
 	/**
@@ -259,7 +262,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 
 		$query_arg = '_wpnonce';
 		$action    = 'bulk-' . $this->_args['plural'];
-		$checked   = $result = isset( $_REQUEST[ $query_arg ] ) ? wp_verify_nonce( $_REQUEST[ $query_arg ], $action ) : false;
+		$checked   = array_key_exists( $query_arg, $_REQUEST ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ), $action ) : false;
 
 		if ( ! $checked ) {
 			return;
@@ -311,21 +314,22 @@ class Leira_Roles_List_Table extends WP_List_Table {
 		$input_id = $input_id . '-search-input';
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
+			echo '<input type="hidden" name="orderby" value="' . esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) ) . '" />';
 		}
 		if ( ! empty( $_REQUEST['order'] ) ) {
-			echo '<input type="hidden" name="order" value="' . esc_attr( $_REQUEST['order'] ) . '" />';
+			echo '<input type="hidden" name="order" value="' . esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) . '" />';
 		}
 		if ( ! empty( $_REQUEST['page'] ) ) {
-			echo '<input type="hidden" name="page" value="' . esc_attr( $_REQUEST['page'] ) . '" />';
+			echo '<input type="hidden" name="page" value="' . esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) ) . '" />';
 		}
 		?>
-		<p class="search-box">
-			<label class="screen-reader-text" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $text; ?>:</label>
-			<input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s"
-					value="<?php _admin_search_query(); ?>"/>
+        <p class="search-box">
+            <label class="screen-reader-text"
+                   for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_html( $text ); ?>:</label>
+            <input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s"
+                   value="<?php _admin_search_query(); ?>"/>
 			<?php submit_button( $text, '', '', false, array( 'id' => 'search-submit' ) ); ?>
-		</p>
+        </p>
 		<?php
 	}
 
@@ -352,7 +356,7 @@ class Leira_Roles_List_Table extends WP_List_Table {
 		/**
 		 * Handle search
 		 */
-		if ( ( ! empty( $_REQUEST['s'] ) ) && $search = $_REQUEST['s'] ) {
+		if ( ( ! empty( $_REQUEST['s'] ) ) && $search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) {
 			// $_SERVER['REQUEST_URI'] = add_query_arg( 's', $search );
 			$data_filtered = array();
 			foreach ( $data as $item ) {
@@ -367,8 +371,8 @@ class Leira_Roles_List_Table extends WP_List_Table {
 		 * This checks for sorting input and sorts the data in our array accordingly.
 		 */
 		function usort_reorder( $a, $b ) {
-			$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( $_REQUEST['orderby'] ) : 'role'; // If no sort, default to role
-			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( $_REQUEST['order'] ) : 'asc'; // If no order, default to asc
+			$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'role'; // If no sort, default to role
+			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'asc'; // If no order, default to asc
 
 			// $result = strcmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case sensitive
 			// $result = strcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case insensitive
@@ -421,57 +425,57 @@ class Leira_Roles_List_Table extends WP_List_Table {
 		}
 		?>
 
-		<form method="get">
-			<table style="display: none">
-				<tbody id="inlineedit">
-				<tr id="inline-edit" class="inline-edit-row" style="display: none">
-					<td colspan="<?php echo $this->get_column_count(); ?>" class="colspanchange">
+        <form method="get">
+            <table style="display: none">
+                <tbody id="inlineedit">
+                <tr id="inline-edit" class="inline-edit-row" style="display: none">
+                    <td colspan="<?php echo esc_html( $this->get_column_count() ); ?>" class="colspanchange">
 
-						<fieldset class="">
-							<legend class="inline-edit-legend"><?php _e( 'Quick Edit' ); ?></legend>
-							<div class="inline-edit-col">
-								<label>
-									<span class="title"><?php _e( 'Role', 'leira-roles' ); ?></span>
-									<span class="input-text-wrap">
+                        <fieldset class="">
+                            <legend class="inline-edit-legend"><?php esc_html_e( 'Quick Edit' ); ?></legend>
+                            <div class="inline-edit-col">
+                                <label>
+                                    <span class="title"><?php esc_html_e( 'Role', 'leira-roles' ); ?></span>
+                                    <span class="input-text-wrap">
 										<input type="hidden" name="old_role" value=""/>
 										<input class="ptitle" type="text" name="new_role" value=""/>
-										<!--<p class="description">
+                                        <!--<p class="description">
 											<small> </small>
 										</p>-->
 									</span>
-								</label>
-								<label>
-									<span class="title"><?php _e( 'Name', 'leira-roles' ); ?></span>
-									<span class="input-text-wrap">
-										<input class="ptitle" type="text" name="name" value=""/>
-										<!--<p class="description">
+                                </label>
+                                <label>
+                                    <span class="title"><?php esc_html_e( 'Name', 'leira-roles' ); ?></span>
+                                    <span class="input-text-wrap">
+										<input class="ptitle" type="text" name="name" value="" autocomplete="off"/>
+                                        <!--<p class="description">
 											<small> </small>
 										</p>-->
 									</span>
-								</label>
-								<label>
-									<span class="title"><?php _e( 'Capabilities', 'leira-roles' ); ?></span>
-									<span class="input-text-wrap">
+                                </label>
+                                <label>
+                                    <span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
+                                    <span class="input-text-wrap">
 										<div class="wp-clearfix">
 											<p class="search-box">
 												<input type="search" name="capabilities_search_input"
-														placeholder="<?php _e( 'Search Capabilities', 'leira-roles' ); ?>">
+                                                       placeholder="<?php esc_html_e( 'Search Capabilities', 'leira-roles' ); ?>">
 											</p>
 											<label class="alignleft">
 												<input type="checkbox" class="cb-capabilities-select-all">
-												<span class="checkbox-title"><?php _e( 'All', 'leira-roles' ); ?> </span>
+												<span class="checkbox-title"><?php esc_html_e( 'All', 'leira-roles' ); ?> </span>
 											</label>
 										</div>
 										<div class="capabilities-container wp-clearfix">
 											<div class="notice notice-error notice-alt inline hidden">
-												<p class="error"><?php _e( 'No capabilities found.', 'leira-roles' ); ?> </p>
+												<p class="error"><?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?> </p>
 											</div>
 										</div>
 									</span>
-								</label>
+                                </label>
 
-							</div>
-						</fieldset>
+                            </div>
+                        </fieldset>
 						<?php
 
 						$core_columns = array(
@@ -497,22 +501,25 @@ class Leira_Roles_List_Table extends WP_List_Table {
 
 						?>
 
-						<div class="inline-edit-save submit">
-							<button type="button" class="cancel button alignleft"><?php _e( 'Cancel' ); ?></button>
-							<button type="button"
-									class="save button button-primary alignright"><?php _e( 'Save' ); ?></button>
-							<span class="spinner"></span>
+                        <div class="inline-edit-save submit">
+                            <button type="button" class="cancel button alignleft">
+                                <?php esc_html_e( 'Cancel' ); ?>
+                            </button>
+                            <button type="button" class="save button button-primary alignright">
+                                <?php esc_html_e( 'Save' ); ?>
+                            </button>
+                            <span class="spinner"></span>
 							<?php wp_nonce_field( 'roleinlineeditnonce', '_inline_edit', false ); ?>
-							<br class="clear"/>
-							<div class="notice notice-error notice-alt inline hidden">
-								<p class="error"></p>
-							</div>
-						</div>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</form>
+                            <br class="clear"/>
+                            <div class="notice notice-error notice-alt inline hidden">
+                                <p class="error"></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
 		<?php
 	}
 }

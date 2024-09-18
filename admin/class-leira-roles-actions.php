@@ -12,7 +12,7 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Actions {
+class Leira_Roles_Actions{
 
 	/**
 	 * @var string
@@ -67,21 +67,21 @@ class Leira_Roles_Actions {
 	}
 
 	/**
-	 * Get the current action selected from the bulk actions dropdown.
+	 * Get the current action selected from the bulk actions' dropdown.
 	 *
 	 * @return string|false The action name or False if no action was selected
 	 */
 	protected function current_action() {
-		if ( isset( $_REQUEST['filter_action'] ) && ! empty( $_REQUEST['filter_action'] ) ) {
+		if ( array_key_exists( 'filter_action', $_REQUEST ) && ! empty( $_REQUEST['filter_action'] ) ) {
 			return false;
 		}
 
 		if ( isset( $_REQUEST['action'] ) && - 1 != $_REQUEST['action'] ) {
-			return $_REQUEST['action'];
+			return sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
 		}
 
 		if ( isset( $_REQUEST['action2'] ) && - 1 != $_REQUEST['action2'] ) {
-			return $_REQUEST['action2'];
+			return sanitize_text_field( wp_unslash( $_REQUEST['action2'] ) );
 		}
 
 		return false;
@@ -114,7 +114,7 @@ class Leira_Roles_Actions {
 				$params       = array(
 					'page' => 'leira-roles', // TODO: redirect to capabilities page too
 				);
-				$redirect_url = add_query_arg( $params, admin_url( 'users.php' ) );
+				$redirect_url = esc_url( add_query_arg( $params, admin_url( 'users.php' ) ) );
 			}
 			if ( $redirect ) {
 				wp_safe_redirect( $redirect_url );
@@ -142,7 +142,7 @@ class Leira_Roles_Actions {
 	 */
 	protected function check_nonce( $action = '-1', $query_arg = '_wpnonce' ) {
 
-		$checked = isset( $_REQUEST[ $query_arg ] ) && wp_verify_nonce( $_REQUEST[ $query_arg ], $action );
+		$checked = isset( $_REQUEST[ $query_arg ] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ), $action );
 		if ( ! $checked ) {
 			$out = __( 'Your link has expired, refresh the page and try again.', 'leira-roles' );
 			$this->notify( $out );
@@ -166,9 +166,9 @@ class Leira_Roles_Actions {
 		/**
 		 * Validate input data
 		 */
-		$role = isset( $_REQUEST['role'] ) ? sanitize_text_field( $_REQUEST['role'] ) : false;
+		$role = isset( $_REQUEST['role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['role'] ) ) : false;
 		$role = str_replace( ' ', '', $role ); // Remove spaces
-		$name = isset( $_REQUEST['name'] ) ? sanitize_text_field( $_REQUEST['name'] ) : false;
+		$name = isset( $_REQUEST['name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) : false;
 
 		if ( empty( $role ) || empty( $name ) ) {
 			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
@@ -179,8 +179,11 @@ class Leira_Roles_Actions {
 		 * Check role doesn't exist
 		 */
 		if ( $this->manager->is_role( $role ) ) {
-			// this role already exist
-			$out = __( sprintf( 'The role %s already exist, use other role identifier.', '<strong>' . esc_attr( $role ) . '</strong>' ), 'leira-roles' );
+			// this role already exists
+			/*
+			 * translators: The name of the role
+			 */
+			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> already exist, use another role identifier.', 'leira-roles' ), $role ) );
 			$this->notify( $out );
 		}
 
@@ -220,7 +223,10 @@ class Leira_Roles_Actions {
 			/**
 			 * Notify user and redirect
 			 */
-			$out = __( sprintf( 'The new role %s was created successfully.', '<strong>' . $role . '</strong>' ), 'leira-roles' );
+			/*
+			 * translators: the role name
+			 */
+			$out = wp_kses_post( sprintf( __( 'The new role <strong>%s</strong> was created successfully.', 'leira-roles' ), $role ) );
 			$this->notify( $out, 'success' );
 		}
 	}
@@ -242,7 +248,7 @@ class Leira_Roles_Actions {
 		/**
 		 * Validate input data
 		 */
-		$role = isset( $_REQUEST['role'] ) ? sanitize_text_field( $_REQUEST['role'] ) : false;
+		$role = isset( $_REQUEST['role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['role'] ) ) : false;
 
 		if ( empty( $role ) ) {
 			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
@@ -253,8 +259,11 @@ class Leira_Roles_Actions {
 		 * Check role doesn't exist
 		 */
 		if ( ! $this->manager->is_role( $role ) ) {
-			// this role does not exist
-			$out = __( sprintf( 'The role %s doesn\'t exist.', '<strong>' . esc_attr( $role ) . '</strong>' ), 'leira-roles' );
+			// this role doesn't exist
+			/*
+			 * translators: the name of the role
+			 */
+			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> doesn\'t exist.', 'leira-roles' ), $role ) );
 			$this->notify( $out );
 		}
 		/**
@@ -263,8 +272,7 @@ class Leira_Roles_Actions {
 		$result = $this->manager->clone_role( $role );
 
 		if ( ! $result instanceof WP_Role ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.', 'leira-roles' );
-			$this->notify( $out );
+			$this->notify( esc_html__( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		if ( $this->is_ajax() ) {
@@ -296,7 +304,7 @@ class Leira_Roles_Actions {
 			 */
 			$from     = '<strong>' . $role . '</strong>';
 			$to       = '<strong>' . $result->name . '</strong>';
-			$undo_url = add_query_arg(
+			$undo_url = esc_url( add_query_arg(
 				array(
 					'page'     => 'leira-roles',
 					'action'   => 'leira-roles-delete-role',
@@ -304,9 +312,12 @@ class Leira_Roles_Actions {
 					'_wpnonce' => wp_create_nonce( 'bulk-roles' ),
 				),
 				admin_url( 'users.php' )
-			);
+			) );
 			$undo     = sprintf( '<a href="%s">%s</a>', $undo_url, __( 'Undo', 'leira-roles' ) );
-			$out      = __( sprintf( 'The role %s was cloned successfully into %s. %s', $from, $to, $undo ), 'leira-roles' );
+			/*
+			 * translators: The role name to clone, into the role. Undo link
+			 */
+			$out = sprintf( __( 'The role %1$s was cloned successfully into %2$s. %3$s', 'leira-roles' ), $from, $to, $undo );
 			$this->notify( $out, 'success' );
 		}
 	}
@@ -331,12 +342,11 @@ class Leira_Roles_Actions {
 		$roles = array();
 		if ( isset( $_REQUEST['role'] ) ) {
 			if ( is_string( $_REQUEST['role'] ) ) {
-				$input   = sanitize_text_field( $_REQUEST['role'] );
+				$input   = sanitize_text_field( wp_unslash( $_REQUEST['role'] ) );
 				$roles[] = $input;
 			} elseif ( is_array( $_REQUEST['role'] ) ) {
-				foreach ( $_REQUEST['role'] as $key => $id ) {
-					$roles[] = sanitize_text_field( $id );
-				}
+				$roles = array_map( 'sanitize_text_field', $_REQUEST['role'] );
+				$roles = array_map( 'wp_unslash', $roles );
 			}
 		} else {
 			return;
@@ -346,8 +356,7 @@ class Leira_Roles_Actions {
 		 * If no roles provided return
 		 */
 		if ( empty( $roles ) ) {
-			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
-			$this->notify( $out );
+			$this->notify( esc_html__( 'Missing parameters, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
@@ -372,9 +381,16 @@ class Leira_Roles_Actions {
 			$deleted = $this->manager->delete_role( $role );
 		}
 
-		$single = sprintf( 'The role %s was successfully deleted.', '<strong>' . $roles[0] . '</strong>' );
-		$plural = sprintf( 'The selected %s roles were successfully deleted.', '<strong>' . count( $roles ) . '</strong>' );
-		$out    = _n( $single, $plural, count( $roles ), 'leira-roles' );
+		/*
+		 * translators: The role or the number of roles deleted
+		 */
+		$out = _n(
+			'The role <strong>%s</strong> was successfully deleted.',
+			'The selected <strong>%s</strong> roles were successfully deleted.',
+			count( $roles ),
+			'leira-roles'
+		);
+		$out = sprintf( $out, count( $roles ) > 1 ? count( $roles ) : $roles[0] );
 		if ( $this->is_ajax() ) {
 			wp_send_json_success( $out );
 		} else {
@@ -391,39 +407,36 @@ class Leira_Roles_Actions {
 		 * Check capabilities
 		 */
 		if ( ! current_user_can( $this->capability ) ) {
-			$out = __( 'You do not have sufficient permissions to perform this action.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'You do not have sufficient permissions to perform this action.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Check nonce
 		 */
-		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( $_REQUEST['_inline_edit'], 'roleinlineeditnonce' );
+		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ), 'roleinlineeditnonce' );
 		if ( ! $checked ) {
-			$out = __( 'Your link has expired, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'Your link has expired, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Validate input data
 		 * We use inline_role to avoid conflicts with role table checkbox column
 		 */
-		$old_role = isset( $_REQUEST['old_role'] ) ? sanitize_text_field( $_REQUEST['old_role'] ) : false;
-		$new_role = isset( $_REQUEST['new_role'] ) ? sanitize_text_field( $_REQUEST['new_role'] ) : false;
-		$name     = isset( $_REQUEST['name'] ) ? sanitize_text_field( $_REQUEST['name'] ) : false;
+		$old_role = isset( $_REQUEST['old_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['old_role'] ) ) : false;
+		$new_role = isset( $_REQUEST['new_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['new_role'] ) ) : false;
+		$name     = isset( $_REQUEST['name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) : false;
 
 		if ( empty( $old_role ) || empty( $new_role ) || empty( $name ) ) {
-			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'Missing parameters, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Sanitize capabilities
 		 */
-		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
+		$input_capabilities = ( array_key_exists( 'capability', $_REQUEST ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
-			$capabilities[ sanitize_text_field( $capability ) ] = true;
+			$capabilities[ sanitize_text_field( wp_unslash( $capability ) ) ] = true;
 		}
 
 		/**
@@ -433,8 +446,7 @@ class Leira_Roles_Actions {
 
 		} elseif ( $old_role !== $new_role ) {
 			if ( $this->manager->is_role( $new_role ) ) {
-				$out = __( 'The provided new role, already exist. Use an other role identifier.', 'leira-roles' );
-				wp_die( $out );
+				wp_die( esc_html__( 'The provided new role, already exist. Use an other role identifier.', 'leira-roles' ) );
 			}
 		}
 
@@ -444,8 +456,7 @@ class Leira_Roles_Actions {
 		 * Something went wrong
 		 */
 		if ( false === $result ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to update the role, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to update the role, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
@@ -476,27 +487,24 @@ class Leira_Roles_Actions {
 		 * Check capabilities
 		 */
 		if ( ! current_user_can( $this->capability ) ) {
-			$out = __( 'You do not have sufficient permissions to perform this action.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'You do not have sufficient permissions to perform this action.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Check nonce
 		 */
-		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( $_REQUEST['_inline_edit'], 'usercapabilitiesinlineeditnonce' );
+		$checked = array_key_exists( '_inline_edit', $_REQUEST ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ), 'usercapabilitiesinlineeditnonce' );
 		if ( ! $checked ) {
-			$out = __( 'Your link has expired, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'Your link has expired, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Check user exist
 		 */
-		$user_id = isset( $_REQUEST['user_id'] ) ? $_REQUEST['user_id'] : false;
+		$user_id = array_key_exists( 'user_id', $_REQUEST ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_id'] ) ) : false;
 		$user    = get_user_by( 'id', $user_id );
 		if ( ! $user instanceof WP_User ) {
-			$out = __( 'User not found, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'User not found, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
@@ -511,15 +519,14 @@ class Leira_Roles_Actions {
 		 */
 		if ( is_multisite() ) {
 			if ( ! is_user_member_of_blog( $user->ID ) ) {
-				$out = __( 'You are not allowed to edit other site users.', 'leira-roles' );
-				wp_die( $out );
+				wp_die( esc_html__( 'You are not allowed to edit other site users.', 'leira-roles' ) );
 			}
 		}
 
 		/**
 		 * Sanitize capabilities
 		 */
-		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
+		$input_capabilities = ( array_key_exists( 'capability', $_REQUEST ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
 			$capabilities[ sanitize_text_field( $capability ) ] = true;
@@ -534,8 +541,7 @@ class Leira_Roles_Actions {
 		 * Notify user and redirect
 		 */
 		if ( false === $user ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.', 'leira-roles' );
-			wp_die( $out );
+			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
@@ -544,8 +550,8 @@ class Leira_Roles_Actions {
 		$GLOBALS['hook_suffix'] = '';// avoid notice error
 		$table                  = _get_list_table( 'WP_Users_List_Table' );
 
-		$tr = $table->single_row( $user );
-		wp_die( $tr );
+		$table->single_row( $user );
+		wp_die();
 	}
 
 	/**
@@ -565,30 +571,31 @@ class Leira_Roles_Actions {
 		/**
 		 * Validate input data
 		 */
-		$capability = isset( $_REQUEST['capability'] ) ? sanitize_text_field( $_REQUEST['capability'] ) : false;
+		$capability = isset( $_REQUEST['capability'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['capability'] ) ) : false;
 		$capability = str_replace( ' ', '', $capability ); // Remove spaces
-		$name       = isset( $_REQUEST['name'] ) ? sanitize_text_field( $_REQUEST['name'] ) : false;
+		$name       = isset( $_REQUEST['name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) : false;
 
 		if ( empty( $capability ) ) {
-			$out = __( 'Missing parameters, refresh the page and try again.', 'leira-roles' );
-			$this->notify( $out );
+			$this->notify( esc_html__( 'Missing parameters, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Check you are not adding a role as capability
 		 */
 		if ( $this->manager->is_role( $capability ) ) {
-			// this capability already exist
-			$out = __( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.', 'leira-roles' );
-			$this->notify( $out );
+			// this capability already exists
+			$this->notify( esc_html__( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Check capability doesn't exist
 		 */
 		if ( $this->manager->is_capability( $capability ) ) {
-			// this capability already exist
-			$out = __( sprintf( 'The capability %s already exist, use other capability identifier.', '<strong>' . esc_attr( $capability ) . '</strong>' ), 'leira-roles' );
+			// this capability already exists
+			/*
+			 * translators: the name of the capability
+			 */
+			$out = sprintf( esc_html__( 'The capability %s already exist, use other capability identifier.', 'leira-roles' ), '<strong>' . esc_attr( $capability ) . '</strong>' );
 			$this->notify( $out );
 		}
 
@@ -598,7 +605,7 @@ class Leira_Roles_Actions {
 		$result = $this->manager->add_capability( $capability );
 
 		if ( ! $result ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to create the capability, refresh the page and try again.', 'leira-roles' );
+			$out = esc_html__( 'Something went wrong, the system wasn\'t able to create the capability, refresh the page and try again.', 'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -623,7 +630,10 @@ class Leira_Roles_Actions {
 			/**
 			 * Notify user and redirect
 			 */
-			$out = __( sprintf( 'The new capability %s was created successfully.', '<strong>' . $capability . '</strong>' ), 'leira-roles' );
+			/*
+			 * translators: the name of the capability
+			 */
+			$out = sprintf( esc_html__( 'The new capability %s was created successfully.', 'leira-roles' ), '<strong>' . $capability . '</strong>' );
 			$this->notify( $out, 'success' );
 		}
 	}
@@ -650,11 +660,11 @@ class Leira_Roles_Actions {
 		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
-			$capabilities[] = sanitize_text_field( $capability );
+			$capabilities[] = sanitize_text_field( wp_unslash($capability) );
 		}
 
 		if ( empty( $capabilities ) ) {
-			$out = __( 'Select valid capabilities and try again.', 'leira-roles' );
+			$out = esc_html__( 'Select valid capabilities and try again.', 'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -664,16 +674,23 @@ class Leira_Roles_Actions {
 		$result = $this->manager->delete_capabilities( $capabilities );
 
 		if ( ! $result ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to delete the selected capabilities, refresh the page and try again.', 'leira-roles' );
+			$out = esc_html__( 'Something went wrong, the system wasn\'t able to delete the selected capabilities, refresh the page and try again.', 'leira-roles' );
 			$this->notify( $out );
 		}
 
 		/**
 		 * Notify the user
 		 */
-		$single = sprintf( 'The capability %s was successfully deleted.', '<strong>' . $capabilities[0] . '</strong>' );
-		$plural = sprintf( 'The selected %s capabilities were successfully deleted.', '<strong>' . count( $capabilities ) . '</strong>' );
-		$out    = _n( $single, $plural, count( $capabilities ), 'leira-roles' );
+		/*
+		 * translators: The capability or the number of capabilities deleted
+		 */
+		$out = _n(
+			'The capability <strong>%s</strong> was successfully deleted.',
+			'The selected <strong>%s</strong> capabilities were successfully deleted.',
+			count( $capabilities ),
+			'leira-roles'
+		);
+		$out = sprintf( $out, count( $capabilities ) > 1 ? count( $capabilities ) : $capabilities[0] );
 		if ( $this->is_ajax() ) {
 			wp_send_json_success( $out );
 		} else {

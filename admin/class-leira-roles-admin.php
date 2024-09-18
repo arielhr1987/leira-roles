@@ -22,7 +22,7 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Admin {
+class Leira_Roles_Admin{
 
 	/**
 	 * The ID of this plugin.
@@ -248,7 +248,10 @@ class Leira_Roles_Admin {
 				$username = $user->data->user_nicename;
 				$username = sprintf( '&#8220;%s&#8221;', $username );
 			}
-			$format     = '<button type="button" class="button-link editinline_capabilities" aria-label="%s" aria-expanded="false">%s</button><div class="hidden" id="inline_capabilities_%s">%s</div>';
+			$format = '<button type="button" class="button-link editinline_capabilities" aria-label="%s" aria-expanded="false">%s</button><div class="hidden" id="inline_capabilities_%s">%s</div>';
+			/*
+			 * translators: Quick edit the username availability
+			 */
 			$aria_label = esc_attr( sprintf( __( 'Quick edit %s capabilities', 'leira-roles' ), $username ) );
 			$label      = __( 'Capabilities', 'leira-roles' );
 
@@ -257,7 +260,7 @@ class Leira_Roles_Admin {
 				// remove roles
 				$allcaps      = array_filter(
 					$user->allcaps,
-					function ( $cap ) {
+					function( $cap ) {
 						return ! leira_roles()->manager->is_role( $cap );
 					},
 					ARRAY_FILTER_USE_KEY
@@ -265,7 +268,7 @@ class Leira_Roles_Admin {
 				$capabilities = array_merge( $capabilities, $allcaps );
 			}
 			ksort( $capabilities, SORT_NATURAL | SORT_FLAG_CASE );
-			$capabilities = json_encode( $capabilities );
+			$capabilities = wp_json_encode( $capabilities );
 
 			$arr   = array(
 				'user_id'      => $user->ID,
@@ -292,59 +295,59 @@ class Leira_Roles_Admin {
 			global $wp_list_table;
 			$columns_count = $wp_list_table->get_column_count();
 			?>
-			<form method="get">
-				<table style="display: none">
-					<tbody id="inlineeditcapabilities">
-					<tr id="inline-edit-capabilities" class="inline-edit-row" style="display: none">
-						<td colspan="<?php echo $columns_count; ?>" class="colspanchange">
+            <form method="get">
+                <table style="display: none">
+                    <tbody id="inlineeditcapabilities">
+                    <tr id="inline-edit-capabilities" class="inline-edit-row" style="display: none">
+                        <td colspan="<?php echo esc_html( $columns_count ); ?>" class="colspanchange">
 
-							<fieldset class="">
-								<legend class="inline-edit-legend"><?php _e( 'Edit Capabilities', 'leira-roles' ); ?></legend>
-								<input type="hidden" name="user_id" value="">
-								<div class="inline-edit-col">
-									<label>
-										<span class="title"><?php _e( 'Capabilities', 'leira-roles' ); ?></span>
-										<span class="input-text-wrap">
+                            <fieldset class="">
+                                <legend class="inline-edit-legend"><?php esc_html_e( 'Edit Capabilities', 'leira-roles' ); ?></legend>
+                                <input type="hidden" name="user_id" value="">
+                                <div class="inline-edit-col">
+                                    <label>
+                                        <span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
+                                        <span class="input-text-wrap">
 										<div class="wp-clearfix">
 											<p class="search-box">
 												<input type="search" name="capabilities_search_input"
-														placeholder="<?php _e( 'Search Capabilities', 'leira-roles' ); ?>">
+                                                       placeholder="<?php esc_html_e( 'Search Capabilities', 'leira-roles' ); ?>">
 											</p>
 											<label class="alignleft">
 												<input type="checkbox" class="cb-capabilities-select-all">
-												<span class="checkbox-title"><?php _e( 'All', 'leira-roles' ); ?> </span>
+												<span class="checkbox-title"><?php esc_html_e( 'All', 'leira-roles' ); ?> </span>
 											</label>
 										</div>
 										<div class="capabilities-container wp-clearfix">
 											<div class="notice notice-error notice-alt inline hidden">
-												<p class="error"><?php _e( 'No capabilities found.', 'leira-roles' ); ?> </p>
+												<p class="error"><?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?> </p>
 											</div>
 										</div>
 									</span>
-									</label>
+                                    </label>
 
-								</div>
-							</fieldset>
-							<div class="inline-edit-save submit">
-								<button type="button" class="cancel button alignleft">
-									<?php _e( 'Cancel', 'leira-roles' ); ?>
-								</button>
-								<button type="button"
-										class="save button button-primary alignright">
-									<?php _e( 'Save', 'leira-roles' ); ?>
-								</button>
-								<span class="spinner"></span>
+                                </div>
+                            </fieldset>
+                            <div class="inline-edit-save submit">
+                                <button type="button" class="cancel button alignleft">
+									<?php esc_html_e( 'Cancel', 'leira-roles' ); ?>
+                                </button>
+                                <button type="button"
+                                        class="save button button-primary alignright">
+									<?php esc_html_e( 'Save', 'leira-roles' ); ?>
+                                </button>
+                                <span class="spinner"></span>
 								<?php wp_nonce_field( 'usercapabilitiesinlineeditnonce', '_inline_edit', false ); ?>
-								<br class="clear"/>
-								<div class="notice notice-error notice-alt inline hidden">
-									<p class="error"></p>
-								</div>
-							</div>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</form>
+                                <br class="clear"/>
+                                <div class="notice notice-error notice-alt inline hidden">
+                                    <p class="error"></p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
 			<?php
 		}
 	}
@@ -354,16 +357,18 @@ class Leira_Roles_Admin {
 	 */
 	public function render_roles_admin_page() {
 		if ( ! current_user_can( $this->capability ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 		?>
-		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php _e( 'Roles', 'leira-roles' ); ?> </h1>
-			<!--<a href="#" class="page-title-action">--><?php // _e( 'Add New', 'leira-roles' ) ?><!--</a>-->
+        <div class="wrap">
+            <h1 class="wp-heading-inline"><?php esc_html_e( 'Roles', 'leira-roles' ); ?> </h1>
+            <!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
 			<?php
-			if ( isset( $_REQUEST['s'] ) && $search = esc_attr( wp_unslash( $_REQUEST['s'] ) ) ) {
-				/* translators: %s: search keywords */
-				printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', $search );
+			if ( isset( $_REQUEST['s'] ) && $search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) {
+				/*
+				 * translators: %s: search keywords
+				 */
+				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', esc_html( $search ) );
 			}
 
 			// the roles table instance
@@ -371,59 +376,60 @@ class Leira_Roles_Admin {
 			$table->prepare_items();
 			$this->admin_notices();
 			?>
-			<hr class="wp-header-end">
-			<div id="ajax-response"></div>
-			<form class="search-form wp-clearfix" method="get">
+            <hr class="wp-header-end">
+            <div id="ajax-response"></div>
+            <form class="search-form wp-clearfix" method="get">
 				<?php $table->search_box( __( 'Search Roles', 'leira-roles' ), 'roles' ); ?>
-			</form>
-			<div id="col-container" class="wp-clearfix">
-				<div id="col-left">
-					<div class="col-wrap">
-						<div class="form-wrap">
-							<h2><?php _e( 'Add New Role', 'leira-roles' ); ?> </h2>
-							<form id="addrole" method="post" action="" class="validate">
-								<input type="hidden" name="action" value="leira-roles-add-role">
-								<input type="hidden" name="screen" value="<?php echo get_current_screen()->id; ?>">
+            </form>
+            <div id="col-container" class="wp-clearfix">
+                <div id="col-left">
+                    <div class="col-wrap">
+                        <div class="form-wrap">
+                            <h2><?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> </h2>
+                            <form id="addrole" method="post" action="" class="validate">
+                                <input type="hidden" name="action" value="leira-roles-add-role">
+                                <input type="hidden" name="screen"
+                                       value="<?php echo esc_html( get_current_screen()->id ); ?>">
 								<?php
 								wp_nonce_field( 'add-role' );
 								?>
 
-								<div class="form-field form-required">
-									<label for="role"><?php _e( 'Role', 'leira-roles' ); ?> </label>
-									<input name="role" id="role" type="text" value="" size="40"
-											aria-required="true">
-									<p><?php _e( 'A unique identifier for the new role.', 'leira-roles' ); ?></p>
-								</div>
-								<div class="form-field form-required">
-									<label for="name"><?php _e( 'Name', 'leira-roles' ); ?> </label>
-									<input name="name" id="name" type="text" value="" size="40">
-									<p><?php _e( 'The name is how it appears on your site.', 'leira-roles' ); ?></p>
-								</div>
+                                <div class="form-field form-required">
+                                    <label for="role"><?php esc_html_e( 'Role', 'leira-roles' ); ?> </label>
+                                    <input name="role" id="role" type="text" value="" size="40"
+                                           aria-required="true" autocomplete="off">
+                                    <p><?php esc_html_e( 'A unique identifier for the new role.', 'leira-roles' ); ?></p>
+                                </div>
+                                <div class="form-field form-required">
+                                    <label for="name"><?php esc_html_e( 'Name', 'leira-roles' ); ?> </label>
+                                    <input name="name" id="name" type="text" value="" size="40" autocomplete="off">
+                                    <p><?php esc_html_e( 'The name is how it appears on your site.', 'leira-roles' ); ?></p>
+                                </div>
 
-								<p class="submit">
-									<input type="submit" name="submit" id="submit" class="button button-primary"
-											value="<?php _e( 'Add New Role', 'leira-roles' ); ?> ">
-								</p>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div id="col-right">
-					<div class="col-wrap">
-						<form action="<?php echo add_query_arg( '', '' ); ?>" method="post">
+                                <p class="submit">
+                                    <input type="submit" name="submit" id="submit" class="button button-primary"
+                                           value="<?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> ">
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="col-right">
+                    <div class="col-wrap">
+                        <form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
 							<?php $table->display(); // Display the table ?>
-						</form>
-						<div class="form-wrap edit-term-notes">
-							<p><?php __( 'Description here.', 'leira-roles' ); ?></p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<form method="get">
+                        </form>
+                        <div class="form-wrap edit-term-notes">
+                            <p><?php __( 'Description here.', 'leira-roles' ); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="get">
 				<?php $table->inline_edit(); ?>
-			</form>
+            </form>
 
-		</div>
+        </div>
 
 		<?php
 	}
@@ -433,7 +439,7 @@ class Leira_Roles_Admin {
 	 */
 	public function admin_roles_page_load() {
 		if ( ! current_user_can( $this->capability ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 
 		// enqueue styles
@@ -472,12 +478,12 @@ class Leira_Roles_Admin {
 		get_current_screen()->add_help_tab(
 			array(
 				'id'      => 'screen-content',
-				'title'   => __( 'Screen Content', 'leira-roles' ),
+				'title'   => esc_html__( 'Screen Content', 'leira-roles' ),
 				'content' =>
-					'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
+					'<p>' . esc_html__( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
 					'<ul>' .
-					'<li>' . __( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab.', 'leira-roles' ) . '</li>' .
-					'<li>' . __( 'The <strong>Search Roles</strong> button will search for roles containing the text you type in the box.', 'leira-roles' ) . '</li>' .
+					'<li>' . wp_kses_post( __( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab.', 'leira-roles' ) ) . '</li>' .
+					'<li>' . wp_kses_post( __( 'The <strong>Search Roles</strong> button will search for roles containing the text you type in the box.', 'leira-roles' ) ) . '</li>' .
 					'</ul>',
 			)
 		);
@@ -488,16 +494,18 @@ class Leira_Roles_Admin {
 	 */
 	public function render_capabilities_admin_page() {
 		if ( ! current_user_can( $this->capability ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 		?>
-		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php _e( 'Capabilities', 'leira-roles' ); ?> </h1>
-			<!--<a href="#" class="page-title-action">--><?php // _e( 'Add New', 'leira-roles' ) ?><!--</a>-->
+        <div class="wrap">
+            <h1 class="wp-heading-inline"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?> </h1>
+            <!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
 			<?php
-			if ( isset( $_REQUEST['s'] ) && $search = esc_attr( wp_unslash( $_REQUEST['s'] ) ) ) {
-				/* translators: %s: search keywords */
-				printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', $search );
+			if ( isset( $_REQUEST['s'] ) && $search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) {
+				/*
+				 * translators: %s: search keywords
+				 */
+				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', esc_html( $search ) );
 			}
 
 			// the roles table instance
@@ -505,53 +513,54 @@ class Leira_Roles_Admin {
 			$table->prepare_items();
 			$this->admin_notices();
 			?>
-			<hr class="wp-header-end">
-			<div id="ajax-response"></div>
-			<form class="search-form wp-clearfix" method="get">
-				<?php $table->search_box( __( 'Search Capabilities', 'leira-roles' ), 'roles' ); ?>
-			</form>
-			<div id="col-container" class="wp-clearfix">
-				<div id="col-left">
-					<div class="col-wrap">
-						<div class="form-wrap">
-							<h2><?php _e( 'Add New Capability', 'leira-roles' ); ?> </h2>
-							<form id="add_capability" method="post" action="" class="validate">
-								<input type="hidden" name="action" value="leira-roles-add-capability">
-								<input type="hidden" name="screen" value="<?php echo get_current_screen()->id; ?>">
+            <hr class="wp-header-end">
+            <div id="ajax-response"></div>
+            <form class="search-form wp-clearfix" method="get">
+				<?php $table->search_box( esc_html__( 'Search Capabilities', 'leira-roles' ), 'roles' ); ?>
+            </form>
+            <div id="col-container" class="wp-clearfix">
+                <div id="col-left">
+                    <div class="col-wrap">
+                        <div class="form-wrap">
+                            <h2><?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> </h2>
+                            <form id="add_capability" method="post" action="" class="validate">
+                                <input type="hidden" name="action" value="leira-roles-add-capability">
+                                <input type="hidden" name="screen"
+                                       value="<?php echo esc_html( get_current_screen()->id ); ?>">
 								<?php
 								wp_nonce_field( 'add-capability' );
 								?>
 
-								<div class="form-field form-required">
-									<label for="role"><?php _e( 'Capability', 'leira-roles' ); ?> </label>
-									<input name="capability" id="capability" type="text" value="" size="40"
-											aria-required="true">
-									<p><?php _e( 'A unique identifier for the new capability.', 'leira-roles' ); ?></p>
-								</div>
-								<p class="submit">
-									<input type="submit" name="submit" id="submit" class="button button-primary"
-											value="<?php _e( 'Add New Capability', 'leira-roles' ); ?> ">
-								</p>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div id="col-right">
-					<div class="col-wrap">
-						<form action="<?php echo add_query_arg( '', '' ); ?>" method="post">
+                                <div class="form-field form-required">
+                                    <label for="capability"><?php esc_html_e( 'Capability', 'leira-roles' ); ?> </label>
+                                    <input name="capability" id="capability" type="text" value="" size="40"
+                                           aria-required="true">
+                                    <p><?php esc_html_e( 'A unique identifier for the new capability.', 'leira-roles' ); ?></p>
+                                </div>
+                                <p class="submit">
+                                    <input type="submit" name="submit" id="submit" class="button button-primary"
+                                           value="<?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> ">
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="col-right">
+                    <div class="col-wrap">
+                        <form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
 							<?php $table->display(); // Display the table ?>
-						</form>
-						<div class="form-wrap edit-term-notes">
-							<p><?php _e( 'Built-in system capabilities are not deletable.', 'leira-roles' ); ?> </p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<form method="get">
+                        </form>
+                        <div class="form-wrap edit-term-notes">
+                            <p><?php esc_html_e( 'Built-in system capabilities are not deletable.', 'leira-roles' ); ?> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="get">
 				<?php $table->inline_edit(); ?>
-			</form>
+            </form>
 
-		</div>
+        </div>
 
 		<?php
 	}
@@ -561,7 +570,7 @@ class Leira_Roles_Admin {
 	 */
 	public function admin_capabilities_page_load() {
 		if ( ! current_user_can( $this->capability ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 
 		// enqueue styles
@@ -599,7 +608,7 @@ class Leira_Roles_Admin {
 	 * Display admin flash notices
 	 */
 	public function admin_notices() {
-		echo leira_roles()->notify->display();
+		echo wp_kses_post( leira_roles()->notify->display() );
 	}
 
 	/**
@@ -723,16 +732,18 @@ class Leira_Roles_Admin {
 
 				ob_start();
 				?>
-				<a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
-					class="leira-roles-admin-rating-link"
-					data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ); ?>"
-					data-nonce="<?php echo wp_create_nonce( 'footer-rated' ); ?>">&#9733;&#9733;&#9733;&#9733;&#9733;</a>
+                <a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
+                   class="leira-roles-admin-rating-link"
+                   data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ); ?>"
+                   data-nonce="<?php echo esc_html( wp_create_nonce( 'footer-rated' ) ); ?>">&#9733;&#9733;&#9733;&#9733;&#9733;</a>
 				<?php
 				$link = ob_get_clean();
 
 				ob_start();
-
-				printf( __( 'If you like Roles & Capabilities please consider leaving a %s review. It will help us to grow the plugin and make it more popular. Thank you.', 'leira-roles' ), $link )
+				/*
+				 * translators: Leave a review for the plugin
+				 */
+				printf( esc_html__( 'If you like Roles & Capabilities please consider leaving a %s review. It will help us to grow the plugin and make it more popular. Thank you.', 'leira-roles' ), wp_kses_post( $link ) )
 				?>
 
 				<?php

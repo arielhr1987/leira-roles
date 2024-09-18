@@ -1,10 +1,10 @@
 === Roles & Capabilities ===
 Contributors: arielhr1987, jlcd0894, grandeljay
 Donate link: https://github.com/arielhr1987
-Tags: user, role, capabilities, debug, admin, dev, permissions, member, edit
+Tags: role, capabilities, admin, permissions, edit
 Requires at least: 4.1
-Tested up to: 6.4
-Stable tag: 1.1.9
+Tested up to: 6.6
+Stable tag: 1.1.10
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -69,7 +69,14 @@ No, Wordpress relay on those capabilities to work properly.
 
 == Changelog ==
 
-= 1.1.8 =
+= 1.1.10 =
+* Wordpress 6.6 compatibility check
+* Fix issue reported by Wordfence,
+* Sanitize inputs correctly
+* Scape correctly data before output
+* Improved UI, fix CSS errors
+
+= 1.1.9 =
 * Wordpress 6.4 compatibility check
 * Remove trailing space in 5 star link
 * Add GitHub link

@@ -29,6 +29,7 @@ body {
         > label.capability-item {
           width: 100%;
 
+
           @media screen and (min-width: 576px) {
             width: 50%;
           }
@@ -109,6 +110,12 @@ body {
 
       > label.capability-item {
         width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 13px;
+        cursor: pointer;
+        margin: .2em 0;
 
         @media screen and (min-width: 576px) {
           width: 50%;
@@ -135,7 +142,7 @@ body {
           padding: 0;
           word-wrap: break-word;
           line-height: 2.5;
-          font-size: 12px;
+          //font-size: 13px;
           color: #555;
         }
 
@@ -155,6 +162,10 @@ body {
 
     > label.capability-item {
       width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
 
       &.hidden {
         display: none;

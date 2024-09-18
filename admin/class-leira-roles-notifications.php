@@ -10,7 +10,7 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Notifications {
+class Leira_Roles_Notifications{
 
 	/**
 	 * Cookie name to use
@@ -72,7 +72,7 @@ class Leira_Roles_Notifications {
 			$messages = $this->get( $type );
 			foreach ( $messages as $message ) {
 				if ( is_string( $message ) ) {
-					$html .= sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, urldecode( $message ) );
+					$html .= wp_kses_post( sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, urldecode( $message ) ) );
 				}
 			}
 		}
@@ -121,7 +121,7 @@ class Leira_Roles_Notifications {
 			 * Set the cookie to read in the next call
 			 * Expiration time is set to a long number to avoid timezone differences
 			 */
-			@setcookie( $this->cookie, json_encode( $this->messages ), strtotime( '+1 month' ) );
+			@setcookie( $this->cookie, wp_json_encode( $this->messages ), strtotime( '+1 month' ) );
 		}
 
 		return true;

@@ -187,7 +187,7 @@ inlineEditL10n = {
                     var json = JSON.parse(value);
 
                     $.each(json, function (capability, value) {
-                        var html = '<label class="alignleft capability-item">' +
+                        var html = '<label class="alignleft capability-item" title="' +  capability + '">' +
                             '<input type="checkbox" name="capability[]" value="' + capability + '"' + (value ? ' checked="checked"' : '') + '>' +
                             '<span class="checkbox-title">' + capability + '</span>' +
                             '</label>';
