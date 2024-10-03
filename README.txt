@@ -18,7 +18,7 @@ Manage your roles and capabilities with simple, yet powerful tools in the admin 
 "Roles & Capabilities" provides a set of tools to help administrators to manage their site roles and capabilities as well as the site users capabilities.
 Only administrator will be able to access the plugin features, there is no extra capability that will grant access to this tool.
 
-With the plugin you will be able to:
+With the plugin, you will be able to:
 
 * Create new roles.
 * Edit role capabilities and display name.
@@ -43,8 +43,8 @@ This plugin is open source. You can view the source code here: [Github](https://
 = Can I create new user roles? =
 Yes, you can add new roles, and assign the capabilities that fit the most for that role.
 
-= Can I remove Wordpress default roles? =
-No, system default roles are not allowed to deleted. Wordpress system relay on those roles to work properly.
+= Can I remove WordPress default roles? =
+No, system default roles aren't allowed to be deleted. WordPress' system relays on those roles to work properly.
 
 = Can I create a new roles with no capabilities? =
 Yes.
@@ -53,7 +53,7 @@ Yes.
 Yes, new capabilities can be created.
 
 = Can I remove system capabilities? =
-No, Wordpress relay on those capabilities to work properly.
+No, WordPress relay on those capabilities to work properly.
 
 == Screenshots ==
 
@@ -70,14 +70,14 @@ No, Wordpress relay on those capabilities to work properly.
 == Changelog ==
 
 = 1.1.10 =
-* Wordpress 6.6 compatibility check
+* WordPress 6.6 compatibility check
 * Fix issue reported by Wordfence,
 * Sanitize inputs correctly
 * Scape correctly data before output
 * Improved UI, fix CSS errors
 
 = 1.1.9 =
-* Wordpress 6.4 compatibility check
+* WordPress 6.4 compatibility check
 * Remove trailing space in 5 star link
 * Add GitHub link
 * Apply WordPress coding style
@@ -85,26 +85,26 @@ No, Wordpress relay on those capabilities to work properly.
 * Use lf line endings for all text files
 
 = 1.1.8 =
-* Wordpress 5.9 compatibility check
+* WordPress 5.9 compatibility check
 
 = 1.1.7 =
-* Wordpress 5.7 compatibility check
+* WordPress 5.7 compatibility check
 
 = 1.1.6 =
-* Wordpress 5.6 compatibility check
+* WordPress 5.6 compatibility check
 
 = 1.1.5 =
 * Fix typo, missing the 'v' in a closing div tag
-* Fix typos in readme file
+* Fix typos in readme.txt file
 
 = 1.1.4 =
-* Added Github Action automatic deploy
-* Added Github Action automatic update readme.txt and assets
+* Added GitHub Action automatic deploy
+* Added GitHub Action automatic update readme.txt and assets
 * Methods documentation updated
 
 = 1.1.3 =
 * Added rate us message to footer
-* Added cookie based notifications
+* Added cookie-based notifications
 * Compatibility check with WP 5.5.* version
 * Fix some typos
 
@@ -118,8 +118,8 @@ No, Wordpress relay on those capabilities to work properly.
 
 = 1.1.0 =
 * Plugin refactored
-* Fix bug creating new role, capabilities are show now upon role creation in the role list
-* Fix bug cloning role, capabilities are show now upon role cloning in the role list
+* Fix bug creating a new role, capabilities are show now upon role creation in the role list
+* Fix a bug cloning role, capabilities are show now upon role cloning in the role list
 
 = 1.0.2 =
 * Adding banners to assets
