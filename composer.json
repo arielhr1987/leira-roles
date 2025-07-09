@@ -1,0 +1,10 @@
+{
+    "require-dev": {
+        "johnpbloch/wordpress": "6.8.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "johnpbloch/wordpress-core-installer": false
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class handle all notifications inside to end user within the plugin.
+ * This class handles all notifications inside to end user within the plugin.
  * The logic is based on BuddyPress core functionality
  *
  * @link       https://github.com/arielhr1987/leira-roles
@@ -53,7 +53,7 @@ class Leira_Roles_Notifications{
 			}
 
 			/**
-			 * Delete the cookie by setting an expiration time before current time
+			 * Delete the cookie by setting an expiration time before the current time
 			 */
 			if ( ! headers_sent() ) {
 				@setcookie( $this->cookie, '', strtotime( '-1 month' ) );
@@ -72,7 +72,8 @@ class Leira_Roles_Notifications{
 			$messages = $this->get( $type );
 			foreach ( $messages as $message ) {
 				if ( is_string( $message ) ) {
-					$html .= wp_kses_post( sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $type, urldecode( $message ) ) );
+					$html .= wp_kses_post( sprintf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+						$type, urldecode( $message ) ) );
 				}
 			}
 		}
@@ -83,7 +84,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Get all messages for a given type
 	 *
-	 * @param string $type
+	 * @param  string  $type
 	 *
 	 * @return array The messages
 	 * @since      1.1.3
@@ -98,9 +99,9 @@ class Leira_Roles_Notifications{
 	}
 
 	/**
-	 * @param string $type The type of notification to show to the user
+	 * @param  string  $type  The type of notification to show to the user
 	 *                     [error|success|warning|info]
-	 * @param string $msg  The message to show to the user
+	 * @param  string  $msg  The message to show to the user
 	 *
 	 * @return bool If notification was added successfully
 	 * @since      1.1.3
@@ -130,7 +131,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Show an error message
 	 *
-	 * @param string $msg
+	 * @param  string  $msg
 	 *
 	 * @since      1.1.3
 	 */
@@ -141,7 +142,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Show a success message
 	 *
-	 * @param string $msg
+	 * @param  string  $msg
 	 *
 	 * @since      1.1.3
 	 */
@@ -152,7 +153,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Show a warning message
 	 *
-	 * @param string $msg
+	 * @param  string  $msg
 	 *
 	 * @since      1.1.3
 	 */
@@ -163,7 +164,7 @@ class Leira_Roles_Notifications{
 	/**
 	 * Show an info message
 	 *
-	 * @param string $msg
+	 * @param  string  $msg
 	 *
 	 * @since      1.1.3
 	 */

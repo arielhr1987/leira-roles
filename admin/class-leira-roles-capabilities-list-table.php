@@ -19,7 +19,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * Leira_Roles_Capabilities_List_Table constructor.
 	 *
-	 * @param array $args
+	 * @param  array  $args
 	 */
 	function __construct( $args = array() ) {
 		global $status, $page;
@@ -27,9 +27,9 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		// Set parent defaults
 		parent::__construct(
 			array(
-				'singular' => 'capability',     // singular name of the listed records
+				'singular' => 'capability',      // singular name of the listed records
 				'plural'   => 'capabilities',    // plural name of the listed records
-				'ajax'     => true,        // does this table support ajax?
+				'ajax'     => true,              // does this table support ajax?
 			)
 		);
 
@@ -56,9 +56,10 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 
 		$this->screen->render_screen_reader_content( 'heading_list' );
 		?>
-        <div class="capabilities-container wp-clearfix <?php echo esc_html( implode( ' ', $this->get_table_classes() ) ); ?>">
+		<div class="capabilities-container wp-clearfix <?php echo esc_html( implode( ' ',
+			$this->get_table_classes() ) ); ?>">
 			<?php $this->display_rows_or_placeholder(); ?>
-        </div>
+		</div>
 		<?php
 		$this->display_tablenav( 'bottom' );
 	}
@@ -78,21 +79,47 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	}
 
 	/**
-	 * Show single row item
+	 * Show a single row item
 	 *
-	 * @param array $item
+	 * @param  array  $item
 	 */
 	public function single_row( $item ) {
-		$class = array( 'alignleft', 'capability-item' );
-		$id    = 'capability-' . md5( $item['capability'] );
 
-		printf( '<label id="%s" class="%s" title="%s">', esc_html( $id ), esc_html( implode( ' ', $class ) ), esc_html( $item['capability'] ) );
-		if ( $item['is_system'] ) {
-			printf( '<input type="checkbox" name="system-capability[]" disabled value="" class="">' );
+		$capability = $item['capability'];
+		$is_system  = ! empty( $item['is_system'] );
+
+		$classes = [ 'alignleft', 'capability-item' ];
+		$id      = 'capability-' . md5( $capability );
+		$label   = esc_html( $capability );
+
+		echo sprintf(
+			'<label id="%1$s" class="%2$s" title="%3$s">',
+			esc_attr( $id ),
+			esc_attr( implode( ' ', $classes ) ),
+			$label
+		);
+
+		if ( $is_system ) {
+			echo '<input type="checkbox" name="system-capability[]" disabled value="" />';
 		} else {
-			printf( '<input type="checkbox" name="capability[]" value="%s">', esc_html( $item['capability'] ) );
+			echo sprintf(
+				'<input type="checkbox" name="capability[]" value="%s" />',
+				esc_attr( $capability )
+			);
 		}
-		printf( '<span class="checkbox-title">%s</span>', esc_html( $item['capability'] ) );
+
+		//Label
+		echo sprintf( '<span class="checkbox-title">%s</span>', $label );
+
+		// Tooltip
+		$title = $this->manager->get_capability_description( $capability );
+		if(!empty($title)){
+			echo sprintf(
+				'<i class="dashicons dashicons-editor-help leira-tooltip" title="%s"></i>',
+				esc_html( $title )
+			);
+		}
+
 		echo '</label>';
 	}
 
@@ -129,9 +156,9 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * Generates and display row actions links for the list table.
 	 *
-	 * @param object $item        The item being acted upon.
-	 * @param string $column_name Current column name.
-	 * @param string $primary     Primary column name.
+	 * @param  object  $item  The item being acted upon.
+	 * @param  string  $column_name  Current column name.
+	 * @param  string  $primary  Primary column name.
 	 *
 	 * @return string The row actions HTML, or an empty string if the current column is the primary column.
 	 */
@@ -140,7 +167,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		$actions = array();
 
 		if ( ! $this->manager->is_system_capability( $item['capability'] ) ) {
-			// Dont these actions if its not a system capability
+			// Include these actions if it's not a system capability
 			$actions = array_merge(
 				$actions,
 				array(
@@ -149,7 +176,8 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 						/*
 						 * translators: Quick edit the capability selected by the user
 						 */
-						esc_attr( sprintf( __( 'Quick edit &#8220;%s&#8221; inline', 'leira-roles' ), $item['capability'] ) ),
+						esc_attr( sprintf( __( 'Quick edit &#8220;%s&#8221; inline', 'leira-roles' ),
+							$item['capability'] ) ),
 						__( 'Quick&nbsp;Edit', 'leira-roles' )
 					),
 					'delete'               => sprintf(
@@ -176,8 +204,8 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * Add default
 	 *
-	 * @param object $item
-	 * @param string $column_name
+	 * @param  object  $item
+	 * @param  string  $column_name
 	 *
 	 * @return mixed|string|void
 	 */
@@ -188,7 +216,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * The checkbox column
 	 *
-	 * @param object $item
+	 * @param  object  $item
 	 *
 	 * @return string|void
 	 */
@@ -215,7 +243,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		$out .= '<div class="hidden" id="inline_' . md5( $item['capability'] ) . '">';
 
 		if ( $this->manager->is_system_capability( $item['capability'] ) ) {
-			// do something with system capabilitys
+			// do something with system capabilities
 		}
 		foreach ( $item as $key => $value ) {
 			$out .= sprintf( '<div class="%s">%s</div>', $key, $value );
@@ -257,7 +285,8 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 
 		$query_arg = '_wpnonce';
 		$action    = 'bulk-' . $this->_args['plural'];
-		$checked   = array_key_exists( $query_arg, $_REQUEST ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ), $action ) : false;
+		$checked   = isset( $_REQUEST[ $query_arg ] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ),
+			$action ) : false;
 
 		if ( ! $checked ) {
 			return;
@@ -276,9 +305,9 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * Determine if a given string contains a given substring.
 	 *
-	 * @param string       $haystack
-	 * @param string|array $needles
-	 * @param bool         $sensitive Use case sensitive search
+	 * @param  string  $haystack
+	 * @param  string|array  $needles
+	 * @param  bool  $sensitive  Use case-sensitive search
 	 *
 	 * @return bool
 	 */
@@ -296,8 +325,8 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	/**
 	 * Displays the search box.
 	 *
-	 * @param string $text     The 'submit' button label.
-	 * @param string $input_id ID attribute value for the search input field.
+	 * @param  string  $text  The 'submit' button label.
+	 * @param  string  $input_id  ID attribute value for the search input field.
 	 *
 	 * @since 3.1.0
 	 */
@@ -318,13 +347,13 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 			echo '<input type="hidden" name="page" value="' . esc_attr( sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) ) . '" />';
 		}
 		?>
-        <p class="search-box">
-            <label class="screen-reader-text"
-                   for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_html( $text ); ?>:</label>
-            <input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s"
-                   value="<?php _admin_search_query(); ?>"/>
+		<p class="search-box">
+			<label class="screen-reader-text"
+				   for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_html( $text ); ?>:</label>
+			<input type="search" id="<?php echo esc_attr( $input_id ); ?>" name="s"
+				   value="<?php _admin_search_query(); ?>"/>
 			<?php submit_button( $text, '', '', false, array( 'id' => 'search-submit' ) ); ?>
-        </p>
+		</p>
 		<?php
 	}
 
@@ -334,7 +363,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 	public function prepare_items() {
 
 		/**
-		 * First, lets decide how many records per page to show
+		 * First, let's decide how many records per page to show
 		 */
 		$per_page = $this->get_items_per_page( str_replace( '-', '_', $this->screen->id . '_per_page' ), 999 );
 
@@ -355,7 +384,8 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 			// $_SERVER['REQUEST_URI'] = add_query_arg( 's', $search );
 			$data_filtered = array();
 			foreach ( $data as $item ) {
-				if ( $this->str_contains( $item['capability'], $search, false ) || $this->str_contains( $item['name'], $search, false ) ) {
+				if ( $this->str_contains( $item['capability'], $search, false ) || $this->str_contains( $item['name'],
+						$search, false ) ) {
 					$data_filtered[] = $item;
 				}
 			}
@@ -367,13 +397,14 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		 */
 		function usort_reorder( $a, $b ) {
 			$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'capability'; // If no sort, default to capability
-			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'asc'; // If no order, default to asc
+			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'asc';            // If no order, default to asc
 
 			// $result = strcmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case sensitive
-			// $result = strcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case insensitive
-			$result = strnatcasecmp( $a[ $orderby ], $b[ $orderby ] ); // Determine sort order, case insensitive, natural order
+			// $result = strcasecmp( $a[ $orderby ], $b[ $orderby ] ); //Determine sort order, case-insensitive
+			$result = strnatcasecmp( $a[ $orderby ],
+				$b[ $orderby ] );                                                                                                      // Determine sort order, case-insensitive, natural order
 
-			return ( 'asc' === $order ) ? $result : - $result; // Send final sort direction to usort
+			return ( 'asc' === $order ) ? $result : - $result; // Send a final sort direction to usort
 		}
 
 		usort( $data, 'usort_reorder' );
@@ -392,17 +423,17 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 
 		/**
-		 * Now we can add the data to the items property, where it can be used by the rest of the class.
+		 * Now we can add the data to the item property, where it can be used by the rest of the class.
 		 */
 		$this->items = $data;
 
 		/**
-		 * We also have to register our pagination options & calculations.
+		 * We also have to register our pagination options and calculations.
 		 */
 		$this->set_pagination_args(
 			array(
-				'total_items' => $total_items,                      // calculate the total number of items
-				'per_page'    => $per_page,                         // determine how many items to show on a page
+				'total_items' => $total_items,                       // calculate the total number of items
+				'per_page'    => $per_page,                          // determine how many items to show on a page
 				'total_pages' => ceil( $total_items / $per_page ),   // calculate the total number of pages
 			)
 		);
@@ -420,53 +451,56 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		}
 		?>
 
-        <form method="get">
-            <table style="display: none">
-                <tbody id="inlineedit">
-                <tr id="inline-edit" class="inline-edit-row" style="display: none">
-                    <td colspan="<?php echo esc_html( $this->get_column_count() ); ?>" class="colspanchange">
+		<form method="get">
+			<table style="display: none">
+				<tbody id="inlineedit">
+				<tr id="inline-edit" class="inline-edit-row" style="display: none">
+					<td colspan="<?php echo esc_html( $this->get_column_count() ); ?>" class="colspanchange">
 
-                        <fieldset class="">
-                            <legend class="inline-edit-legend"><?php esc_html_e( 'Quick Edit' ); ?></legend>
-                            <div class="inline-edit-col">
-                                <label>
-                                    <span class="title"><?php esc_html_e( 'Capability', 'leira-roles' ); ?></span>
-                                    <span class="input-text-wrap">
+						<fieldset class="">
+							<legend class="inline-edit-legend"><?php esc_html_e( 'Quick Edit' ); ?></legend>
+							<div class="inline-edit-col">
+								<label>
+									<span class="title"><?php esc_html_e( 'Capability', 'leira-roles' ); ?></span>
+									<span class="input-text-wrap">
 										<input type="hidden" name="old_capability" value=""/>
 										<input class="ptitle" type="text" name="new_capability" value=""/>
-                                        <!--<p class="description">
+										<!--<p class="description">
 											<small> </small>
 										</p>-->
 									</span>
-                                </label>
-                                <label>
-                                    <span class="title"><?php esc_html_e( 'Name', 'leira-roles' ); ?></span>
-                                    <span class="input-text-wrap">
+								</label>
+								<label>
+									<span class="title"><?php esc_html_e( 'Name', 'leira-roles' ); ?></span>
+									<span class="input-text-wrap">
 										<input class="ptitle" type="text" name="name" value=""/>
-                                        <!--<p class="description">
+										<!--<p class="description">
 											<small> </small>
 										</p>-->
 									</span>
-                                </label>
-                                <label>
-                                    <span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
-                                    <span class="input-text-wrap">
+								</label>
+								<label>
+									<span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
+									<span class="input-text-wrap">
 										<div class="wp-clearfix">
 											<p class="search-box">
 												<input type="search" name="capabilities_search_input"
-                                                       placeholder="<?php esc_html_e( 'Search Capabilities', 'leira-roles' ); ?>">
+													   placeholder="<?php esc_html_e( 'Search Capabilities',
+														   'leira-roles' ); ?>">
 											</p>
 										</div>
 										<div class="capabilities-container wp-clearfix">
 											<div class="notice notice-error notice-alt inline hidden">
-												<p class="error"><?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?> </p>
+												<p class="error">
+													<?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?>
+												</p>
 											</div>
 										</div>
 									</span>
-                                </label>
+								</label>
 
-                            </div>
-                        </fieldset>
+							</div>
+						</fieldset>
 						<?php
 
 						$core_columns = array(
@@ -490,23 +524,23 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 
 						?>
 
-                        <div class="inline-edit-save submit">
-                            <button type="button"
-                                    class="cancel button alignleft"><?php esc_html_e( 'Cancel' ); ?></button>
-                            <button type="button"
-                                    class="save button button-primary alignright"><?php esc_html_e( 'Save' ); ?></button>
-                            <span class="spinner"></span>
+						<div class="inline-edit-save submit">
+							<button type="button"
+									class="cancel button alignleft"><?php esc_html_e( 'Cancel' ); ?></button>
+							<button type="button"
+									class="save button button-primary alignright"><?php esc_html_e( 'Save' ); ?></button>
+							<span class="spinner"></span>
 							<?php wp_nonce_field( 'capabilityinlineeditnonce', '_inline_edit', false ); ?>
-                            <br class="clear"/>
-                            <div class="notice notice-error notice-alt inline hidden">
-                                <p class="error"></p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+							<br class="clear"/>
+							<div class="notice notice-error notice-alt inline hidden">
+								<p class="error"></p>
+							</div>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</form>
 		<?php
 	}
 }

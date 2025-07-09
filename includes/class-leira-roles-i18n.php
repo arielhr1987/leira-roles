@@ -1,24 +1,12 @@
 <?php
 
 /**
- * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
- *
- * @link       https://github.com/arielhr1987/leira-roles
- * @since      1.0.0
- *
- * @package    Leira_Roles
- * @subpackage Leira_Roles/includes
- */
-
-/**
  * Define the internationalization functionality.
  *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
+ * @link       https://github.com/arielhr1987/leira-roles
  * @since      1.0.0
  * @package    Leira_Roles
  * @subpackage Leira_Roles/includes

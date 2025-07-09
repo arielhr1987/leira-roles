@@ -1,0 +1,1 @@
+(()=>{"use strict";window.jQuery,jQuery(document).ready(function(t){t("body").on("click","a.leira-roles-admin-rating-link",function(){t.post(ajaxurl,{action:"leira-roles-footer-rated",_wpnonce:t(this).data("nonce")},function(){}),t(this).parent().text(t(this).data("rated"))})})})();

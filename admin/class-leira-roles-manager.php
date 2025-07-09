@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
+ * Defines the plugin name, version, and two example hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @link       https://github.com/arielhr1987/leira-roles
@@ -12,90 +12,18 @@
  * @subpackage Leira_Roles/admin
  * @author     Ariel <arielhr1987@gmail.com>
  */
-class Leira_Roles_Manager {
+class Leira_Roles_Manager{
 
 	/**
 	 * Built-in system capabilities defined by WordPress and the corresponding description
 	 *
 	 * @var array
 	 */
-	public $system_capabilities = array();
-
-	/**
-	 * Leira_Roles_Manager constructor.
-	 */
-	public function __construct() {
-
-		$this->system_capabilities = array(
-			'activate_plugins'       => __( 'Allow users to activate plugins.', 'leira-roles' ),
-			'create_users'           => __( 'Allow users to create users within the site.', 'leira-roles' ),
-			'delete_others_pages'    => __( 'Enables permission to delete others pages.', 'leira-roles' ),
-			'delete_others_posts'    => __( 'Enables permission to delete others posts.', 'leira-roles' ),
-			'delete_pages'           => __( 'Enables permission to delete pages.', 'leira-roles' ),
-			'delete_plugins'         => __( 'Allow users to delete plugins.', 'leira-roles' ),
-			'delete_posts'           => __( 'Enables permission to delete posts.', 'leira-roles' ),
-			'delete_private_pages'   => __( 'Enables permission to delete pages marked as private.', 'leira-roles' ),
-			'delete_private_posts'   => __( 'Enables permission to delete posts marked as private.', 'leira-roles' ),
-			'delete_published_pages' => __( 'Enables permission to delete published pages.', 'leira-roles' ),
-			'delete_published_posts' => __( 'Enables permission to delete published posts.', 'leira-roles' ),
-			'delete_themes'          => __( 'Allows access to delete themes.', 'leira-roles' ),
-			'delete_users'           => __( 'Allow users to delete users within the site.', 'leira-roles' ),
-			'edit_dashboard'         => __( 'Allows access to edit dashboard widgets and its settings.', 'leira-roles' ),
-			'edit_files'             => __( 'Deprecated', 'leira-roles' ),
-			'edit_others_pages'      => __( 'Enables permission to edit others pages.', 'leira-roles' ),
-			'edit_others_posts'      => __( 'Enables permission to edit others posts.', 'leira-roles' ),
-			'edit_pages'             => __( 'Enables permission to edit pages.', 'leira-roles' ),
-			'edit_plugins'           => __( 'Allow users to edit plugin files.', 'leira-roles' ),
-			'edit_posts'             => __( 'Allows access to “Posts”, “Posts > Add New”, “Comments” and “Comments > Awaiting Moderation”', 'leira-roles' ),
-			'edit_private_pages'     => __( 'Enables permission to edit pages marked as private.', 'leira-roles' ),
-			'edit_private_posts'     => __( 'Enables permission to edit posts marked as private.', 'leira-roles' ),
-			'edit_published_pages'   => __( 'Enables permission to edit published pages.', 'leira-roles' ),
-			'edit_published_posts'   => __( 'Enables permission to edit published posts.', 'leira-roles' ),
-			'edit_theme_options'     => __( 'Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”.', 'leira-roles' ),
-			'edit_themes'            => __( 'Allows access to “Appearance > Theme Editor” to edit theme files.', 'leira-roles' ),
-			'edit_users'             => __( 'Allow users to edit users within the site.', 'leira-roles' ),
-			'export'                 => __( 'Allows access to “Tools > Export”.', 'leira-roles' ),
-			'import'                 => __( 'Allows access to “Tools > Import”.', 'leira-roles' ),
-			'install_plugins'        => __( 'Allow users to install new plugins.', 'leira-roles' ),
-			'install_themes'         => __( 'Allows access to install themes.', 'leira-roles' ),
-			'level_0'                => __( 'Deprecated', 'leira-roles' ),
-			'level_1'                => __( 'Deprecated', 'leira-roles' ),
-			'level_2'                => __( 'Deprecated', 'leira-roles' ),
-			'level_3'                => __( 'Deprecated', 'leira-roles' ),
-			'level_4'                => __( 'Deprecated', 'leira-roles' ),
-			'level_5'                => __( 'Deprecated', 'leira-roles' ),
-			'level_6'                => __( 'Deprecated', 'leira-roles' ),
-			'level_7'                => __( 'Deprecated', 'leira-roles' ),
-			'level_8'                => __( 'Deprecated', 'leira-roles' ),
-			'level_9'                => __( 'Deprecated', 'leira-roles' ),
-			'level_10'               => __( 'Deprecated', 'leira-roles' ),
-			'list_users'             => __( 'Allow users to list users within the site', 'leira-roles' ),
-			'manage_categories'      => __( 'Enables permission to “Posts > Categories” and “Links > Categories”( Links not available since v3.5).', 'leira-roles' ),
-			'manage_links'           => __( 'Used by the Link Manager in WordPress. Since WordPress version 3.0 Link Manager is not available', 'leira-roles' ),
-			'manage_options'         => __( 'Allows access to “Settings” section', 'leira-roles' ),
-			'moderate_comments'      => __( 'Allow users to moderate comments through the “Comments” menu. But it also requires edit_posts capability.', 'leira-roles' ),
-			'promote_users'          => __( 'Allow users to promote users within the site.', 'leira-roles' ),
-			'publish_pages'          => __( 'Enables permission to publish pages.', 'leira-roles' ),
-			'publish_posts'          => __( 'Allows access to publish posts, including XML - RPC publish', 'leira-roles' ),
-			'read'                   => __( 'Allows access to menu items “Dashboard” and “Users > Your Profile”.', 'leira-roles' ),
-			'read_private_pages'     => __( 'Enables permission to read pages marked as private.', 'leira-roles' ),
-			'read_private_posts'     => __( 'Enables permission to read posts marked as private.', 'leira-roles' ),
-			'remove_users'           => __( 'Not used', 'leira-roles' ),
-			'switch_themes'          => __( 'Allows access to “Appearance” and “Appearance > Theme Editor” menus.', 'leira-roles' ),
-			'unfiltered_html'        => __( 'Allows the user to post any HTML data including JavaScript. In WordPress Multisite, only Super Admins have this capability', 'leira-roles' ),
-			'unfiltered_upload'      => __( 'This capability is not available to any role by default ( including Super Admins). The capability needs to be enabled by defining the following constant in wp-config. define( ‘ALLOW_UNFILTERED_UPLOADS’ )', 'leira-roles' ),
-			'update_core'            => __( 'Allows to upgrade WordPress core.', 'leira-roles' ),
-			'update_plugins'         => __( 'Allow users to install new plugins.', 'leira-roles' ),
-			'update_themes'          => __( 'Allows access to update themes.', 'leira-roles' ),
-			'upload_files'           => __( 'Enables permission to “Media” and “Media > Add New”.', 'leira-roles' ),
-			'edit_comment'           => __( 'edit_comment is a meta capability . It gets re-mapped to another meta capability.', 'leira-roles' ),
-			'add_users'              => __( 'Not used', 'leira-roles' ),
-		);
-	}
+	protected $system_capabilities = array();
 
 	/**
 	 * Returns an array of all the available roles.
-	 * This method is used to show the roles list table.
+	 * This method is used to show the role list table.
 	 *
 	 * @return array[]
 	 */
@@ -122,7 +50,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Array containing all default WordPress roles
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function get_system_roles() {
 
@@ -142,7 +70,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Checks if the given role is a system role
 	 *
-	 * @param $role
+	 * @param  string  $role  The role to check
 	 *
 	 * @return bool
 	 */
@@ -158,7 +86,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Checks if he provided role exist
 	 *
-	 * @param $role
+	 * @param  string  $role  The role to check
 	 *
 	 * @return bool
 	 */
@@ -169,7 +97,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Get role object from role
 	 *
-	 * @param $role
+	 * @param  string  $role  The role to get the object from
 	 *
 	 * @return WP_Role|null
 	 */
@@ -180,7 +108,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Get role name string form a role
 	 *
-	 * @param $role
+	 * @param  string  $role  The role to get the name from
 	 *
 	 * @return string
 	 */
@@ -209,7 +137,7 @@ class Leira_Roles_Manager {
 		$id      = $temp_id;
 		$i       = 0;
 		while ( $this->is_role( $id ) ) {
-			++$i;
+			++ $i;
 			$id = $temp_id . '-' . $i;
 		}
 
@@ -223,10 +151,10 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Add role to the system
+	 * Add a role to the system
 	 *
-	 * @param $role
-	 * @param $name
+	 * @param  string  $role  The role identifier
+	 * @param  string  $name  The role display name
 	 *
 	 * @return WP_Role|null
 	 */
@@ -239,7 +167,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Deletes a role from the system
 	 *
-	 * @param $role
+	 * @param  string  $role  The role identifier to delete
 	 *
 	 * @return bool
 	 */
@@ -250,12 +178,12 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Update a role. If the role is a system role it will update the display name and capabilities only
+	 * Update a role. If the role is a system role, it will update the display name and capabilities only
 	 *
-	 * @param string $old_role     The role to update
-	 * @param string $new_role     The new role identifier
-	 * @param string $name         The new role display name
-	 * @param array  $capabilities The capabilities for the role
+	 * @param  string  $old_role  The role to update
+	 * @param  string  $new_role  The new role identifier
+	 * @param  string  $name  The new role display name
+	 * @param  array  $capabilities  The capabilities for the role
 	 *
 	 * @return bool|WP_Role
 	 */
@@ -289,7 +217,7 @@ class Leira_Roles_Manager {
 		}
 
 		/**
-		 * Lets check if the capabilities provided by the user does not contain unknown capabilities
+		 * Let's check if the capabilities provided by the user do not contain unknown capabilities
 		 * Just in case someone tries to change the checkbox input value in the browser
 		 */
 		$capabilities = array_filter(
@@ -301,8 +229,8 @@ class Leira_Roles_Manager {
 		);
 
 		/**
-		 * We need to make sure to set non system capabilities to false to preserve them.
-		 * If we dont do it we may lost some capabilities
+		 * We need to make sure to set non-system capabilities to false so we preserve them.
+		 * If we don't do it, we may lose some capabilities
 		 */
 		$non_system_capabilities = $this->get_non_system_capabilities( false );
 		$capabilities            = array_merge( $non_system_capabilities, $capabilities );
@@ -328,9 +256,9 @@ class Leira_Roles_Manager {
 	/**
 	 * Update role capabilities. NOT IN USE
 	 *
-	 * @param string $role           The role to update capabilities
-	 * @param array  $caps           The new capabilities to set
-	 * @param bool   $remove_missing If $caps array is missing some capabilities, put those caps as false
+	 * @param  string  $role  The role to update capabilities
+	 * @param  array  $caps  The new capabilities to set
+	 * @param  bool  $remove_missing  If the $caps array is missing some capabilities, put those caps as false
 	 *
 	 * @return bool
 	 */
@@ -349,7 +277,7 @@ class Leira_Roles_Manager {
 			$last_cap = key( array_slice( $caps, - 1, 1, true ) );
 			foreach ( $caps as $cap => $grant ) {
 				if ( $cap === $last_cap ) {
-					// use db, next call to add_cap will generate a db query
+					// use db, the next call to add_cap will generate a db query
 					$roles->use_db = true;
 				}
 				$role_obj->add_cap( $cap, $grant );
@@ -364,7 +292,7 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Get the list of capabilities to show in the capabilities table
+	 * Get the list of capabilities to show in the capability table
 	 *
 	 * @return array
 	 */
@@ -384,18 +312,18 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Update a user capabilities.
-	 * This is not an easy script so be careful while editing
+	 * Update a user capability.
+	 * This is not an easy script, so be careful while editing
 	 * The input capabilities are those selected by the user in the frontend. We will check for the default user role
-	 * capabilities. If the provided capabilities contains the same values as the role we will not set it, because by
-	 * default the user has access to it, in case the capability value differs (true|false) we will set according.
-	 * In case other role capabilities we will set it tu true, no need to set to false because the user dow not have
+	 * capabilities. If the provided capabilities contain the same values as the role, we will not set it, because by
+	 * default the user has access to it, in case the capability value differs (true|false), we will set according.
+	 * In case other role capabilities we will set it tu true, no need to set to false because the user does not have
 	 * access to it by default
-	 * In case is not a capability, its a user defined capability we need to set it to true or false otherwise we might
-	 * loose the cap when saving
+	 * In case is not a capability, it's a user-defined capability we need to set it to true or false otherwise we might
+	 * lose the cap when saving
 	 *
-	 * @param string|WP_User $user         The user to update capabilities
-	 * @param array          $capabilities The new user capabilities
+	 * @param  string|WP_User  $user  The user to update capabilities
+	 * @param  array  $capabilities  The new user capabilities
 	 *
 	 * @return bool|WP_User
 	 */
@@ -409,18 +337,18 @@ class Leira_Roles_Manager {
 		}
 
 		/**
-		 * You are editing your own capabilities. Lets check that you dont break anything
+		 * You are editing your own capabilities. Let's check that you don't break anything
 		 */
-		if ( get_current_user() == $user ) {
-
+		if ( get_current_user_id() == $user->ID ) {
+			//We need to check what to do here
 		}
 
 		/**
-		 * In multisite check if user belongs to the current site. Except if super admin is editing
+		 * In multisite check if the user belongs to the current site. Except if super admin is editing
 		 */
 
 		/**
-		 * Remove roles from capabilities. Make sure we dont insert a role as capability
+		 * Remove roles from capabilities. Make sure we don't insert a role as a capability
 		 */
 		$capabilities = array_filter(
 			$capabilities,
@@ -436,7 +364,7 @@ class Leira_Roles_Manager {
 		$update = array();
 
 		/**
-		 * Get user role capabilities. All capabilities that the role allows or deny
+		 * Get user role capabilities. All capabilities that the role allows or denies
 		 */
 		$user_role_capabilities = array();
 		foreach ( $user->roles as $role ) {
@@ -466,18 +394,18 @@ class Leira_Roles_Manager {
 
 				if ( isset( $capabilities[ $all_capability ] ) ) {
 					// the user checked a cb
-					// lets check if was check or the user checked
+					// let's check if was checked, or the user checked
 					if ( $capabilities[ $all_capability ] === $role_value ) {
-						// the user leave the cb checked as it was
+						// the user leaves the cb checked as it was
 					} else {
-						// the user change the cb to checked
+						// the user changes the cb to check
 						$update[ $all_capability ] = ! $role_value;
 					}
 				} else {
-					// the user did'nt check the cb
-					// lets check if was uncheck or the user unchecked
+					// the user didn't check the cb
+					// let's check if was unchecked or the user unchecked
 					if ( false === $role_value ) {
-						// the user leave the cb unchecked
+						// the user leaves the cb unchecked
 					} else {
 						// the user changed the cb to unchecked
 						$update[ $all_capability ] = ! $role_value;
@@ -486,7 +414,7 @@ class Leira_Roles_Manager {
 				}
 			} else {
 				/**
-				 * Is others role capability
+				 * Is another role capability
 				 */
 				if ( isset( $capabilities[ $all_capability ] ) ) {
 
@@ -499,10 +427,10 @@ class Leira_Roles_Manager {
 
 			if ( ! $this->is_capability( $capability ) && ! $this->is_role( $capability ) ) {
 				/**
-				 * Its a user specific capability
-				 * Now lets check for the value. false means the user didnt check the cb
+				 * Its user-specific capability
+				 * Now lets check for the value, false means the user didn't check the cb
 				 */
-				$user_value = isset( $capabilities[ $capability ] ) ? (bool) $capabilities[ $capability ] : false;
+				$user_value = isset( $capabilities[ $capability ] ) && (bool) $capabilities[ $capability ];
 				if ( $user_value == $value ) {
 					// no change in the capability value
 					$update[ $capability ] = $value;
@@ -511,11 +439,11 @@ class Leira_Roles_Manager {
 					$update[ $capability ] = ! $value;
 				}
 
-				// simplified version, lets keep it the other way to better understanding
+				// simplified version, let's keep it the other way to better understanding
 				// $update[ $capability ] = $user_value == $value ? $value : ! $value;
 			}
 
-			// We make sure with this logic that if the user changes the value of a cb the system wont create the capability
+			// We make sure with this logic that if the user changes the value of a cb, the system won't create the capability
 		}
 
 		// Update user meta
@@ -530,7 +458,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Get all available capabilities
 	 *
-	 * @param bool $default The default value for the capability
+	 * @param  bool  $default  The default value for the capability
 	 *
 	 * @return array
 	 */
@@ -550,7 +478,9 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * @param bool $default
+	 * Get a list of all role capabilities where the key is the capability and the value is the default value
+	 *
+	 * @param  bool  $default  The default value for the role capabilities
 	 *
 	 * @return array
 	 */
@@ -576,12 +506,12 @@ class Leira_Roles_Manager {
 	/**
 	 * Get all system capabilities
 	 *
-	 * @param bool $default Default value for the system capabilities
+	 * @param  bool  $default  Default value for the system capabilities
 	 *
 	 * @return array
 	 */
 	public function get_system_capabilities( $default = false ) {
-		$capabilities = array_keys( $this->system_capabilities );
+		$capabilities = array_keys( $this->get_all_capabilities_description() );
 
 		$capabilities = array_fill_keys( $capabilities, $default );
 
@@ -593,7 +523,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Get all capabilities that are not in the system by default
 	 *
-	 * @param bool $default Default value for the capabilities
+	 * @param  bool  $default  Default value for the capabilities
 	 *
 	 * @return array
 	 */
@@ -630,9 +560,9 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Check if the capability exist
+	 * Check if the capability exists
 	 *
-	 * @param string $capability
+	 * @param  string  $capability
 	 *
 	 * @return bool
 	 */
@@ -643,10 +573,11 @@ class Leira_Roles_Manager {
 	}
 
 	/**
-	 * Add capability. The user defined capabilities is stored in the administrator role with a default values set to
-	 * false. We stored in administrator role because this role is not deletable
+	 * Add capability.
+	 * The user-defined capabilities are stored in the administrator role with a default value set to false.
+	 * We store in the "administrator" role because this role is not deletable
 	 *
-	 * @param string $capability The capability to add
+	 * @param  string  $capability  The capability to add
 	 *
 	 * @return bool
 	 */
@@ -666,7 +597,7 @@ class Leira_Roles_Manager {
 	/**
 	 * Delete the capabilities
 	 *
-	 * @param array $capabilities The array of capability to delete
+	 * @param  array  $capabilities  The array of capability to delete
 	 *
 	 * @return bool
 	 */
@@ -704,18 +635,115 @@ class Leira_Roles_Manager {
 	/**
 	 * Gets a description for the capability
 	 *
-	 * @param string $capability The capability
+	 * @param  string  $capability  The capability
 	 *
 	 * @return string The description for the provided capability
 	 */
 	public function get_capability_description( $capability ) {
-		$description = '';
-		if ( isset( $this->system_capabilities[ $capability ] ) ) {
-			$description = $this->system_capabilities[ $capability ];
+		$capabilities = $this->get_all_capabilities_description();
+		$description  = '';
+		if ( isset( $capabilities[ $capability ] ) ) {
+			$description = $capabilities[ $capability ];
 		}
 
 		$description = apply_filters( 'leira-roles-get-capability-description', $description, $capability );
 
 		return $description;
+	}
+
+	/**
+	 * Get a list of all capability descriptions
+	 *
+	 * @return string[]
+	 * @since 1.1.11
+	 */
+	public function get_all_capabilities_description() {
+		if ( empty( $this->system_capabilities ) ) {
+			// We initialize the system capabilities array here
+			// Because if it's done in the constructor, WordPress throws a warning
+			// because we are trying to access a text domain before is registered
+			$this->system_capabilities = array(
+				'activate_plugins'       => __( 'Allow users to activate plugins.', 'leira-roles' ),
+				'create_users'           => __( 'Allow users to create users within the site.', 'leira-roles' ),
+				'delete_others_pages'    => __( 'Enables permission to delete others pages.', 'leira-roles' ),
+				'delete_others_posts'    => __( 'Enables permission to delete others posts.', 'leira-roles' ),
+				'delete_pages'           => __( 'Enables permission to delete pages.', 'leira-roles' ),
+				'delete_plugins'         => __( 'Allow users to delete plugins.', 'leira-roles' ),
+				'delete_posts'           => __( 'Enables permission to delete posts.', 'leira-roles' ),
+				'delete_private_pages'   => __( 'Enables permission to delete pages marked as private.',
+					'leira-roles' ),
+				'delete_private_posts'   => __( 'Enables permission to delete posts marked as private.',
+					'leira-roles' ),
+				'delete_published_pages' => __( 'Enables permission to delete published pages.', 'leira-roles' ),
+				'delete_published_posts' => __( 'Enables permission to delete published posts.', 'leira-roles' ),
+				'delete_themes'          => __( 'Allows access to delete themes.', 'leira-roles' ),
+				'delete_users'           => __( 'Allow users to delete users within the site.', 'leira-roles' ),
+				'edit_dashboard'         => __( 'Allows access to edit dashboard widgets and its settings.',
+					'leira-roles' ),
+				'edit_files'             => __( 'Deprecated', 'leira-roles' ),
+				'edit_others_pages'      => __( 'Enables permission to edit others pages.', 'leira-roles' ),
+				'edit_others_posts'      => __( 'Enables permission to edit others posts.', 'leira-roles' ),
+				'edit_pages'             => __( 'Enables permission to edit pages.', 'leira-roles' ),
+				'edit_plugins'           => __( 'Allow users to edit plugin files.', 'leira-roles' ),
+				'edit_posts'             => __( 'Allows access to “Posts”, “Posts > Add New”, “Comments” and “Comments > Awaiting Moderation”',
+					'leira-roles' ),
+				'edit_private_pages'     => __( 'Enables permission to edit pages marked as private.', 'leira-roles' ),
+				'edit_private_posts'     => __( 'Enables permission to edit posts marked as private.', 'leira-roles' ),
+				'edit_published_pages'   => __( 'Enables permission to edit published pages.', 'leira-roles' ),
+				'edit_published_posts'   => __( 'Enables permission to edit published posts.', 'leira-roles' ),
+				'edit_theme_options'     => __( 'Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”.',
+					'leira-roles' ),
+				'edit_themes'            => __( 'Allows access to “Appearance > Theme Editor” to edit theme files.',
+					'leira-roles' ),
+				'edit_users'             => __( 'Allow users to edit users within the site.', 'leira-roles' ),
+				'export'                 => __( 'Allows access to “Tools > Export”.', 'leira-roles' ),
+				'import'                 => __( 'Allows access to “Tools > Import”.', 'leira-roles' ),
+				'install_plugins'        => __( 'Allow users to install new plugins.', 'leira-roles' ),
+				'install_themes'         => __( 'Allows access to install themes.', 'leira-roles' ),
+				'level_0'                => __( 'Deprecated', 'leira-roles' ),
+				'level_1'                => __( 'Deprecated', 'leira-roles' ),
+				'level_2'                => __( 'Deprecated', 'leira-roles' ),
+				'level_3'                => __( 'Deprecated', 'leira-roles' ),
+				'level_4'                => __( 'Deprecated', 'leira-roles' ),
+				'level_5'                => __( 'Deprecated', 'leira-roles' ),
+				'level_6'                => __( 'Deprecated', 'leira-roles' ),
+				'level_7'                => __( 'Deprecated', 'leira-roles' ),
+				'level_8'                => __( 'Deprecated', 'leira-roles' ),
+				'level_9'                => __( 'Deprecated', 'leira-roles' ),
+				'level_10'               => __( 'Deprecated', 'leira-roles' ),
+				'list_users'             => __( 'Allow users to list users within the site', 'leira-roles' ),
+				'manage_categories'      => __( 'Enables permission to “Posts > Categories” and “Links > Categories”( Links not available since v3.5).',
+					'leira-roles' ),
+				'manage_links'           => __( 'Used by the Link Manager in WordPress. Since WordPress version 3.0 Link Manager is not available',
+					'leira-roles' ),
+				'manage_options'         => __( 'Allows access to “Settings” section', 'leira-roles' ),
+				'moderate_comments'      => __( 'Allow users to moderate comments through the “Comments” menu. But it also requires edit_posts capability.',
+					'leira-roles' ),
+				'promote_users'          => __( 'Allow users to promote users within the site.', 'leira-roles' ),
+				'publish_pages'          => __( 'Enables permission to publish pages.', 'leira-roles' ),
+				'publish_posts'          => __( 'Allows access to publish posts, including XML - RPC publish',
+					'leira-roles' ),
+				'read'                   => __( 'Allows access to menu items “Dashboard” and “Users > Your Profile”.',
+					'leira-roles' ),
+				'read_private_pages'     => __( 'Enables permission to read pages marked as private.', 'leira-roles' ),
+				'read_private_posts'     => __( 'Enables permission to read posts marked as private.', 'leira-roles' ),
+				'remove_users'           => __( 'Not used', 'leira-roles' ),
+				'switch_themes'          => __( 'Allows access to “Appearance” and “Appearance > Theme Editor” menus.',
+					'leira-roles' ),
+				'unfiltered_html'        => __( 'Allows the user to post any HTML data including JavaScript. In WordPress Multisite, only Super Admins have this capability',
+					'leira-roles' ),
+				'unfiltered_upload'      => __( 'This capability is not available to any role by default ( including Super Admins). The capability needs to be enabled by defining the following constant in wp-config. define( ‘ALLOW_UNFILTERED_UPLOADS’ )',
+					'leira-roles' ),
+				'update_core'            => __( 'Allows to upgrade WordPress core.', 'leira-roles' ),
+				'update_plugins'         => __( 'Allow users to install new plugins.', 'leira-roles' ),
+				'update_themes'          => __( 'Allows access to update themes.', 'leira-roles' ),
+				'upload_files'           => __( 'Enables permission to “Media” and “Media > Add New”.', 'leira-roles' ),
+				'edit_comment'           => __( 'edit_comment is a meta capability . It gets re-mapped to another meta capability.',
+					'leira-roles' ),
+				'add_users'              => __( 'Not used', 'leira-roles' ),
+			);
+		}
+
+		return apply_filters( 'leira-roles-get-all-capabilities-description', $this->system_capabilities );
 	}
 }

@@ -3,8 +3,10 @@
  *
  * @since 1.1.3
  */
+import 'jquery';
+import './admin.scss'
 
-/* global ajaxurl */
+/* global ajaxurl, jQuery */
 
 jQuery(document).ready(function ($) {
 
