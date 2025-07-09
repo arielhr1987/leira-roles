@@ -28,6 +28,11 @@ Designed for simplicity and control, this plugin allows you to customize user pe
 
 Whether you're building a membership site, managing editorial permissions, or fine-tuning access, this plugin gives you the precision and flexibility you need.
 
+== Development ==
+
+This plugin is open-source and actively maintained.  
+👉 [View or contribute to the source code on GitHub](https://github.com/arielhr1987/leira-roles)
+
 == Installation ==
 
 1. Upload the `leira-roles` folder to the `/wp-content/plugins/` directory.
@@ -136,8 +141,3 @@ No. Core capabilities are essential for WordPress to function correctly and are 
 
 = 1.0.0 =
 * Initial plugin release.
-
-== Development ==
-
-This plugin is open-source and actively maintained.  
-👉 [View or contribute to the source code on GitHub](https://github.com/arielhr1987/leira-roles)
