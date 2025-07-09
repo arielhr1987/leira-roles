@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
+ * Defines the plugin name, version, and two example hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @link       https://github.com/arielhr1987/leira-roles
@@ -54,7 +54,7 @@ class Leira_Roles_Actions{
 	}
 
 	/**
-	 * Handle post actions
+	 * Handle POST actions
 	 */
 	public function handle() {
 		$current_action = $this->current_action();
@@ -72,7 +72,7 @@ class Leira_Roles_Actions{
 	 * @return string|false The action name or False if no action was selected
 	 */
 	protected function current_action() {
-		if ( array_key_exists( 'filter_action', $_REQUEST ) && ! empty( $_REQUEST['filter_action'] ) ) {
+		if ( isset( $_REQUEST['filter_action'] ) && ! empty( $_REQUEST['filter_action'] ) ) {
 			return false;
 		}
 
@@ -88,11 +88,11 @@ class Leira_Roles_Actions{
 	}
 
 	/**
-	 * Notify the user with a message. Handles ajax and post requests.
+	 * Notify the user with a message. Handles ajax and POST requests.
 	 *
-	 * @param string $message  The message to show to the user.
-	 * @param string $type     The type of message to show [error|success|warning\info].
-	 * @param bool   $redirect If we should redirect to referrer.
+	 * @param  string  $message  The message to show to the user.
+	 * @param  string  $type  The type of message to show [error|success|warning\info].
+	 * @param  bool  $redirect  If we should redirect to referrer.
 	 */
 	protected function notify( $message, $type = 'error', $redirect = true ) {
 
@@ -101,7 +101,8 @@ class Leira_Roles_Actions{
 		}
 
 		if ( $this->is_ajax() ) {
-			$format = '<div class="notice notice-%s is-dismissible"><p>%s</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">' . __( 'Dismiss this notice.', 'leira-roles' ) . '</span></button></div>';
+			$format = '<div class="notice notice-%s is-dismissible"><p>%s</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">' . __( 'Dismiss this notice.',
+					'leira-roles' ) . '</span></button></div>';
 			$format = '<div class="notice notice-%s is-dismissible"><p>%s</p></div>';
 			wp_send_json_error( sprintf( $format, $type, $message ) );
 		} else {
@@ -137,12 +138,13 @@ class Leira_Roles_Actions{
 	/**
 	 * Check nonce and notify if error
 	 *
-	 * @param string $action
-	 * @param string $query_arg
+	 * @param  string  $action
+	 * @param  string  $query_arg
 	 */
 	protected function check_nonce( $action = '-1', $query_arg = '_wpnonce' ) {
 
-		$checked = isset( $_REQUEST[ $query_arg ] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ), $action );
+		$checked = isset( $_REQUEST[ $query_arg ] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST[ $query_arg ] ) ),
+				$action );
 		if ( ! $checked ) {
 			$out = __( 'Your link has expired, refresh the page and try again.', 'leira-roles' );
 			$this->notify( $out );
@@ -183,7 +185,8 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: The name of the role
 			 */
-			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> already exist, use another role identifier.', 'leira-roles' ), $role ) );
+			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> already exist, use another role identifier.',
+				'leira-roles' ), $role ) );
 			$this->notify( $out );
 		}
 
@@ -193,7 +196,8 @@ class Leira_Roles_Actions{
 		$result = $this->manager->add_role( $role, $name );
 
 		if ( ! $result instanceof WP_Role ) {
-			$out = __( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.', 'leira-roles' );
+			$out = __( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.',
+				'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -226,7 +230,8 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: the role name
 			 */
-			$out = wp_kses_post( sprintf( __( 'The new role <strong>%s</strong> was created successfully.', 'leira-roles' ), $role ) );
+			$out = wp_kses_post( sprintf( __( 'The new role <strong>%s</strong> was created successfully.',
+				'leira-roles' ), $role ) );
 			$this->notify( $out, 'success' );
 		}
 	}
@@ -263,7 +268,8 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: the name of the role
 			 */
-			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> doesn\'t exist.', 'leira-roles' ), $role ) );
+			$out = wp_kses_post( sprintf( __( 'The role <strong>%s</strong> doesn\'t exist.', 'leira-roles' ),
+				$role ) );
 			$this->notify( $out );
 		}
 		/**
@@ -272,7 +278,8 @@ class Leira_Roles_Actions{
 		$result = $this->manager->clone_role( $role );
 
 		if ( ! $result instanceof WP_Role ) {
-			$this->notify( esc_html__( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.', 'leira-roles' ) );
+			$this->notify( esc_html__( 'Something went wrong, the system wasn\'t able to create the role, refresh the page and try again.',
+				'leira-roles' ) );
 		}
 
 		if ( $this->is_ajax() ) {
@@ -317,13 +324,14 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: The role name to clone, into the role. Undo link
 			 */
-			$out = sprintf( __( 'The role %1$s was cloned successfully into %2$s. %3$s', 'leira-roles' ), $from, $to, $undo );
+			$out = sprintf( __( 'The role %1$s was cloned successfully into %2$s. %3$s', 'leira-roles' ), $from, $to,
+				$undo );
 			$this->notify( $out, 'success' );
 		}
 	}
 
 	/**
-	 *
+	 * Handles delete role action
 	 */
 	public function delete_role() {
 		/**
@@ -399,7 +407,7 @@ class Leira_Roles_Actions{
 	}
 
 	/**
-	 * Handle Quick Edit post request
+	 * Handle Quick Edit Role request
 	 */
 	public function quick_edit_role() {
 		$format = '<div class="notice notice-%1$s is-dismissible"><p class="%1$s">%2$s</p></div>';
@@ -413,14 +421,15 @@ class Leira_Roles_Actions{
 		/**
 		 * Check nonce
 		 */
-		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ), 'roleinlineeditnonce' );
+		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ),
+				'roleinlineeditnonce' );
 		if ( ! $checked ) {
 			wp_die( esc_html__( 'Your link has expired, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
 		 * Validate input data
-		 * We use inline_role to avoid conflicts with role table checkbox column
+		 * We use inline_role to avoid conflicts with the role table checkbox column
 		 */
 		$old_role = isset( $_REQUEST['old_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['old_role'] ) ) : false;
 		$new_role = isset( $_REQUEST['new_role'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['new_role'] ) ) : false;
@@ -433,7 +442,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Sanitize capabilities
 		 */
-		$input_capabilities = ( array_key_exists( 'capability', $_REQUEST ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
+		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
 			$capabilities[ sanitize_text_field( wp_unslash( $capability ) ) ] = true;
@@ -446,7 +455,8 @@ class Leira_Roles_Actions{
 
 		} elseif ( $old_role !== $new_role ) {
 			if ( $this->manager->is_role( $new_role ) ) {
-				wp_die( esc_html__( 'The provided new role, already exist. Use an other role identifier.', 'leira-roles' ) );
+				wp_die( esc_html__( 'The provided new role, already exist. Use an other role identifier.',
+					'leira-roles' ) );
 			}
 		}
 
@@ -456,7 +466,8 @@ class Leira_Roles_Actions{
 		 * Something went wrong
 		 */
 		if ( false === $result ) {
-			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to update the role, refresh the page and try again.', 'leira-roles' ) );
+			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to update the role, refresh the page and try again.',
+				'leira-roles' ) );
 		}
 
 		/**
@@ -480,7 +491,7 @@ class Leira_Roles_Actions{
 	}
 
 	/**
-	 *
+	 * Handles quick edit user capabilities post request
 	 */
 	public function quick_edit_user_capabilities() {
 		/**
@@ -493,29 +504,30 @@ class Leira_Roles_Actions{
 		/**
 		 * Check nonce
 		 */
-		$checked = array_key_exists( '_inline_edit', $_REQUEST ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ), 'usercapabilitiesinlineeditnonce' );
+		$checked = isset( $_REQUEST['_inline_edit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_inline_edit'] ) ),
+				'usercapabilitiesinlineeditnonce' );
 		if ( ! $checked ) {
 			wp_die( esc_html__( 'Your link has expired, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
-		 * Check user exist
+		 * Check user exists
 		 */
-		$user_id = array_key_exists( 'user_id', $_REQUEST ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_id'] ) ) : false;
+		$user_id = isset( $_REQUEST['user_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['user_id'] ) ) : false;
 		$user    = get_user_by( 'id', $user_id );
 		if ( ! $user instanceof WP_User ) {
 			wp_die( esc_html__( 'User not found, refresh the page and try again.', 'leira-roles' ) );
 		}
 
 		/**
-		 * You are editing your own capabilities. Lets check that you dont break anything
+		 * You are editing your own capabilities. Let's check that you don't break anything
 		 */
 		if ( get_current_user_id() == $user->ID ) {
 			// What do we do here??? TODO: Lets think about it.
 		}
 
 		/**
-		 * In multisite check if the user to edit is member of the site
+		 * In multisite check if the user to edit is a member of the site
 		 */
 		if ( is_multisite() ) {
 			if ( ! is_user_member_of_blog( $user->ID ) ) {
@@ -526,7 +538,7 @@ class Leira_Roles_Actions{
 		/**
 		 * Sanitize capabilities
 		 */
-		$input_capabilities = ( array_key_exists( 'capability', $_REQUEST ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
+		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
 			$capabilities[ sanitize_text_field( $capability ) ] = true;
@@ -541,16 +553,24 @@ class Leira_Roles_Actions{
 		 * Notify user and redirect
 		 */
 		if ( false === $user ) {
-			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.', 'leira-roles' ) );
+			wp_die( esc_html__( 'Something went wrong, the system wasn\'t able to save the user capabilities, refresh the page and try again.',
+				'leira-roles' ) );
 		}
 
 		/**
 		 * Output the row table with the new updated data
 		 */
 		$GLOBALS['hook_suffix'] = '';// avoid notice error
-		$table                  = _get_list_table( 'WP_Users_List_Table' );
-
-		$table->single_row( $user );
+		/**
+		 * @var WP_Users_List_Table $table
+		 */
+		$table = _get_list_table( 'WP_Users_List_Table' );
+		$row   = $table->single_row( $user );
+		if ( is_string( $row ) ) {
+			// WP just to echo the string, but in recent wp versions it returns the table row object
+			// keep this for compatibility
+			echo $row;
+		}
 		wp_die();
 	}
 
@@ -584,7 +604,8 @@ class Leira_Roles_Actions{
 		 */
 		if ( $this->manager->is_role( $capability ) ) {
 			// this capability already exists
-			$this->notify( esc_html__( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.', 'leira-roles' ) );
+			$this->notify( esc_html__( 'You can\'t add a capability with the same identifier as a role, use other capability identifier.',
+				'leira-roles' ) );
 		}
 
 		/**
@@ -595,7 +616,8 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: the name of the capability
 			 */
-			$out = sprintf( esc_html__( 'The capability %s already exist, use other capability identifier.', 'leira-roles' ), '<strong>' . esc_attr( $capability ) . '</strong>' );
+			$out = sprintf( esc_html__( 'The capability %s already exist, use other capability identifier.',
+				'leira-roles' ), '<strong>' . esc_attr( $capability ) . '</strong>' );
 			$this->notify( $out );
 		}
 
@@ -605,7 +627,8 @@ class Leira_Roles_Actions{
 		$result = $this->manager->add_capability( $capability );
 
 		if ( ! $result ) {
-			$out = esc_html__( 'Something went wrong, the system wasn\'t able to create the capability, refresh the page and try again.', 'leira-roles' );
+			$out = esc_html__( 'Something went wrong, the system wasn\'t able to create the capability, refresh the page and try again.',
+				'leira-roles' );
 			$this->notify( $out );
 		}
 
@@ -633,7 +656,8 @@ class Leira_Roles_Actions{
 			/*
 			 * translators: the name of the capability
 			 */
-			$out = sprintf( esc_html__( 'The new capability %s was created successfully.', 'leira-roles' ), '<strong>' . $capability . '</strong>' );
+			$out = sprintf( esc_html__( 'The new capability %s was created successfully.', 'leira-roles' ),
+				'<strong>' . $capability . '</strong>' );
 			$this->notify( $out, 'success' );
 		}
 	}
@@ -660,7 +684,7 @@ class Leira_Roles_Actions{
 		$input_capabilities = ( isset( $_REQUEST['capability'] ) && is_array( $_REQUEST['capability'] ) ) ? $_REQUEST['capability'] : array();
 		$capabilities       = array();
 		foreach ( $input_capabilities as $capability ) {
-			$capabilities[] = sanitize_text_field( wp_unslash($capability) );
+			$capabilities[] = sanitize_text_field( wp_unslash( $capability ) );
 		}
 
 		if ( empty( $capabilities ) ) {
@@ -674,7 +698,8 @@ class Leira_Roles_Actions{
 		$result = $this->manager->delete_capabilities( $capabilities );
 
 		if ( ! $result ) {
-			$out = esc_html__( 'Something went wrong, the system wasn\'t able to delete the selected capabilities, refresh the page and try again.', 'leira-roles' );
+			$out = esc_html__( 'Something went wrong, the system wasn\'t able to delete the selected capabilities, refresh the page and try again.',
+				'leira-roles' );
 			$this->notify( $out );
 		}
 

@@ -1,0 +1,149 @@
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/admin.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+table th.column-count, table td.column-count {
+  width: 74px;
+  text-align: center;
+}
+
+body.users_page_leira-roles .inline-editor > td {
+  padding: 0 12px;
+}
+body.users_page_leira-roles .inline-editor fieldset label input[type=checkbox] {
+  margin-left: 1px;
+}
+body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
+  width: 100%;
+}
+@media screen and (min-width: 576px) {
+  body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
+    width: 33%;
+  }
+}
+@media screen and (min-width: 1600px) {
+  body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
+    width: 25%;
+  }
+}
+@media screen and (min-width: 2000px) {
+  body.users_page_leira-roles .inline-editor .capabilities-container > label.capability-item {
+    width: 20em;
+  }
+}
+body.users-php .inline-editor > td {
+  padding: 0 12px;
+}
+body.users-php .inline-editor fieldset label input[type=checkbox] {
+  margin-left: 1px;
+}
+body.users-php .inline-editor .capabilities-container > label.capability-item {
+  width: 100%;
+}
+@media screen and (min-width: 576px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 782px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 33%;
+  }
+}
+@media screen and (min-width: 960px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 33%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 25%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 20%;
+  }
+}
+@media screen and (min-width: 1500px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 16.6em;
+  }
+}
+@media screen and (min-width: 1600px) {
+  body.users-php .inline-editor .capabilities-container > label.capability-item {
+    width: 20em;
+  }
+}
+body.users_page_leira-roles-capabilities .capabilities-container {
+  overflow: auto;
+}
+body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  cursor: pointer;
+  margin: 0.2em 0;
+}
+@media screen and (min-width: 576px) {
+  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+    width: 33%;
+  }
+}
+@media screen and (min-width: 1600px) {
+  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+    width: 25%;
+  }
+}
+@media screen and (min-width: 2000px) {
+  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+    width: 20em;
+  }
+}
+body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item input[type=checkbox] {
+  margin-left: 1px;
+}
+body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item span.checkbox-title {
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+  line-height: 2.5;
+  color: #555;
+}
+body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item.hidden {
+  display: none;
+}
+
+.inline-editor .capabilities-container {
+  overflow: auto;
+}
+.inline-editor .capabilities-container > label.capability-item {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.inline-editor .capabilities-container > label.capability-item.hidden {
+  display: none;
+}
+
+.leira-tooltip {
+  cursor: help;
+  color: #72777c;
+  vertical-align: middle;
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=admin.css.map*/

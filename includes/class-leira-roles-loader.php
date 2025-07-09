@@ -14,7 +14,7 @@
  * Register all actions and filters for the plugin.
  *
  * Maintain a list of all hooks that are registered throughout
- * the plugin, and register them with the WordPress API. Call the
+ * the plugin and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
  * @package    Leira_Roles
@@ -72,7 +72,7 @@ class Leira_Roles_Loader {
 	}
 
 	/**
-	 * Sets the value of a instance registered in the loader
+	 * Sets the value of an instance registered in the loader
 	 *
 	 * @param $key
 	 * @param $value
@@ -128,9 +128,9 @@ class Leira_Roles_Loader {
 	 *
 	 * @return   array                                  The collection of actions and filters registered with WordPress.
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 */
-	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
+	protected function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
 
 		$hooks[] = array(
 			'hook'          => $hook,

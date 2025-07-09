@@ -114,9 +114,9 @@ class Leira_Roles {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 */
-	private function load_dependencies() {
+	protected function load_dependencies() {
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -149,25 +149,19 @@ class Leira_Roles {
 			require_once plugin_dir_path( __DIR__ ) . 'admin/class-leira-roles-notifications.php';
 		}
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-leira-roles-public.php';
-
 		$this->loader = new Leira_Roles_Loader();
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Leira_Roles_i18n class in order to set the domain and to register the hook
+	 * Uses the Leira_Roles_i18n class to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 */
-	private function set_locale() {
+	protected function set_locale() {
 
 		$plugin_i18n = new Leira_Roles_i18n();
 		$this->get_loader()->set( 'i18n', $plugin_i18n );
@@ -176,13 +170,13 @@ class Leira_Roles {
 	}
 
 	/**
-	 * Register all of the hooks related to the admin area functionality
+	 * Register all the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 */
-	private function define_admin_hooks() {
+	protected function define_admin_hooks() {
 
 		if ( is_admin() ) {
 			/**
@@ -220,7 +214,7 @@ class Leira_Roles {
 			$this->loader->add_action( 'wp_ajax_leira-roles-footer-rated', $actions, 'footer_rated' );
 
 			// for future versions add ajax to capability creation
-			// $this->loader->add_action( 'wp_ajax_leira-roles-add-capability', $actions, 'handle' );
+			// $this->loader->add_action('wp_ajax_leira-roles-add-capability', $actions, 'handle');
 
 			$this->loader->add_action( 'load-users.php', $plugin_admin, 'load_users_page' );
 
@@ -234,17 +228,17 @@ class Leira_Roles {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
+	 * Register all the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 */
-	private function define_public_hooks() {
+	protected function define_public_hooks() {
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
+	 * Run the loader to execute all the hooks with WordPress.
 	 *
 	 * @since    1.0.0
 	 */

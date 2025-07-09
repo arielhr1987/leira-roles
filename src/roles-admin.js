@@ -2,11 +2,12 @@
  * Contains logic for deleting and adding roles.
  *
  * For deleting roles it makes a request to the server to delete the tag.
- * For adding roles it makes a request to the server to add the tag.
+ * For adding roles, it makes a request to the server to add the tag.
  *
  */
 
 /* global ajaxurl, wpAjax, tagsl10n, showNotice, validateForm */
+import 'jquery';
 
 jQuery(document).ready(function ($) {
 
@@ -98,7 +99,7 @@ jQuery(document).ready(function ($) {
             return true;
         }
 
-        // Confirms the deletion, a negative response means the deletion must not be executed.
+        // Confirms the deletion; a negative response means the deletion must not be executed.
         var response = showNotice.warn();
         if (!response) {
             e.preventDefault();

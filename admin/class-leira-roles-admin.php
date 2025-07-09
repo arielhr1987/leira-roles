@@ -13,10 +13,10 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
+ * Defines the plugin name, version, and two example hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * This class is responsible for render admin pages and load dependencies these pages use
+ * This class is responsible for rendering admin pages and loading dependencies these pages use
  *
  * @package    Leira_Roles
  * @subpackage Leira_Roles/admin
@@ -28,19 +28,19 @@ class Leira_Roles_Admin{
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 * @var      string $plugin_name The ID of this plugin.
 	 */
-	private $plugin_name;
+	protected $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   protected
 	 * @var      string $version The current version of this plugin.
 	 */
-	private $version;
+	protected $version;
 
 	/**
 	 * The capability
@@ -68,8 +68,8 @@ class Leira_Roles_Admin{
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @param string $plugin_name The name of this plugin.
-	 * @param string $version     The version of this plugin.
+	 * @param  string  $plugin_name  The name of this plugin.
+	 * @param  string  $version  The version of this plugin.
 	 *
 	 * @since    1.0.0
 	 */
@@ -84,50 +84,119 @@ class Leira_Roles_Admin{
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
+	 * @param  string  $hook  The page uri
+	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Leira_Roles_Loader as all of the hooks are defined
+		 * defined in Leira_Roles_Loader as all the hooks are defined
 		 * in that particular class.
 		 *
 		 * The Leira_Roles_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
+		$pages = array(
+			'users.php',
+			'users_page_leira-roles',
+			'users_page_leira-roles-capabilities',
+		);
+		if ( in_array( $hook, $pages ) ) {
+			// Enqueue css
+			$this->enqueue_asset( 'admin.css' );
+		}
 	}
 
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @param string $hook The page uri
+	 * @param  string  $hook  The page uri
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts( $hook ) {
 
+		//Users page
 		if ( 'users.php' === $hook ) {
-			wp_enqueue_script(
-				$this->plugin_name,
-				plugin_dir_url( __FILE__ ) . 'js/inline-edit-user-capabilities.js',
-				array(
-					'jquery',
-					'wp-a11y',
-				),
-				$this->version,
-				false
-			);
-
-			// wp_localize_script( $this->plugin_name, 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
+			$this->enqueue_asset( 'inline-edit-user-capabilities.js' );
 		}
 
-		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
+		// User roles page
+		if ( 'users_page_leira-roles' === $hook ) {
+			$this->enqueue_asset( 'admin.js' );
+			$this->enqueue_asset( 'roles-admin.js' );
+			$this->enqueue_asset( 'inline-edit-roles.js' );
+		}
+
+		// User capabilities page
+		if ( 'users_page_leira-roles-capabilities' === $hook ) {
+			$this->enqueue_asset( 'admin.js' );
+		}
+
+		// Add localizations
+		/* @var Leira_Roles_Manager $manager */
+		$manager      = Leira_Roles::instance()->get_loader()->get( 'manager' );
+		$translations = $manager->get_all_capabilities_description();
+		$translations = array_merge( $translations, [
+			"inlineEditError" => __( 'An error occurred while trying to save the capabilities.', 'leira-roles' ),
+			"inlineEditSaved" => __( 'Role saved successfully.', 'leira-roles' ),
+		] );
+		wp_localize_script( 'leira-roles-admin', 'leiraRolesL10n', $translations );
+		wp_localize_script( 'leira-roles-roles-admin', 'leiraRolesL10n', $translations );
+		wp_localize_script( 'leira-roles-inline-edit-user-capabilities', 'leiraRolesL10n', $translations );
+	}
+
+	/**
+	 * Enqueue a script from the build
+	 *
+	 * @param  string  $filename  The name of the script to enqueue from the build
+	 *
+	 * @return void
+	 */
+	public function enqueue_asset( $filename ) {
+		$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+
+		// Only allow JS or CSS
+		if ( ! in_array( $extension, [ 'js', 'css' ], true ) ) {
+			return;
+		}
+
+		$handle     = 'leira-roles-' . pathinfo( $filename, PATHINFO_FILENAME );
+		$build_dir  = plugin_dir_path( dirname( __FILE__ ) ) . 'build/';
+		$build_url  = plugin_dir_url( dirname( __FILE__ ) ) . 'build/';
+		$asset_path = $build_dir . pathinfo( $filename, PATHINFO_FILENAME ) . '.asset.php';
+		$asset_file = $build_dir . $filename;
+
+		$asset = file_exists( $asset_path )
+			? include $asset_path
+			: [
+				'dependencies' => [],
+				'version'      => file_exists( $asset_file ) ? filemtime( $asset_file ) : false,
+			];
+
+		// Choose the appropriate WordPress function
+		if ( $extension === 'js' ) {
+			wp_set_script_translations( $handle, 'leira-roles', plugin_dir_path( dirname( __FILE__ ) ) . 'languages' );
+			wp_enqueue_script(
+				$handle,
+				$build_url . $filename,
+				$asset['dependencies'],
+				$asset['version'],
+				true // Load in footer
+			);
+		} else {
+			wp_enqueue_style(
+				$handle,
+				$build_url . $filename,
+				[], //$asset['dependencies'],
+				$asset['version']
+			);
+		}
 	}
 
 	/**
@@ -151,7 +220,7 @@ class Leira_Roles_Admin{
 	}
 
 	/**
-	 * Returns the admin list table instance for capabilities page
+	 * Returns the admin list table instance for capability page
 	 *
 	 * @return Leira_Roles_Capabilities_List_Table
 	 */
@@ -210,8 +279,8 @@ class Leira_Roles_Admin{
 	 * Filter the per_page screen option for the admin list table
 	 *
 	 * @param        $false
-	 * @param string $option The option name
-	 * @param string $value  The new value for the option
+	 * @param  string  $option  The option name
+	 * @param  string  $value  The new value for the option
 	 *
 	 * @return int
 	 */
@@ -233,10 +302,10 @@ class Leira_Roles_Admin{
 	}
 
 	/**
-	 * Show capabilities quick edit row action in the users list page
+	 * Show capabilities quick edit row action in the user's list page
 	 *
-	 * @param array   $actions Array of actions for the row
-	 * @param WP_User $user    The current user in the row
+	 * @param  array  $actions  Array of actions for the row
+	 * @param  WP_User  $user  The current user in the row
 	 *
 	 * @return mixed
 	 */
@@ -260,7 +329,7 @@ class Leira_Roles_Admin{
 				// remove roles
 				$allcaps      = array_filter(
 					$user->allcaps,
-					function( $cap ) {
+					function ( $cap ) {
 						return ! leira_roles()->manager->is_role( $cap );
 					},
 					ARRAY_FILTER_USE_KEY
@@ -295,59 +364,63 @@ class Leira_Roles_Admin{
 			global $wp_list_table;
 			$columns_count = $wp_list_table->get_column_count();
 			?>
-            <form method="get">
-                <table style="display: none">
-                    <tbody id="inlineeditcapabilities">
-                    <tr id="inline-edit-capabilities" class="inline-edit-row" style="display: none">
-                        <td colspan="<?php echo esc_html( $columns_count ); ?>" class="colspanchange">
+			<form method="get">
+				<table style="display: none">
+					<tbody id="inlineeditcapabilities">
+					<tr id="inline-edit-capabilities" class="inline-edit-row" style="display: none">
+						<td colspan="<?php echo esc_html( $columns_count ); ?>" class="colspanchange">
 
-                            <fieldset class="">
-                                <legend class="inline-edit-legend"><?php esc_html_e( 'Edit Capabilities', 'leira-roles' ); ?></legend>
-                                <input type="hidden" name="user_id" value="">
-                                <div class="inline-edit-col">
-                                    <label>
-                                        <span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
-                                        <span class="input-text-wrap">
+							<fieldset class="">
+								<legend class="inline-edit-legend"><?php esc_html_e( 'Edit Capabilities',
+										'leira-roles' ); ?></legend>
+								<input type="hidden" name="user_id" value="">
+								<div class="inline-edit-col">
+									<label>
+										<span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
+										<span class="input-text-wrap">
 										<div class="wp-clearfix">
 											<p class="search-box">
 												<input type="search" name="capabilities_search_input"
-                                                       placeholder="<?php esc_html_e( 'Search Capabilities', 'leira-roles' ); ?>">
+													   placeholder="<?php esc_html_e( 'Search Capabilities',
+														   'leira-roles' ); ?>">
 											</p>
 											<label class="alignleft">
 												<input type="checkbox" class="cb-capabilities-select-all">
-												<span class="checkbox-title"><?php esc_html_e( 'All', 'leira-roles' ); ?> </span>
+												<span class="checkbox-title"><?php esc_html_e( 'All',
+														'leira-roles' ); ?> </span>
 											</label>
 										</div>
 										<div class="capabilities-container wp-clearfix">
 											<div class="notice notice-error notice-alt inline hidden">
-												<p class="error"><?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?> </p>
+												<p class="error"><?php esc_html_e( 'No capabilities found.',
+														'leira-roles' ); ?> </p>
 											</div>
 										</div>
 									</span>
-                                    </label>
+									</label>
 
-                                </div>
-                            </fieldset>
-                            <div class="inline-edit-save submit">
-                                <button type="button" class="cancel button alignleft">
+								</div>
+							</fieldset>
+							<div class="inline-edit-save submit">
+								<button type="button" class="cancel button alignleft">
 									<?php esc_html_e( 'Cancel', 'leira-roles' ); ?>
-                                </button>
-                                <button type="button"
-                                        class="save button button-primary alignright">
+								</button>
+								<button type="button"
+										class="save button button-primary alignright">
 									<?php esc_html_e( 'Save', 'leira-roles' ); ?>
-                                </button>
-                                <span class="spinner"></span>
+								</button>
+								<span class="spinner"></span>
 								<?php wp_nonce_field( 'usercapabilitiesinlineeditnonce', '_inline_edit', false ); ?>
-                                <br class="clear"/>
-                                <div class="notice notice-error notice-alt inline hidden">
-                                    <p class="error"></p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
+								<br class="clear"/>
+								<div class="notice notice-error notice-alt inline hidden">
+									<p class="error"></p>
+								</div>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
 			<?php
 		}
 	}
@@ -360,76 +433,79 @@ class Leira_Roles_Admin{
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 		?>
-        <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e( 'Roles', 'leira-roles' ); ?> </h1>
-            <!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
+		<div class="wrap">
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'Roles', 'leira-roles' ); ?> </h1>
+			<!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
 			<?php
 			if ( isset( $_REQUEST['s'] ) && $search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) {
 				/*
 				 * translators: %s: search keywords
 				 */
-				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', esc_html( $search ) );
+				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;',
+						'leira-roles' ) . '</span>', esc_html( $search ) );
 			}
 
-			// the roles table instance
+			// the role table instance
 			$table = $this->get_roles_list_table();
 			$table->prepare_items();
 			$this->admin_notices();
 			?>
-            <hr class="wp-header-end">
-            <div id="ajax-response"></div>
-            <form class="search-form wp-clearfix" method="get">
+			<hr class="wp-header-end">
+			<div id="ajax-response"></div>
+			<form class="search-form wp-clearfix" method="get">
 				<?php $table->search_box( __( 'Search Roles', 'leira-roles' ), 'roles' ); ?>
-            </form>
-            <div id="col-container" class="wp-clearfix">
-                <div id="col-left">
-                    <div class="col-wrap">
-                        <div class="form-wrap">
-                            <h2><?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> </h2>
-                            <form id="addrole" method="post" action="" class="validate">
-                                <input type="hidden" name="action" value="leira-roles-add-role">
-                                <input type="hidden" name="screen"
-                                       value="<?php echo esc_html( get_current_screen()->id ); ?>">
+			</form>
+			<div id="col-container" class="wp-clearfix">
+				<div id="col-left">
+					<div class="col-wrap">
+						<div class="form-wrap">
+							<h2><?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> </h2>
+							<form id="addrole" method="post" action="" class="validate">
+								<input type="hidden" name="action" value="leira-roles-add-role">
+								<input type="hidden" name="screen"
+									   value="<?php echo esc_html( get_current_screen()->id ); ?>">
 								<?php
 								wp_nonce_field( 'add-role' );
 								?>
 
-                                <div class="form-field form-required">
-                                    <label for="role"><?php esc_html_e( 'Role', 'leira-roles' ); ?> </label>
-                                    <input name="role" id="role" type="text" value="" size="40"
-                                           aria-required="true" autocomplete="off">
-                                    <p><?php esc_html_e( 'A unique identifier for the new role.', 'leira-roles' ); ?></p>
-                                </div>
-                                <div class="form-field form-required">
-                                    <label for="name"><?php esc_html_e( 'Name', 'leira-roles' ); ?> </label>
-                                    <input name="name" id="name" type="text" value="" size="40" autocomplete="off">
-                                    <p><?php esc_html_e( 'The name is how it appears on your site.', 'leira-roles' ); ?></p>
-                                </div>
+								<div class="form-field form-required">
+									<label for="role"><?php esc_html_e( 'Role', 'leira-roles' ); ?> </label>
+									<input name="role" id="role" type="text" value="" size="40"
+										   aria-required="true" autocomplete="off">
+									<p><?php esc_html_e( 'A unique identifier for the new role.',
+											'leira-roles' ); ?></p>
+								</div>
+								<div class="form-field form-required">
+									<label for="name"><?php esc_html_e( 'Name', 'leira-roles' ); ?> </label>
+									<input name="name" id="name" type="text" value="" size="40" autocomplete="off">
+									<p><?php esc_html_e( 'The name is how it appears on your site.',
+											'leira-roles' ); ?></p>
+								</div>
 
-                                <p class="submit">
-                                    <input type="submit" name="submit" id="submit" class="button button-primary"
-                                           value="<?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> ">
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div id="col-right">
-                    <div class="col-wrap">
-                        <form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
+								<p class="submit">
+									<input type="submit" name="submit" id="submit" class="button button-primary"
+										   value="<?php esc_html_e( 'Add New Role', 'leira-roles' ); ?> ">
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="col-right">
+					<div class="col-wrap">
+						<form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
 							<?php $table->display(); // Display the table ?>
-                        </form>
-                        <div class="form-wrap edit-term-notes">
-                            <p><?php __( 'Description here.', 'leira-roles' ); ?></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form method="get">
+						</form>
+						<div class="form-wrap edit-term-notes">
+							<p><?php __( 'Description here.', 'leira-roles' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form method="get">
 				<?php $table->inline_edit(); ?>
-            </form>
+			</form>
 
-        </div>
+		</div>
 
 		<?php
 	}
@@ -442,28 +518,7 @@ class Leira_Roles_Admin{
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 
-		// enqueue styles
-		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
-
-		// enqueue scripts
-		wp_enqueue_script( $this->plugin_name . '_common', plugin_dir_url( __FILE__ ) . 'js/leira-roles-common.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . '_table_edit', plugin_dir_url( __FILE__ ) . 'js/leira-roles-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script(
-			$this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'js/inline-edit-roles.js',
-			array(
-				'jquery',
-				'wp-a11y',
-			),
-			$this->version,
-			false
-		);
-
-		// Localize
-		// wp_localize_script( $this->plugin_name . '_table_edit', 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
-		// wp_localize_script( $this->plugin_name, 'leira_roles_i18n', leira_roles()->manager->system_capabilities );
-
-		// initialize table here to be able to register default WP_List_Table screen options
+		// initialize the table here to be able to register default WP_List_Table screen options
 		$this->get_roles_list_table();
 
 		// Handle actions
@@ -480,10 +535,13 @@ class Leira_Roles_Admin{
 				'id'      => 'screen-content',
 				'title'   => esc_html__( 'Screen Content', 'leira-roles' ),
 				'content' =>
-					'<p>' . esc_html__( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
+					'<p>' . esc_html__( 'You can customize the display of this screen&#8217;s contents in a number of ways:',
+						'leira-roles' ) . '</p>' .
 					'<ul>' .
-					'<li>' . wp_kses_post( __( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab.', 'leira-roles' ) ) . '</li>' .
-					'<li>' . wp_kses_post( __( 'The <strong>Search Roles</strong> button will search for roles containing the text you type in the box.', 'leira-roles' ) ) . '</li>' .
+					'<li>' . wp_kses_post( __( 'You can hide/display columns based on your needs and decide how many roles to list per screen using the <strong>Screen Options</strong> tab.',
+						'leira-roles' ) ) . '</li>' .
+					'<li>' . wp_kses_post( __( 'The <strong>Search Roles</strong> button will search for roles containing the text you type in the box.',
+						'leira-roles' ) ) . '</li>' .
 					'</ul>',
 			)
 		);
@@ -497,70 +555,73 @@ class Leira_Roles_Admin{
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
 		}
 		?>
-        <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?> </h1>
-            <!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
+		<div class="wrap">
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?> </h1>
+			<!--<a href="#" class="page-title-action">--><?php // esc_html_e( 'Add New', 'leira-roles' ) ?><!--</a>-->
 			<?php
 			if ( isset( $_REQUEST['s'] ) && $search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) ) {
 				/*
 				 * translators: %s: search keywords
 				 */
-				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;', 'leira-roles' ) . '</span>', esc_html( $search ) );
+				printf( ' <span class="subtitle">' . esc_html__( 'Search results for &#8220;%s&#8221;',
+						'leira-roles' ) . '</span>', esc_html( $search ) );
 			}
 
-			// the roles table instance
+			// the role table instance
 			$table = $this->get_capabilities_list_table();
 			$table->prepare_items();
 			$this->admin_notices();
 			?>
-            <hr class="wp-header-end">
-            <div id="ajax-response"></div>
-            <form class="search-form wp-clearfix" method="get">
+			<hr class="wp-header-end">
+			<div id="ajax-response"></div>
+			<form class="search-form wp-clearfix" method="get">
 				<?php $table->search_box( esc_html__( 'Search Capabilities', 'leira-roles' ), 'roles' ); ?>
-            </form>
-            <div id="col-container" class="wp-clearfix">
-                <div id="col-left">
-                    <div class="col-wrap">
-                        <div class="form-wrap">
-                            <h2><?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> </h2>
-                            <form id="add_capability" method="post" action="" class="validate">
-                                <input type="hidden" name="action" value="leira-roles-add-capability">
-                                <input type="hidden" name="screen"
-                                       value="<?php echo esc_html( get_current_screen()->id ); ?>">
+			</form>
+			<div id="col-container" class="wp-clearfix">
+				<div id="col-left">
+					<div class="col-wrap">
+						<div class="form-wrap">
+							<h2><?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> </h2>
+							<form id="add_capability" method="post" action="" class="validate">
+								<input type="hidden" name="action" value="leira-roles-add-capability">
+								<input type="hidden" name="screen"
+									   value="<?php echo esc_html( get_current_screen()->id ); ?>">
 								<?php
 								wp_nonce_field( 'add-capability' );
 								?>
 
-                                <div class="form-field form-required">
-                                    <label for="capability"><?php esc_html_e( 'Capability', 'leira-roles' ); ?> </label>
-                                    <input name="capability" id="capability" type="text" value="" size="40"
-                                           aria-required="true">
-                                    <p><?php esc_html_e( 'A unique identifier for the new capability.', 'leira-roles' ); ?></p>
-                                </div>
-                                <p class="submit">
-                                    <input type="submit" name="submit" id="submit" class="button button-primary"
-                                           value="<?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> ">
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div id="col-right">
-                    <div class="col-wrap">
-                        <form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
+								<div class="form-field form-required">
+									<label for="capability"><?php esc_html_e( 'Capability', 'leira-roles' ); ?> </label>
+									<input name="capability" id="capability" type="text" value="" size="40"
+										   aria-required="true">
+									<p><?php esc_html_e( 'A unique identifier for the new capability.',
+											'leira-roles' ); ?></p>
+								</div>
+								<p class="submit">
+									<input type="submit" name="submit" id="submit" class="button button-primary"
+										   value="<?php esc_html_e( 'Add New Capability', 'leira-roles' ); ?> ">
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="col-right">
+					<div class="col-wrap">
+						<form action="<?php echo esc_url( add_query_arg( '', '' ) ); ?>" method="post">
 							<?php $table->display(); // Display the table ?>
-                        </form>
-                        <div class="form-wrap edit-term-notes">
-                            <p><?php esc_html_e( 'Built-in system capabilities are not deletable.', 'leira-roles' ); ?> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form method="get">
+						</form>
+						<div class="form-wrap edit-term-notes">
+							<p><?php esc_html_e( 'Built-in system capabilities are not deletable.',
+									'leira-roles' ); ?> </p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form method="get">
 				<?php $table->inline_edit(); ?>
-            </form>
+			</form>
 
-        </div>
+		</div>
 
 		<?php
 	}
@@ -571,16 +632,9 @@ class Leira_Roles_Admin{
 	public function admin_capabilities_page_load() {
 		if ( ! current_user_can( $this->capability ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'leira-roles' ) );
-		}
+		};
 
-		// enqueue styles
-		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leira-roles-admin.css', array(), $this->version, 'all' );
-
-		// enqueue scripts
-		wp_enqueue_script( $this->plugin_name . '_common', plugin_dir_url( __FILE__ ) . 'js/leira-roles-common.js', array( 'jquery' ), $this->version, false );
-		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leira-roles-capabilities-admin.js', array( 'jquery' ), $this->version, false );
-
-		// initialize table here to be able to register default WP_List_Table screen options
+		// initialize the table here to be able to register default WP_List_Table screen options
 		$this->get_capabilities_list_table();
 
 		// Handle actions
@@ -596,9 +650,11 @@ class Leira_Roles_Admin{
 				'id'      => 'screen-content',
 				'title'   => __( 'Screen Content', 'leira-roles' ),
 				'content' =>
-					'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'leira-roles' ) . '</p>' .
+					'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:',
+						'leira-roles' ) . '</p>' .
 					'<ul>' .
-					'<li>' . __( 'The <strong>Search Capabilities</strong> button will search for capabilities containing the text you type in the box.', 'leira-roles' ) . '</li>' .
+					'<li>' . __( 'The <strong>Search Capabilities</strong> button will search for capabilities containing the text you type in the box.',
+						'leira-roles' ) . '</li>' .
 					'</ul>',
 			)
 		);
@@ -612,7 +668,7 @@ class Leira_Roles_Admin{
 	}
 
 	/**
-	 * Handle post actions
+	 * Handle post-actions
 	 */
 	public function handle_actions() {
 
@@ -631,11 +687,16 @@ class Leira_Roles_Admin{
 				'id'      => 'overview',
 				'title'   => __( 'Overview', 'leira-roles' ),
 				'content' =>
-					'<p>' . __( 'WordPress uses a concept of Roles, designed to give the site owner the ability to control what users can and cannot do within the site.', 'leira-roles' ) . '</p>' .
-					'<p>' . __( 'A site owner can manage the user access to such tasks as writing and editing posts, creating Pages, creating categories, moderating comments, managing plugins, managing themes, and managing other users, by assigning a specific role to each of the users.', 'leira-roles' ) . '</p>' .
-					'<p>' . __( 'WordPress has six pre-defined roles: Super Admin, Administrator, Editor, Author, Contributor and Subscriber. Each role is allowed to perform a set of tasks called Capabilities.', 'leira-roles' ) . '</p>' .
-					'<p>' . __( 'There are many capabilities including “publish_posts“, “moderate_comments“, and “edit_users“. A default set of capabilities is pre-assigned to each role, but other capabilities can be assigned or removed.', 'leira-roles' ) . '</p>' .
-					( is_multisite() ? ( '<p>' . __( 'The Super Admin role allows a user to perform all possible capabilities. Each of the other roles has a decreasing number of allowed capabilities. For instance, the Subscriber role has just the “read” capability. One particular role should not be considered to be senior to another role. Rather, consider that roles define the user’s responsibilities within the site.', 'leira-roles' ) . '</p>' ) : '' ) .
+					'<p>' . __( 'WordPress uses a concept of Roles, designed to give the site owner the ability to control what users can and cannot do within the site.',
+						'leira-roles' ) . '</p>' .
+					'<p>' . __( 'A site owner can manage the user access to such tasks as writing and editing posts, creating Pages, creating categories, moderating comments, managing plugins, managing themes, and managing other users, by assigning a specific role to each of the users.',
+						'leira-roles' ) . '</p>' .
+					'<p>' . __( 'WordPress has six pre-defined roles: Super Admin, Administrator, Editor, Author, Contributor and Subscriber. Each role is allowed to perform a set of tasks called Capabilities.',
+						'leira-roles' ) . '</p>' .
+					'<p>' . __( 'There are many capabilities including “publish_posts“, “moderate_comments“, and “edit_users“. A default set of capabilities is pre-assigned to each role, but other capabilities can be assigned or removed.',
+						'leira-roles' ) . '</p>' .
+					( is_multisite() ? ( '<p>' . __( 'The Super Admin role allows a user to perform all possible capabilities. Each of the other roles has a decreasing number of allowed capabilities. For instance, the Subscriber role has just the “read” capability. One particular role should not be considered to be senior to another role. Rather, consider that roles define the user’s responsibilities within the site.',
+							'leira-roles' ) . '</p>' ) : '' ) .
 					'',
 			)
 		);
@@ -644,23 +705,38 @@ class Leira_Roles_Admin{
 				'id'      => 'roles',
 				'title'   => __( 'Roles', 'leira-roles' ),
 				'content' =>
-					'<p>' . __( 'Upon installing WordPress, an Administrator account is automatically created.', 'leira-roles' ) . '</p>' .
-					( ! is_multisite() ? ( '<p>' . __( 'The default role for new users can be set in: ', 'leira-roles' ) . sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), __( 'General Settings', 'leira-roles' ) ) . '</p>' ) : '' ) .
+					'<p>' . __( 'Upon installing WordPress, an Administrator account is automatically created.',
+						'leira-roles' ) . '</p>' .
+					( ! is_multisite() ? ( '<p>' . __( 'The default role for new users can be set in: ',
+							'leira-roles' ) . sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ),
+							__( 'General Settings', 'leira-roles' ) ) . '</p>' ) : '' ) .
 					'<p>' . __( 'WordPress comes with five predefined roles:', 'leira-roles' ) . '</p>' .
 					'<ul>' .
-					( is_multisite() ? ( '<li>' . sprintf( '<strong>%s</strong>', __( 'Super Admin', 'leira-roles' ) ) . __( ' : somebody with access to the site network administration features and all other features.', 'leira-roles' ) . '</li>' ) : '' ) .
-					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘administrator’)', __( 'Administrator', 'leira-roles' ) ) . __( ' : somebody who has access to all the administration features within a single site.', 'leira-roles' ) . '</li>' .
-					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘editor’)', __( 'Editor', 'leira-roles' ) ) . __( ' : somebody who can publish and manage posts including the posts of other users.', 'leira-roles' ) . '</li>' .
-					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘author’)', __( 'Author', 'leira-roles' ) ) . __( ' : somebody who can publish and manage their own posts.', 'leira-roles' ) . '</li>' .
-					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘contributor’)', __( 'Contributor', 'leira-roles' ) ) . __( ' : somebody who can write and manage their own posts but cannot publish them.', 'leira-roles' ) . '</li>' .
-					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘subscriber’)', __( 'Subscriber', 'leira-roles' ) ) . __( ' : somebody who can only manage their profile.', 'leira-roles' ) . '</li>' .
+					( is_multisite() ? ( '<li>' . sprintf( '<strong>%s</strong>', __( 'Super Admin',
+							'leira-roles' ) ) . __( ' : somebody with access to the site network administration features and all other features.',
+							'leira-roles' ) . '</li>' ) : '' ) .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘administrator’)', __( 'Administrator',
+						'leira-roles' ) ) . __( ' : somebody who has access to all the administration features within a single site.',
+						'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘editor’)', __( 'Editor',
+						'leira-roles' ) ) . __( ' : somebody who can publish and manage posts including the posts of other users.',
+						'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘author’)',
+						__( 'Author', 'leira-roles' ) ) . __( ' : somebody who can publish and manage their own posts.',
+						'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘contributor’)', __( 'Contributor',
+						'leira-roles' ) ) . __( ' : somebody who can write and manage their own posts but cannot publish them.',
+						'leira-roles' ) . '</li>' .
+					'<li>' . sprintf( '<strong>%s</strong> (slug: ‘subscriber’)',
+						__( 'Subscriber', 'leira-roles' ) ) . __( ' : somebody who can only manage their profile.',
+						'leira-roles' ) . '</li>' .
 					'</ul>' .
 					'',
 			)
 		);
 
 		$capabilities        = '';
-		$system_capabilities = leira_roles()->manager->system_capabilities;
+		$system_capabilities = leira_roles()->manager->get_all_capabilities_description();
 		foreach ( $system_capabilities as $capability => $description ) {
 			$capabilities .= sprintf( '<li><strong>%s</strong>: %s</li>', $capability, $description );
 		}
@@ -682,10 +758,14 @@ class Leira_Roles_Admin{
 
 		get_current_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'leira-roles' ) . '</strong></p>' .
-			'<p><a href="https://wordpress.org/support/article/roles-and-capabilities/">' . __( 'Roles and Capabilities', 'leira-roles' ) . '</a></p>' .
-			'<p><a href="https://wordpress.org/support/plugin/leira-roles/">' . __( 'Support', 'leira-roles' ) . '</a></p>' . // TODO: Change to github plugin page
-			'<p><a href="https://github.com/arielhr1987/leira-roles/issues">' . __( 'Report an issue', 'leira-roles' ) . '</a></p>' .
-			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Development', 'leira-roles' ) . '</a></p>'
+			'<p><a href="https://wordpress.org/support/article/roles-and-capabilities/">' . __( 'Roles and Capabilities',
+				'leira-roles' ) . '</a></p>' .
+			'<p><a href="https://wordpress.org/support/plugin/leira-roles/">' . __( 'Support',
+				'leira-roles' ) . '</a></p>' . // TODO: Change to github plugin page
+			'<p><a href="https://github.com/arielhr1987/leira-roles/issues">' . __( 'Report an issue',
+				'leira-roles' ) . '</a></p>' .
+			'<p><a href="https://github.com/arielhr1987/leira-roles/">' . __( 'Development',
+				'leira-roles' ) . '</a></p>'
 		);
 	}
 
@@ -700,8 +780,10 @@ class Leira_Roles_Admin{
 				'id'       => 'leira-roles-capabilities',
 				'title'    => __( 'Capabilities', 'leira-roles' ),
 				'content'  =>
-					'<p>' . __( 'The <strong>Capabilities</strong> button will help you to allow or revoke specific capabilities for the user.', 'leira-roles' ) . '</p>' .
-					'<p>' . __( 'Be aware that if you revoke your user capabilities, you might experience some issues.', 'leira-roles' ) . '</p>' .
+					'<p>' . __( 'The <strong>Capabilities</strong> button will help you to allow or revoke specific capabilities for the user.',
+						'leira-roles' ) . '</p>' .
+					'<p>' . __( 'Be aware that if you revoke your user capabilities, you might experience some issues.',
+						'leira-roles' ) . '</p>' .
 					'',
 				'priority' => 100,
 			)
@@ -709,7 +791,7 @@ class Leira_Roles_Admin{
 	}
 
 	/**
-	 * Change the admin footer text on Settings page
+	 * Change the admin footer text on the Settings page
 	 * Give us a rate
 	 *
 	 * @param $footer_text
@@ -732,10 +814,10 @@ class Leira_Roles_Admin{
 
 				ob_start();
 				?>
-                <a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
-                   class="leira-roles-admin-rating-link"
-                   data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ); ?>"
-                   data-nonce="<?php echo esc_html( wp_create_nonce( 'footer-rated' ) ); ?>">&#9733;&#9733;&#9733;&#9733;&#9733;</a>
+				<a href="https://wordpress.org/support/plugin/leira-roles/reviews/?filter=5" target="_blank"
+				   class="leira-roles-admin-rating-link"
+				   data-rated="<?php esc_attr_e( 'Thanks :)', 'leira-roles' ); ?>"
+				   data-nonce="<?php echo esc_html( wp_create_nonce( 'footer-rated' ) ); ?>">&#9733;&#9733;&#9733;&#9733;&#9733;</a>
 				<?php
 				$link = ob_get_clean();
 
@@ -743,7 +825,8 @@ class Leira_Roles_Admin{
 				/*
 				 * translators: Leave a review for the plugin
 				 */
-				printf( esc_html__( 'If you like Roles & Capabilities please consider leaving a %s review. It will help us to grow the plugin and make it more popular. Thank you.', 'leira-roles' ), wp_kses_post( $link ) )
+				printf( esc_html__( 'If you like Roles & Capabilities please consider leaving a %s review. It will help us to grow the plugin and make it more popular. Thank you.',
+					'leira-roles' ), wp_kses_post( $link ) )
 				?>
 
 				<?php
