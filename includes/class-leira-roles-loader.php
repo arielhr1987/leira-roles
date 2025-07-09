@@ -90,8 +90,7 @@ class Leira_Roles_Loader {
 	 * @param object $component     A reference to the instance of the object on which the action is defined.
 	 * @param string $callback      The name of the function definition on the $component.
 	 * @param int    $priority      Optional. The priority at which the function should be fired. Default is 10.
-	 * @param int    $accepted_args Optional. The number of arguments that should be passed to the $callback. Default
-	 *                              is 1.
+	 * @param int    $accepted_args Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 *
 	 * @since    1.0.0
 	 */
@@ -106,8 +105,7 @@ class Leira_Roles_Loader {
 	 * @param object $component     A reference to the instance of the object on which the filter is defined.
 	 * @param string $callback      The name of the function definition on the $component.
 	 * @param int    $priority      Optional. The priority at which the function should be fired. Default is 10.
-	 * @param int    $accepted_args Optional. The number of arguments that should be passed to the $callback. Default
-	 *                              is 1
+	 * @param int    $accepted_args Optional. The number of arguments that should be passed to the $callback. Default is 1
 	 *
 	 * @since    1.0.0
 	 */

@@ -430,7 +430,7 @@ class Leira_Roles_Manager{
 				 * Its user-specific capability
 				 * Now lets check for the value, false means the user didn't check the cb
 				 */
-				$user_value = isset( $capabilities[ $capability ] ) ? (bool) $capabilities[ $capability ] : false;
+				$user_value = isset( $capabilities[ $capability ] ) && (bool) $capabilities[ $capability ];
 				if ( $user_value == $value ) {
 					// no change in the capability value
 					$update[ $capability ] = $value;

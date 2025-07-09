@@ -53,7 +53,7 @@ class Leira_Roles_Notifications{
 			}
 
 			/**
-			 * Delete the cookie by setting an expiration time before current time
+			 * Delete the cookie by setting an expiration time before the current time
 			 */
 			if ( ! headers_sent() ) {
 				@setcookie( $this->cookie, '', strtotime( '-1 month' ) );

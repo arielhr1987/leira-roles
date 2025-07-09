@@ -243,7 +243,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		$out .= '<div class="hidden" id="inline_' . md5( $item['capability'] ) . '">';
 
 		if ( $this->manager->is_system_capability( $item['capability'] ) ) {
-			// do something with system capabilitys
+			// do something with system capabilities
 		}
 		foreach ( $item as $key => $value ) {
 			$out .= sprintf( '<div class="%s">%s</div>', $key, $value );
@@ -428,7 +428,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		$this->items = $data;
 
 		/**
-		 * We also have to register our pagination options & calculations.
+		 * We also have to register our pagination options and calculations.
 		 */
 		$this->set_pagination_args(
 			array(
