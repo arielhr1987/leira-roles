@@ -141,3 +141,4 @@ No. Core capabilities are essential for WordPress to function correctly and are 
 
 = 1.0.0 =
 * Initial plugin release.
+
