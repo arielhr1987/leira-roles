@@ -4,7 +4,7 @@ Donate link: https://github.com/arielhr1987
 Tags: role, capabilities, admin, permissions, edit  
 Requires at least: 4.1  
 Tested up to: 6.8  
-Stable tag: 1.1.12
+Stable tag: 1.1.13
 Requires PHP: 7.4  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
@@ -69,6 +69,9 @@ No. Core capabilities are essential for WordPress to function correctly and are 
 9. Bulk capability editing interface.
 
 == Changelog ==
+
+= 1.1.13 =
+* Fixed an issue with bulk deletion on the Capabilities list page.
 
 = 1.1.12 =
 * Improve the build process to automatically update the plugin version. 

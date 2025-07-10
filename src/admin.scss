@@ -104,11 +104,25 @@ body {
 
 	&.users_page_leira-roles-capabilities {
 
+
 		.capabilities-container {
 			//max-height: 250px;
 			overflow: auto;
 
-			> label.capability-item {
+			.wp-list-table {
+				background-color: transparent;
+				border: none;
+
+				tbody, tr{
+					background-color: transparent;
+				}
+			}
+
+			.check-column {
+				padding: 5px;
+			}
+
+			label.capability-item {
 				width: 100%;
 				white-space: nowrap;
 				overflow: hidden;
@@ -116,6 +130,11 @@ body {
 				font-size: 13px;
 				cursor: pointer;
 				margin: .2em 0;
+				position: static !important;
+
+				&:hover {
+					background-color: transparent;
+				}
 
 				@media screen and (min-width: 576px) {
 					width: 50%;

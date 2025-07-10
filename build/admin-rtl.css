@@ -82,7 +82,17 @@ body.users-php .inline-editor .capabilities-container > label.capability-item {
 body.users_page_leira-roles-capabilities .capabilities-container {
   overflow: auto;
 }
-body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+body.users_page_leira-roles-capabilities .capabilities-container .wp-list-table {
+  background-color: transparent;
+  border: none;
+}
+body.users_page_leira-roles-capabilities .capabilities-container .wp-list-table tbody, body.users_page_leira-roles-capabilities .capabilities-container .wp-list-table tr {
+  background-color: transparent;
+}
+body.users_page_leira-roles-capabilities .capabilities-container .check-column {
+  padding: 5px;
+}
+body.users_page_leira-roles-capabilities .capabilities-container label.capability-item {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -90,38 +100,42 @@ body.users_page_leira-roles-capabilities .capabilities-container > label.capabil
   font-size: 13px;
   cursor: pointer;
   margin: 0.2em 0;
+  position: static !important;
+}
+body.users_page_leira-roles-capabilities .capabilities-container label.capability-item:hover {
+  background-color: transparent;
 }
 @media screen and (min-width: 576px) {
-  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+  body.users_page_leira-roles-capabilities .capabilities-container label.capability-item {
     width: 50%;
   }
 }
 @media screen and (min-width: 1200px) {
-  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+  body.users_page_leira-roles-capabilities .capabilities-container label.capability-item {
     width: 33%;
   }
 }
 @media screen and (min-width: 1600px) {
-  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+  body.users_page_leira-roles-capabilities .capabilities-container label.capability-item {
     width: 25%;
   }
 }
 @media screen and (min-width: 2000px) {
-  body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item {
+  body.users_page_leira-roles-capabilities .capabilities-container label.capability-item {
     width: 20em;
   }
 }
-body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item input[type=checkbox] {
+body.users_page_leira-roles-capabilities .capabilities-container label.capability-item input[type=checkbox] {
   margin-right: 1px;
 }
-body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item span.checkbox-title {
+body.users_page_leira-roles-capabilities .capabilities-container label.capability-item span.checkbox-title {
   margin: 0;
   padding: 0;
   word-wrap: break-word;
   line-height: 2.5;
   color: #555;
 }
-body.users_page_leira-roles-capabilities .capabilities-container > label.capability-item.hidden {
+body.users_page_leira-roles-capabilities .capabilities-container label.capability-item.hidden {
   display: none;
 }
 

@@ -58,7 +58,16 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 		?>
 		<div class="capabilities-container wp-clearfix <?php echo esc_html( implode( ' ',
 			$this->get_table_classes() ) ); ?>">
-			<?php $this->display_rows_or_placeholder(); ?>
+			<?php //$this->display_rows_or_placeholder(); ?>
+			<table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+				<tbody id="the-list">
+				<tr>
+					<td class="check-column">
+						<?php $this->display_rows_or_placeholder(); ?>
+					</td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
 		<?php
 		$this->display_tablenav( 'bottom' );
@@ -113,7 +122,7 @@ class Leira_Roles_Capabilities_List_Table extends WP_List_Table{
 
 		// Tooltip
 		$title = $this->manager->get_capability_description( $capability );
-		if(!empty($title)){
+		if ( ! empty( $title ) ) {
 			echo sprintf(
 				'<i class="dashicons dashicons-editor-help leira-tooltip" title="%s"></i>',
 				esc_html( $title )
