@@ -369,44 +369,44 @@ class Leira_Roles_Admin{
 					<tbody id="inlineeditcapabilities">
 					<tr id="inline-edit-capabilities" class="inline-edit-row" style="display: none">
 						<td colspan="<?php echo esc_html( $columns_count ); ?>" class="colspanchange">
-
 							<fieldset class="">
-								<legend class="inline-edit-legend"><?php esc_html_e( 'Edit Capabilities',
-										'leira-roles' ); ?></legend>
+								<legend class="inline-edit-legend">
+									<?php esc_html_e( 'Edit Capabilities', 'leira-roles' ); ?>
+								</legend>
 								<input type="hidden" name="user_id" value="">
 								<div class="inline-edit-col">
 									<label>
 										<span class="title"><?php esc_html_e( 'Capabilities', 'leira-roles' ); ?></span>
 										<span class="input-text-wrap">
-										<div class="wp-clearfix">
-											<p class="search-box">
-												<input type="search" name="capabilities_search_input"
-													   placeholder="<?php esc_html_e( 'Search Capabilities',
-														   'leira-roles' ); ?>">
-											</p>
-											<label class="alignleft">
-												<input type="checkbox" class="cb-capabilities-select-all">
-												<span class="checkbox-title"><?php esc_html_e( 'All',
-														'leira-roles' ); ?> </span>
-											</label>
-										</div>
-										<div class="capabilities-container wp-clearfix">
-											<div class="notice notice-error notice-alt inline hidden">
-												<p class="error"><?php esc_html_e( 'No capabilities found.',
-														'leira-roles' ); ?> </p>
+											<div class="wp-clearfix">
+												<p class="search-box">
+													<input type="search" name="capabilities_search_input"
+														   placeholder="<?php esc_html_e( 'Search Capabilities',
+															   'leira-roles' ); ?>">
+												</p>
+												<label class="alignleft">
+													<input type="checkbox" class="cb-capabilities-select-all">
+													<span class="checkbox-title">
+														<?php esc_html_e( 'All', 'leira-roles' ); ?>
+													</span>
+												</label>
 											</div>
-										</div>
-									</span>
+											<div class="capabilities-container wp-clearfix">
+												<div class="notice notice-error notice-alt inline hidden">
+													<p class="error">
+														<?php esc_html_e( 'No capabilities found.', 'leira-roles' ); ?>
+													</p>
+												</div>
+											</div>
+										</span>
 									</label>
-
 								</div>
 							</fieldset>
 							<div class="inline-edit-save submit">
 								<button type="button" class="cancel button alignleft">
 									<?php esc_html_e( 'Cancel', 'leira-roles' ); ?>
 								</button>
-								<button type="button"
-										class="save button button-primary alignright">
+								<button type="button" class="save button button-primary alignright">
 									<?php esc_html_e( 'Save', 'leira-roles' ); ?>
 								</button>
 								<span class="spinner"></span>
